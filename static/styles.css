@@ -2,6 +2,28 @@
   Base Element Styles
 ==================================== */
 
+* {
+	box-sizing: border-box;
+}
+
+a {
+	text-decoration: none;
+}
+
+body {
+	padding-top: 1em;
+	font-family: Arial, sans-serif;
+}
+
+h1 {
+	font-family: "Geneva", sans-serif;
+}
+
+img {
+	max-width: 100%;
+}
+
+
 
 /* =================================
   Base Layout Styles
@@ -9,8 +31,51 @@
 
 /* ---- Navigation ---- */
 
+.main-nav a {
+	font-family: "Geneva", sans-serif;
+	display: block;
+	text-align: center;
+	padding: 10px 15px;
+	color: black;
+}
+
+.main-nav a:hover {
+	color: #3F4234;
+}
+
+#title {
+	font-size: 1.5em;
+}
+
+/* ---- Banner ---- */
+
+#banner {
+	margin-top: 3em;
+	margin-bottom: 3em;
+}
+
+#banner img {
+	padding: .4em;
+}
+
+#banner h4 {
+	font-weight: normal;
+}
+
+#banner-right {
+	border: solid 1px black;
+	margin: .4em
+}
+
+#banner-left {
+	margin: .4em;
+}
+
+
 
 /* ---- Layout Containers ---- */
+
+
 
 
 /* ---- Page Elements ---- */
@@ -21,9 +86,65 @@
 ==================================== */
 
 @media (min-width: 769px) {
+	.main-nav li {
+		display: inline-block;
+	}
 
+	.nav-right {
+		float: right;
+		/* Subscribe button is higher up???? line-height to try to fix but....*/
+		line-height: 1.5em;
+	}
+
+	.nav-left {
+		float: left;
+	}
+
+	.container {
+		width: 70%;
+		margin: 0 auto;
+	}
+
+	/* ---- Banner ---- */
+
+	#banner {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#banner-right {
+		float: right;
+		width: 50%;
+	}
+
+	#banner-left {
+		float: left;
+		width: 50%;
+	}
+
+	#banner h1 {
+		font-size: 3em;
+	}
+
+	/* ---- Float clearfix ---- */
+
+	.clearfix::after {
+		content: " ";
+		display: table;
+		clear: both;
+	}
 }
 
 @media (min-width: 1425px) {
+
+	#banner h1 {
+		font-size: 4em;
+	}
+
+	#banner h4 {
+		font-size: 1.5em;
+	}
+
 
 }
