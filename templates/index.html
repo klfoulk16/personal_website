@@ -10,16 +10,17 @@
 </head>
 
 <body>
-    <nav class="main-nav">
-        <div class="container clearfix">
-            <h1 id="title"><a href="/">Kelly Foulk</a></h1>
-            <ul class="nav-menu">
-                <li><a href="/">Code</a></li>
-                <li><a href="/">Other</a></li>
-                <li><a href="/">Subscribe</a></li>
+    <nav class="main-nav container clearfix">
+        <div class="">
+            <ul id="menu">
+                <li class="l" id="title"><a href="/">Kelly Foulk</a></li>
+                <div id="phone_menu">
+                    <li class="l"><a href="/">Code</a></li>
+                    <li class="l"><a href="/">Other</a></li>
+                    <li class="r"><a href="/">Subscribe</a></li>
+                </div>
             </ul>
-            <button id= 'phone_menu_btn'>Menu</button>
-        </div>
+            <button id="phone_menu_btn" onclick="showMenu()">Menu</button>
     </nav> <!--/.main-header
         <ul>
             <div class="nav-left">
@@ -34,7 +35,7 @@
 
     -->
 
-    <hr style="width:80%"">
+    <hr style="width:80%;">
 
     <div id ="banner" class="container clearfix">
         <div id="banner-left">
