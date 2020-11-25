@@ -43,6 +43,19 @@ img {
 	color: #3F4234;
 }
 
+.main-nav ul {
+	float: left;
+}
+
+#phone_menu_btn {
+	display: inline-block;
+	float: right;
+}
+
+.phone_menu {
+	display: none;
+}
+
 #title {
 	font-size: 1.5em;
 }
@@ -86,8 +99,17 @@ img {
 ==================================== */
 
 @media (min-width: 769px) {
-	.main-nav li {
-		display: inline-block;
+
+	.main-nav ul {
+		float: none;
+	}
+
+	.phone_menu {
+		display: inline;
+	}
+
+	#phone_menu_btn {
+		display: none;
 	}
 
 	.nav-right {
