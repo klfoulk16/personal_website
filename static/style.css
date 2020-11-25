@@ -1,0 +1,147 @@
+/* =================================
+  Base Element Styles
+==================================== */
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Varela Round', sans-serif;
+	line-height: 1.6;
+	color: #3a3a3a;
+}
+
+p {
+	font-size: .95em;
+	margin-bottom: 1.8em;
+}
+
+h2,
+h3,
+a {
+	color: #3F4234;
+}
+
+h2,
+h3,
+h4 {
+	margin-top: 0;
+}
+
+h4 {
+	margin-bottom: .4em;
+}
+
+a {
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+figure {
+	margin: 0;
+	line-height: 0;
+}
+
+figcaption {
+	font-size: .9em;
+	line-height: 1.5;
+	color: #fff;
+	padding: 1em;
+	background: #A1BBD0;
+  margin-bottom: 25px;
+}
+
+.columnButton {
+    color: white;
+    background: #508abc;
+    border: solid 1px;
+    border-color: rgba(0, 0, 0, .1);
+    cursor: pointer;
+		font-size: .95em;
+		padding: 1em 5em;
+		border-radius: .3em;
+		outline: 0;
+}
+
+
+/* =================================
+  Base Layout Styles
+==================================== */
+
+/* ---- Navigation ---- */
+
+.name {
+	font-size: 1.25em;
+	margin: 0;
+}
+
+.main-nav {
+	margin-top: 5px;
+}
+
+.name a,
+.main-nav a {
+	display: block;
+	text-align: center;
+	padding: 10px 15px;
+}
+
+.main-nav a {
+	font-size: .95em;
+	color: black;
+	text-transform: uppercase;
+}
+
+.main-nav a:hover {
+	color: #3F4234;
+}
+
+/* ---- Layout Containers ---- */
+
+.main-header {
+	padding-top: .5em;
+	padding-bottom: .5em;
+}
+
+.banner,
+.main-footer {
+	text-align: center;
+}
+
+
+/* =================================
+  Media Queries
+==================================== */
+
+@media (min-width: 769px) {
+    /*add your large page adjustments here*/
+    body {
+      padding-top: 68px;
+    }
+
+    .main-header {
+      position: fixed;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,.4);
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .container {
+  		width: 90%;
+  		margin: 0 auto;
+  	}
+}
+
+@media (min-width: 1425px) {
+    /*add your small page settings here*/
+    .container {
+		width: 80%;
+		max-width: 1150px;
+	}
+}
