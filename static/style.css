@@ -67,7 +67,6 @@ figcaption {
 		outline: 0;
 }
 
-
 /* =================================
   Base Layout Styles
 ==================================== */
@@ -92,7 +91,7 @@ figcaption {
 
 .main-nav a {
 	font-size: .95em;
-	color: black;
+	color: #D1A827;
 	text-transform: uppercase;
 }
 
@@ -112,36 +111,169 @@ figcaption {
 	text-align: center;
 }
 
+.banner {
+	color: #fff;
+	background: #3F4234;
+	padding: 3.2em 0;
+	margin-bottom: 60px;
+}
+
+.intro {
+  margin: 0 auto;
+  border: 10px solid #687672;
+  box-shadow: 2px 2px 4px rgba(0,0,0,.4);
+  width: 80%;
+  margin: 0 auto;
+  max-width: 800px;
+  text-align: center;
+  margin-top: 5em;
+  margin-bottom: 3em;
+  padding: 3em 2em 3em 2em;
+
+}
+
+.col {
+	padding-right: 1em;
+	padding-left: 1em;
+	text-align:center;
+}
+
+.future {
+  background: #F4E7D7;
+  padding: 4em 4em;
+  margin-top: 40px;
+  margin-bottom: 60px;
+}
+
+.main-footer {
+	background: #A1BBD0;
+	padding: 2em 0;
+	margin-top: 30px;
+}
+
+/* ---- Page Elements ---- */
+
+.logo {
+	width: 190px;
+}
+
+.headline {
+	margin-bottom: 0;
+}
+
+.profile-pic {
+  width: 40%;
+  height: 40%;
+  border-radius: 10%;
+}
 
 /* =================================
   Media Queries
 ==================================== */
 
 @media (min-width: 769px) {
-    /*add your large page adjustments here*/
-    body {
-      padding-top: 68px;
-    }
 
-    .main-header {
-      position: fixed;
-      background: #fff;
-      box-shadow: 0 1px 4px rgba(0,0,0,.4);
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-    }
+  body {
+    padding-top: 68px;
+  }
 
-    .container {
-  		width: 90%;
-  		margin: 0 auto;
-  	}
+  .main-header {
+    position: fixed;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.4);
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .container {
+		width: 90%;
+		margin: 0 auto;
+	}
+
+  .colImg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .colhead {
+    text-align: center;
+  }
+
+	.name,
+	.travel,
+  .education,
+  .future {
+		float: left;
+	}
+
+	.travel,
+	.education {
+		width: 50%;
+    margin-top: 60px;
+	}
+
+  .travel {
+    padding-left: 2em;
+  }
+
+  .education {
+    padding-right: 2em;
+  }
+
+	.main-nav {
+		float: right;
+	}
+
+	.main-nav li {
+		display: inline-block;
+		margin-left: 15px;
+	}
+
+	.tagline {
+		font-size: 1.4em;
+	}
+
+	.profile-pic {
+	  width: 20%;
+	  height: 20%;
+	  border-radius: 10%;
+	}
+
+	/* ---- Float clearfix ---- */
+
+	.clearfix::after {
+		content: " ";
+		display: table;
+		clear: both;
+	}
+
 }
 
 @media (min-width: 1425px) {
-    /*add your small page settings here*/
-    .container {
+
+	.container {
 		width: 80%;
 		max-width: 1150px;
 	}
+
+	.future {
+		width: 40%;
+	}
+
+	.travel,
+	.education {
+		width: 30%;
+	}
+
+  .education {
+    float: left;
+  }
+
+  .travel {
+    float: right;
+  }
+
+  .future {
+    float: right;
 }
