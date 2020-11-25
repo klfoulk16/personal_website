@@ -29,12 +29,28 @@ img {
   Base Layout Styles
 ==================================== */
 
+/* ---- Layout Containers ---- */
+
+.container {
+	width: 80%;
+	margin: 0 auto;
+}
+
+/* ---- Float clearfix ---- */
+
+.clearfix::after {
+	content: " ";
+	display: table;
+	clear: both;
+}
+
+
 /* ---- Navigation ---- */
 
 .main-nav a {
 	font-family: "Geneva", sans-serif;
 	display: block;
-	text-align: center;
+	text-align: left;
 	padding: 10px 15px;
 	color: black;
 }
@@ -43,21 +59,25 @@ img {
 	color: #3F4234;
 }
 
-.main-nav ul {
-	float: left;
-}
-
-#phone_menu_btn {
-	display: inline-block;
-	float: right;
-}
-
-.phone_menu {
+#phone_menu {
 	display: none;
 }
 
 #title {
 	font-size: 1.5em;
+}
+
+#menu {
+	float: left;
+}
+
+#phone_menu_btn {
+	float: right;
+	background: none;
+	margin-top:0.3em;
+	padding: .6em;
+	border: solid 1px;
+	font-family: "Geneva", sans-serif;
 }
 
 /* ---- Banner ---- */
@@ -86,10 +106,6 @@ img {
 
 
 
-/* ---- Layout Containers ---- */
-
-
-
 
 /* ---- Page Elements ---- */
 
@@ -100,31 +116,38 @@ img {
 
 @media (min-width: 769px) {
 
-	.main-nav ul {
+	/* ---- Layout Containers ---- */
+
+	.container {
+		width: 70%;
+	}
+
+	/* ---- Navigation ---- */
+
+	#phone_menu {
+		display: contents!important;
+	}
+
+	#menu, #phone_menu_btn {
 		float: none;
 	}
 
-	.phone_menu {
-		display: inline;
+	.l {
+		float: left;
+	}
+
+	.r {
+		float: right;
+	}
+
+	#phone_menu li {
+		display: inline-block;
+		margin-left: 15px;
+		padding-top: .45em;
 	}
 
 	#phone_menu_btn {
 		display: none;
-	}
-
-	.nav-right {
-		float: right;
-		/* Subscribe button is higher up???? line-height to try to fix but....*/
-		line-height: 1.5em;
-	}
-
-	.nav-left {
-		float: left;
-	}
-
-	.container {
-		width: 70%;
-		margin: 0 auto;
 	}
 
 	/* ---- Banner ---- */
@@ -147,14 +170,6 @@ img {
 
 	#banner h1 {
 		font-size: 3em;
-	}
-
-	/* ---- Float clearfix ---- */
-
-	.clearfix::after {
-		content: " ";
-		display: table;
-		clear: both;
 	}
 }
 
