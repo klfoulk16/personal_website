@@ -74,10 +74,14 @@ img {
 #phone_menu_btn {
 	float: right;
 	background: none;
-	margin-top:0.3em;
-	padding: .6em;
+	margin-top:0.4em;
+	padding: .5em 1.25em;
 	border: solid 1px;
 	font-family: "Geneva", sans-serif;
+}
+
+#phone_menu_btn:visited {
+	border: none;
 }
 
 /* ---- Banner ---- */
@@ -103,8 +107,6 @@ img {
 #banner-left {
 	margin: .4em;
 }
-
-
 
 
 /* ---- Page Elements ---- */
@@ -175,12 +177,22 @@ img {
 
 @media (min-width: 1425px) {
 
+	.container {
+		width: 65%;
+		margin: 0 auto;
+	}
+
 	#banner h1 {
 		font-size: 4em;
 	}
 
 	#banner h4 {
 		font-size: 1.5em;
+	}
+
+	#banner-right, #banner-left {
+		margin-left: 1.25em;
+		margin-right: 1.25em;
 	}
 
 
