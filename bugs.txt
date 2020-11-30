@@ -1,0 +1,3 @@
+Bugs:
+Unordered lists don't have bullet points.
+Footer doesn't stay at the bottom.
