@@ -90,5 +90,10 @@ def create():
     else:
         return render_template('create.html', success=False)
 
+@app.route('/post/<id>', methods=['GET'])
+def edit(id):
+    post = Posts.query.filter_by(id=id).first()
+    return render_template('post.html', post=post)
+
 if __name__ == '__main__':
     app.run()
