@@ -33,18 +33,27 @@ hr {
 	width: 80%;
 }
 
+textarea {
+	width: 100%;
+	height: 100%;
+}
 
+input {
+	width: 100%;
+}
 
-/* =================================
-  Base Layout Styles
-==================================== */
-
-.btn {
+.btn, select {
 	background: none;
 	padding: .5em 1.25em;
 	border: solid 1px;
 	font-family: "Geneva", sans-serif;
 }
+
+
+
+/* =================================
+  Base Layout Styles
+==================================== */
 
 /* ---- Layout Containers ---- */
 
@@ -97,6 +106,8 @@ hr {
 	border: none;
 }
 
+/* Home Page */
+
 /* ---- Banner ---- */
 
 #banner {
@@ -121,6 +132,12 @@ hr {
 	border: solid 1px black;
 }
 
+/* ---- Blog Posts ---- */
+
+#blog-posts {
+	padding: 1em .4em 0em;
+}
+
 
 /* ---- Page Elements ---- */
 
@@ -129,6 +146,11 @@ hr {
 	font-size: 1.25em;
 }
 
+/* Create Post */
+
+#submit {
+	margin-top: 2em;
+}
 
 /* =================================
   Media Queries

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    New Post
+{% endblock %}
+
+{% block main %}
+
+{% if success %}
+    <div class="container">
+        <h1>Sucess. Your post is now live.</h1>
+    </div>
+{% endif %}
+
+{% if not success %}
+    <form action="/create" method="POST" class="container">
+        <h1>Create New Post</h1>
+        <h3>Post Title:</h3>
+        <input type="text" name="h1" maxlength="125" />
+        <h3>Sample:</h3>
+        <textarea name="sample" cols="30" rows="3" maxlength="150"></textarea>
+        <h3>Body:</h3>
+        <textarea name="body" cols="30" rows="10"></textarea>
+        <h3>Category:</h3>
+        <select name="category">
+            <option value="">Select Category</option>
+            <option value="code">Code</option>
+            <!-- Eventually have ability to make new categories. Or maybe have tags so I can filter between things?-->
+            <option value="other">Other</option>
+        </select>
+        <input type="submit" value="Submit" class="btn" id="submit"/>
+    </form>
+{% endif %}
+
+{% endblock %}
