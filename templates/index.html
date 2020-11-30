@@ -5,8 +5,6 @@
 {% endblock %}
 
 {% block main %}
-        <hr>
-
         <div id ="banner" class="container clearfix">
             <div id="banner-left">
                 <img src="../static/meFSUGrad.jpg">
@@ -25,11 +23,15 @@
 
         <div class="container" id="blog-posts">
             {% for post in posts %}
-            <h1>{{ h1 }}</h1>
+            <div class="post-sample">
+                <h1>{{ post.h1 }}</h1>
+                <h4>{{ post.date }}</h4>
+                <p>{{ post.sample }}
+            </div>
             {% endfor %}
         </div>
-        
- {% endblock %}
+
+{% endblock %}
 
 
 

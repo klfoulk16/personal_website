@@ -54,21 +54,41 @@ db = SQLAlchemy(app)
 class Posts(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
-    h1 = db.Column(db.String(200))
+    h1 = db.Column(db.String(100))
+    sample = db.Column(db.String(175))
     body = db.Column(db.Text())
     category = db.Column(db.String(200))
     date = db.Column(db.Date())
 
-    def __init__(self, h1, body, category):
+    def __init__(self, h1, sample, body, category):
         self.h1 = h1
+        self.sample = sample
         self.body = body
         self.category = category
         self.date = datetime.date.today()
 
 @app.route('/')
 def index():
-    posts = {}
+    posts = Posts.query.all()
+    for post in posts:
+        post.date = post.date.strftime('%B %d, %Y')
     return render_template('index.html', posts=posts)
+
+@app.route('/create', methods=['GET', 'POST'])
+def create():
+    if request.method == "POST":
+        h1 = request.form['h1']
+        sample = request.form['sample']
+        body = request.form['body']
+        category = request.form['category']
+
+        data = Posts(h1, sample, body, category)
+        db.session.add(data)
+        db.session.commit()
+        return render_template('create.html', success=True)
+
+    else:
+        return render_template('create.html', success=False)
 
 if __name__ == '__main__':
     app.run()
