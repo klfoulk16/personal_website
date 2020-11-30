@@ -95,5 +95,10 @@ def edit(id):
     post = Posts.query.filter_by(id=id).first()
     return render_template('post.html', post=post)
 
+@app.route('/<category>', methods=['GET'])
+def post_layout(category):
+    posts = Posts.query.filter_by(category=category)
+    return render_template('post_layout.html', posts=posts, category=category)
+
 if __name__ == '__main__':
     app.run()
