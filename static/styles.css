@@ -49,8 +49,6 @@ input {
 	font-family: "Geneva", sans-serif;
 }
 
-
-
 /* =================================
   Base Layout Styles
 ==================================== */
@@ -83,6 +81,13 @@ input {
 
 .main-nav a:hover {
 	color: #3F4234;
+}
+
+.main-nav ol,
+ ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 #phone_menu {
@@ -134,7 +139,7 @@ input {
 
 /* ---- Blog Posts ---- */
 
-#blog-posts {
+#blog-posts, .inner {
 	padding: 1em .4em 0em;
 }
 

@@ -26,7 +26,8 @@
             <div class="post-sample">
                 <h1>{{ post.h1 }}</h1>
                 <h4>{{ post.date }}</h4>
-                <p>{{ post.sample }}
+                <p>{{ post.sample }}</p>
+                <a href='/post/{{post.id}}'><button class="btn">Read More</button></a>
             </div>
             {% endfor %}
         </div>
