@@ -23,11 +23,28 @@ img {
 	max-width: 100%;
 }
 
+footer {
+	margin-top: 10em;
+	margin-bottom: 1em;
+	text-align: center;
+}
+
+hr {
+	width: 80%;
+}
+
 
 
 /* =================================
   Base Layout Styles
 ==================================== */
+
+.btn {
+	background: none;
+	padding: .5em 1.25em;
+	border: solid 1px;
+	font-family: "Geneva", sans-serif;
+}
 
 /* ---- Layout Containers ---- */
 
@@ -73,11 +90,7 @@ img {
 
 #phone_menu_btn {
 	float: right;
-	background: none;
 	margin-top:0.4em;
-	padding: .5em 1.25em;
-	border: solid 1px;
-	font-family: "Geneva", sans-serif;
 }
 
 #phone_menu_btn:visited {
@@ -87,8 +100,8 @@ img {
 /* ---- Banner ---- */
 
 #banner {
-	margin-top: 3em;
-	margin-bottom: 3em;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 #banner img {
@@ -100,16 +113,21 @@ img {
 }
 
 #banner-right {
-	border: solid 1px black;
 	margin: .4em
 }
 
 #banner-left {
 	margin: .4em;
+	border: solid 1px black;
 }
 
 
 /* ---- Page Elements ---- */
+
+.category_btn {
+	width: 45%;
+	font-size: 1.25em;
+}
 
 
 /* =================================
@@ -120,8 +138,9 @@ img {
 
 	/* ---- Layout Containers ---- */
 
-	.container {
-		width: 70%;
+	#page-wrap {
+		width: 75%;
+		margin: 0 auto;
 	}
 
 	/* ---- Navigation ---- */
@@ -158,16 +177,18 @@ img {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		margin-top: 3em;
+		margin-bottom: 3em;
 	}
 
 	#banner-right {
-		float: right;
 		width: 50%;
+		margin-left: 1em;
 	}
 
 	#banner-left {
-		float: left;
 		width: 50%;
+		margin-right: 1em;
 	}
 
 	#banner h1 {
@@ -177,17 +198,12 @@ img {
 
 @media (min-width: 1425px) {
 
-	.container {
+	#page-wrap {
 		width: 65%;
-		margin: 0 auto;
-	}
-
-	#banner h1 {
-		font-size: 4em;
 	}
 
 	#banner h4 {
-		font-size: 1.5em;
+		font-size: 1.25em;
 	}
 
 	#banner-right, #banner-left {

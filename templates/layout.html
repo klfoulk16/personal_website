@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="../static/Normalize.css">
+    <title>Kelly Foulk</title>
+    <!--Contain's the basic layout for the home page, which I will be populating with information from the database.-->
+</head>
+
+<body>
+    <div id="page-wrap">
+        <nav class="main-nav container clearfix">
+            <div class="">
+                <ul id="menu">
+                    <li class="l" id="title"><a href="/">Kelly Foulk</a></li>
+                    <div id="phone_menu">
+                        <li class="l"><a href="/">Code</a></li>
+                        <li class="l"><a href="/">Other</a></li>
+                        <li class="r"><a href="/">Subscribe</a></li>
+                    </div>
+                </ul>
+                <button id="phone_menu_btn" class="btn" onclick="showMenu()">Menu</button>
+        </nav> <!--/.main-header-->
+
+        {% block main %}{% endblock %}
+
+        <footer>
+            <span>&copy;2020 Kelly Foulk.</span>
+        </footer>
+    </div>
+
+    <script src="../static/scripts.js"></script>
+</body>
+</html>

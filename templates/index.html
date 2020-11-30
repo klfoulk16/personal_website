@@ -1,57 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/styles.css">
-    <link rel="stylesheet" href="../static/Normalize.css">
-    <title>Kelly Foulk</title>
-    <!--Contain's the basic layout for the home page, which I will be populating with information from the database.-->
-</head>
+{% extends "layout.html" %}
 
-<body>
-    <nav class="main-nav container clearfix">
-        <div class="">
-            <ul id="menu">
-                <li class="l" id="title"><a href="/">Kelly Foulk</a></li>
-                <div id="phone_menu">
-                    <li class="l"><a href="/">Code</a></li>
-                    <li class="l"><a href="/">Other</a></li>
-                    <li class="r"><a href="/">Subscribe</a></li>
-                </div>
-            </ul>
-            <button id="phone_menu_btn" onclick="showMenu()">Menu</button>
-    </nav> <!--/.main-header
-        <ul>
-            <div class="nav-left">
-                <li id="title"><a href="/">Kelly Foulk</a></li>
-                <li class="phone_menu"><a href="/">Code</a></li>
-                <li class="phone_menu"><a href="/">Other</a></li>
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+        <hr>
+
+        <div id ="banner" class="container clearfix">
+            <div id="banner-left">
+                <img src="../static/meFSUGrad.jpg">
             </div>
-            <div class="nav-right">
-                <li class="phone_menu"><a href="/">Subscribe</a></li>
+            <div id="banner-right">
+                <h1>Hiya, I'm Kelly</h1>
+                <h4>I like to code. And lots of other things. Find out more about my projects and other adventures below:</h4>
+                <button class="l btn category_btn">Code</button>
+                <button class="r btn category_btn">Other</button>
             </div>
-        </ul>
-
-    -->
-
-    <hr style="width:80%;">
-
-    <div id ="banner" class="container clearfix">
-        <div id="banner-left">
-            <h1>Hiya, I'm Kelly</h1>
-            <h4>I like to code. And lots of other things. Find out more about my projects and other adventures here.</h4>
         </div>
-        <div id="banner-right">
-            <img src="../static/meFSUGrad.jpg">
+
+        <hr>
+
+        <!-- Add subscribe button here-->
+
+        <div class="container" id="blog-posts">
+            {% for post in posts %}
+            <h1>{{ h1 }}</h1>
+            {% endfor %}
         </div>
-    </div>
+        
+ {% endblock %}
 
-    <hr style="width:80%"">
 
-    <script src="../static/scripts.js"></script>
-</body>
-</html>
 
 <!--create top menu-->
 

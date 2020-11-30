@@ -25,10 +25,12 @@ ENV = 'dev'
 
 if ENV == 'dev':
     app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:PASSWORD@localhost/personal_website'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:secretsauce1234@localhost/personal_website'
 else:
     app.debug = False
     app.config['SQLALCHEMY_DATABASE_URI'] = ''
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config.update(
 	#EMAIL SETTINGS
@@ -42,9 +44,6 @@ app.config.update(
 	)
 
 mail = Mail(app)
-
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 db = SQLAlchemy(app)
 
 # if you need to redo the db setup, drop the table and then run python in terminal and then these commands:
@@ -52,21 +51,24 @@ db = SQLAlchemy(app)
     # >>> db.create_all()
     # >>> exit()
 
-class posts(db.Model):
+class Posts(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200))
+    h1 = db.Column(db.String(200))
     body = db.Column(db.Text())
+    category = db.Column(db.String(200))
     date = db.Column(db.Date())
 
-    def __init__(self, title, body):
-        self.title = title
+    def __init__(self, h1, body, category):
+        self.h1 = h1
         self.body = body
+        self.category = category
         self.date = datetime.date.today()
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    posts = {}
+    return render_template('index.html', posts=posts)
 
 if __name__ == '__main__':
     app.run()
