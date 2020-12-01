@@ -1,10 +1,10 @@
 """Set up all the essential flask peices and app routes. Connect database that contains the blog posts and information."""
 
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, flash, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Mail, Message
-from flask_login import LoginManager, login_user, login_required
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 import datetime
 
 # Configure app
@@ -137,18 +137,28 @@ def post_layout(category):
         post.date = post.date.strftime('%B %d, %Y')
     return render_template('post_layout.html', posts=posts, category=category)
 
+"""
+Handling the admin user (aka me).
+"""
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    session.clear()
+    if current_user.is_authenticated:
+        return redirect(url_for('admin'))
     if request.method == "POST":
         email = request.form['email']
         user = User.query.get(email)
         if user is not None and user.check_password(request.form['password']):
             login_user(user)
+            flash('What would you like to do today?')
             return redirect(url_for('admin'))
         return render_template('login.html', message="Username or password incorrect.")
     else:
         return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 @app.route('/create', methods=['GET', 'POST'])
 @login_required
@@ -162,10 +172,11 @@ def create():
         data = Posts(h1, sample, body, category)
         db.session.add(data)
         db.session.commit()
-        return render_template('create.html', success=True)
+        flash('Success, your post is live.')
+        return redirect(url_for('admin'))
 
     else:
-        return render_template('create.html', success=False)
+        return render_template('create.html')
 
 @app.route('/admin', methods=['GET'])
 @login_required
