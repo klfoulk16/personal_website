@@ -1,5 +1,10 @@
 Bugs:
 Unordered lists don't have bullet points.
 Footer doesn't stay at the bottom.
-The dates don't all convert pretty in the code page.
-Display most recent posts first instead of oldest posts first in layouts.
+
+Fixed:
+1.The dates don't all convert pretty in the code page.
+-added .all() after db query.
+
+2. Display most recent posts first instead of oldest posts first in layouts.
+- Used posts = Posts.query.order_by(Posts.id.desc()).all()
