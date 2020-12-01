@@ -49,6 +49,10 @@ input {
 	font-family: "Geneva", sans-serif;
 }
 
+a:link {
+	color: inherit;
+}
+
 /* =================================
   Base Layout Styles
 ==================================== */
