@@ -119,7 +119,7 @@ App Routes
 
 @app.route('/')
 def index():
-    posts = Posts.query.all()
+    posts = Posts.query.order_by(Posts.id.desc()).all()
     for post in posts:
         post.date = post.date.strftime('%B %d, %Y')
     return render_template('index.html', posts=posts)
@@ -132,7 +132,7 @@ def view_post(id):
 
 @app.route('/<category>', methods=['GET'])
 def post_layout(category):
-    posts = Posts.query.filter_by(category=category)
+    posts = Posts.query.filter_by(category=category).order_by(Posts.id.desc()).all()
     for post in posts:
         post.date = post.date.strftime('%B %d, %Y')
     return render_template('post_layout.html', posts=posts, category=category)
