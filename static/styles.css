@@ -155,10 +155,24 @@ a:link {
 	font-size: 1.25em;
 }
 
-/* Create Post */
+/* Forms */
 
-#submit {
+.form-btn {
 	margin-top: 2em;
+	display: block;
+	width: 100%;
+}
+
+.form-element {
+	padding: .5em 1.25em;
+	border: solid 1px;
+	font-family: "Geneva", sans-serif;
+	margin-top: 1em;
+}
+
+/* ---- Admin Panel ---- */
+.admin-btn {
+	margin-bottom: 1em;
 }
 
 /* =================================

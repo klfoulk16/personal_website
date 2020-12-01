@@ -1,9 +1,10 @@
 """Set up all the essential flask peices and app routes. Connect database that contains the blog posts and information."""
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Mail, Message
-from flask_login import LoginManager, LoginForm
+from flask_login import LoginManager, login_user, login_required
 import datetime
 
 # Configure app
@@ -35,6 +36,8 @@ app.config.update(
 
 db = SQLAlchemy(app)
 mail = Mail(app)
+login_manager = LoginManager(app)
+app.secret_key = ***REMOVED***
 
 # if you need to redo the db setup, drop the table and then run python in terminal and then these commands:
     # >>> from app import db
@@ -65,10 +68,16 @@ class User(db.Model):
 
     """
     __tablename__ = 'user'
-
     email = db.Column(db.String, primary_key=True)
-    password = db.Column(db.String)
+    password_hash = db.Column(db.String)
     authenticated = db.Column(db.Boolean, default=False)
+
+    def __init__(self, email, password):
+        self.email = email
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
     def is_active(self):
         """True, as all users are active."""
@@ -86,14 +95,10 @@ class User(db.Model):
         """False, as anonymous users aren't supported."""
         return False
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-app.secret_key = ***REMOVED***
-
 @login_manager.user_loader
 def load_user(user_id):
-    """Given *user_id*, return the associated User object.
-
+    """
+    Given *user_id*, return the associated User object.
     :param unicode user_id: user_id (email) user to retrieve
 
     """
@@ -108,6 +113,9 @@ def after_request(response):
     return response
 
 
+"""
+App Routes
+"""
 
 @app.route('/')
 def index():
@@ -116,7 +124,34 @@ def index():
         post.date = post.date.strftime('%B %d, %Y')
     return render_template('index.html', posts=posts)
 
+@app.route('/post/<id>', methods=['GET'])
+def view_post(id):
+    post = Posts.query.filter_by(id=id).first()
+    post.date = post.date.strftime('%B %d, %Y')
+    return render_template('post.html', post=post)
+
+@app.route('/<category>', methods=['GET'])
+def post_layout(category):
+    posts = Posts.query.filter_by(category=category)
+    for post in posts:
+        post.date = post.date.strftime('%B %d, %Y')
+    return render_template('post_layout.html', posts=posts, category=category)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    session.clear()
+    if request.method == "POST":
+        email = request.form['email']
+        user = User.query.get(email)
+        if user is not None and user.check_password(request.form['password']):
+            login_user(user)
+            return redirect(url_for('admin'))
+        return render_template('login.html', message="Username or password incorrect.")
+    else:
+        return render_template('login.html')
+
 @app.route('/create', methods=['GET', 'POST'])
+@login_required
 def create():
     if request.method == "POST":
         h1 = request.form['h1']
@@ -132,40 +167,22 @@ def create():
     else:
         return render_template('create.html', success=False)
 
-@app.route('/post/<id>', methods=['GET'])
-def edit(id):
-    post = Posts.query.filter_by(id=id).first()
-    post.date = post.date.strftime('%B %d, %Y')
-    return render_template('post.html', post=post)
-
-@app.route('/<category>', methods=['GET'])
-def post_layout(category):
-    posts = Posts.query.filter_by(category=category)
-    for post in posts:
-        post.date = post.date.strftime('%B %d, %Y')
-    return render_template('post_layout.html', posts=posts, category=category)
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    # Here we use a class of some kind to represent and validate our
-    # client-side form data. For example, WTForms is a library that will
-    # handle this for us, and we use a custom LoginForm to validate.
-    form = LoginForm()
-    if form.validate_on_submit():
-        # Login and validate the user.
-        # user should be an instance of your `User` class
-        login_user(user)
-
-        flask.flash('Logged in successfully.')
-
-        next = flask.request.args.get('next')
-        # is_safe_url should check if the url is safe for redirects.
-        # See http://flask.pocoo.org/snippets/62/ for an example.
-        if not is_safe_url(next):
-            return flask.abort(400)
-
-        return flask.redirect(next or flask.url_for('index'))
-    return flask.render_template('login.html', form=form)
+@app.route('/admin', methods=['GET'])
+@login_required
+def admin():
+    return render_template('admin.html')
 
 if __name__ == '__main__':
     app.run()
+
+
+"""
+code I used to add myself to user db:
+>>> from app import db
+>>> from app import User
+>>> user = User("klf16@my.fsu.edu", "password")
+>>> db.session.add(user)
+>>> db.session.commit()
+>>> exit()
+
+"""

@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/login" method="post">
-        <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
-        </div>
-        <div class="form-group">
-            <input class="form-control" name="password" placeholder="Password" type="password">
-        </div>
-        <button class="btn" type="submit">Log In</button>
-    </form>
+    <div class="container inner">
+        <h1>Howdy!</h1>
+        <h3>What would you like to do today?</h3>
+        <a href='/create'><button class="btn admin-btn">Create Post</button></a>
+        <a href='/edit'><button class="btn admin-btn">Edit Post</button></a>
+        <a href='/delete'><button class="btn admin-btn">Delete Post</button></a>
+        <a href='/send-mail'><button class="btn admin-btn">Send Mail</button></a>
+        <a href='/logout'><button class="btn admin-btn">Logout</button></a>
+    </div>
 {% endblock %}
