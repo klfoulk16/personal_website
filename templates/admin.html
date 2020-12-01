@@ -7,7 +7,13 @@
 {% block main %}
     <div class="container inner">
         <h1>Howdy!</h1>
-        <h3>What would you like to do today?</h3>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <h3>{{ message }}</h3>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <a href='/create'><button class="btn admin-btn">Create Post</button></a>
         <a href='/edit'><button class="btn admin-btn">Edit Post</button></a>
         <a href='/delete'><button class="btn admin-btn">Delete Post</button></a>
