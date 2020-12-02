@@ -4,6 +4,7 @@ from flask_mail import Mail, Message
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
 
 # Configure app
 app = Flask(__name__)
@@ -12,7 +13,7 @@ app = Flask(__name__)
 # Specify which environment we're using
 ENV = 'dev'
 
-if ENV == 'prod':
+if ENV == 'dev':
     app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = '***REMOVED***'
 else:
@@ -29,7 +30,9 @@ app.config.update(
     #MISC SETTINGS
     SQLALCHEMY_TRACK_MODIFICATIONS = False,
     # Ensure templates are auto-reloaded
-    TEMPLATES_AUTO_RELOAD = True
+    TEMPLATES_AUTO_RELOAD = True,
+    # ensure files bigger than 1MB aren't uploaded
+    MAX_CONTENT_LENGTH = 1024 * 1024,
 	)
 
 db = SQLAlchemy(app)
@@ -77,9 +80,9 @@ class PostImages(db.Model):
     header = db.Column(db.Boolean)
 
     def __init__(self, post_id, img_path, header):
-        self.post_id = h1
-        self.img_path = sample
-        self.header = body
+        self.post_id = post_id
+        self.img_path = img_path
+        self.header = header
 
 class Admin(db.Model):
     """An admin user capable of viewing reports.
@@ -163,9 +166,10 @@ def index():
 
 @app.route('/post/<id>', methods=['GET'])
 def view_post(id):
-    post = Posts.query.filter_by(id=id).first()
-    post.date = post.date.strftime('%B %d, %Y')
-    return render_template('post.html', post=post)
+    current_post = Posts.query.filter_by(id=id).first()
+    header_path = PostImages.query.filter_by(post_id=id, header=True).first()
+    current_post.date = current_post.date.strftime('%B %d, %Y')
+    return render_template('post.html', post=current_post, header_path=header_path.img_path)
 
 @app.route('/<category>', methods=['GET'])
 def post_layout(category):
@@ -198,8 +202,6 @@ def login():
     if request.method == "POST":
         email = request.form['email']
         user = Admin.query.get(email)
-        print(user.email, user.password_hash)
-        print(request.form['password'])
         if user is not None and user.check_password(request.form['password']):
             login_user(user)
             flash('What would you like to do today?')
@@ -221,10 +223,20 @@ def create():
         sample = request.form['sample']
         body = request.form['body']
         category = request.form['category']
-
         data = Posts(h1, sample, body, category)
         db.session.add(data)
         db.session.commit()
+        header = request.files['header']
+        if header.filename != '':
+            post_id = str(data.id)
+            img_folder = os.path.join('static', 'post_imgs', post_id)
+            if not os.path.exists(img_folder):
+                os.makedirs(img_folder)
+            header_location = os.path.join(img_folder, 'header')
+            header.save(header_location)
+            img_data = PostImages(post_id, header_location, True)
+            db.session.add(img_data)
+            db.session.commit()
         flash('Success, your post is live.')
         return redirect(url_for('admin'))
 
