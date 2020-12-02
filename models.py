@@ -1,4 +1,9 @@
-from flask_sqlalchemy import SQLAlchemy
+from app import db
+
+# if you need to redo the db setup, drop the table and then run python in terminal and then these commands:
+    # >>> from app import db
+    # >>> db.create_all()
+    # >>> exit()
 
 class Posts(db.Model):
     __tablename__ = 'posts'
@@ -24,10 +29,16 @@ class User(db.Model):
 
     """
     __tablename__ = 'user'
-
     email = db.Column(db.String, primary_key=True)
-    password = db.Column(db.String)
+    password_hash = db.Column(db.String)
     authenticated = db.Column(db.Boolean, default=False)
+
+    def __init__(self, email, password):
+        self.email = email
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
     def is_active(self):
         """True, as all users are active."""
