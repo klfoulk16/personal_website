@@ -2,10 +2,9 @@
 
 from flask import Flask, flash, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Mail, Message
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-import datetime
+from models import *
 
 # Configure app
 app = Flask(__name__)
@@ -38,62 +37,6 @@ db = SQLAlchemy(app)
 mail = Mail(app)
 login_manager = LoginManager(app)
 app.secret_key = b'L@\xf1\xd6\xb0z\xb5\x8f\xc8Nj\xcat\xf9\xa7\x91'
-
-# if you need to redo the db setup, drop the table and then run python in terminal and then these commands:
-    # >>> from app import db
-    # >>> db.create_all()
-    # >>> exit()
-
-class Posts(db.Model):
-    __tablename__ = 'posts'
-    id = db.Column(db.Integer, primary_key=True)
-    h1 = db.Column(db.String(100))
-    sample = db.Column(db.String(175))
-    body = db.Column(db.Text())
-    category = db.Column(db.String(200))
-    date = db.Column(db.Date())
-
-    def __init__(self, h1, sample, body, category):
-        self.h1 = h1
-        self.sample = sample
-        self.body = body
-        self.category = category
-        self.date = datetime.date.today()
-
-class User(db.Model):
-    """An admin user capable of viewing reports.
-
-    :param str email: email address of user
-    :param str password: encrypted password for the user
-
-    """
-    __tablename__ = 'user'
-    email = db.Column(db.String, primary_key=True)
-    password_hash = db.Column(db.String)
-    authenticated = db.Column(db.Boolean, default=False)
-
-    def __init__(self, email, password):
-        self.email = email
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
-    def is_active(self):
-        """True, as all users are active."""
-        return True
-
-    def get_id(self):
-        """Return the email address to satisfy Flask-Login's requirements."""
-        return self.email
-
-    def is_authenticated(self):
-        """Return True if the user is authenticated."""
-        return self.authenticated
-
-    def is_anonymous(self):
-        """False, as anonymous users aren't supported."""
-        return False
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -136,6 +79,20 @@ def post_layout(category):
     for post in posts:
         post.date = post.date.strftime('%B %d, %Y')
     return render_template('post_layout.html', posts=posts, category=category)
+
+@app.route('/subscribe', methods=['POST'])
+def subscribe():
+    first = request.form['first']
+    last = request.form['last']
+    email = request.form['email']
+
+    data = Subscribers(first, last, email)
+    db.session.add(data)
+    db.session.commit()
+
+    # have this automatically send a welcome email to confirm people.
+    # maybe this should return some URL so we know that the person is subscribed?
+    return ('', 204)
 
 """
 Handling the admin user (aka me).
@@ -183,17 +140,20 @@ def create():
 def admin():
     return render_template('admin.html')
 
+# send email to all marinas
+@app.route('/send-mail')
+def send_mail():
+    # get list of all marina's info
+    subs = Subscribers.query.filter_by(still_subscribed=True).all()
+    for sub in subs:
+        msg = Message("Hi everyone",
+        sender="foulkelly1@gmail.com",
+        recipients=[sub.email])
+        msg.body = "This is the body."
+        msg.html = render_template('/test-posts/test1.html')
+        mail.send(msg)
+    flash('Success, the mail has been sent.')
+    return redirect(url_for('admin'))
+
 if __name__ == '__main__':
     app.run()
-
-
-"""
-code I used to add myself to user db:
->>> from app import db
->>> from app import User
->>> user = User("klf16@my.fsu.edu", "password")
->>> db.session.add(user)
->>> db.session.commit()
->>> exit()
-
-"""

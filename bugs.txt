@@ -1,6 +1,20 @@
 Bugs:
-Unordered lists don't have bullet points.
-Footer doesn't stay at the bottom.
+-Unordered lists don't have bullet points.
+-Footer doesn't stay at the bottom.
+-Go back and add a new email address to
+
+Getting this error when I click around a lot:
+sqlalchemy.exc.InvalidRequestError
+sqlalchemy.exc.InvalidRequestError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (raised as a result of Query-invoked autoflush; consider using a session.no_autoflush block if this flush is occurring prematurely)
+(psycopg2.errors.DeadlockDetected) deadlock detected
+DETAIL:  Process 18791 waits for ShareLock on transaction 590; blocked by process 18761.
+Process 18761 waits for ShareLock on transaction 589; blocked by process 18791.
+HINT:  See server log for query details.
+CONTEXT:  while updating tuple (0,6) in relation "posts"
+
+[SQL: UPDATE posts SET date=%(date)s WHERE posts.id = %(posts_id)s]
+[parameters: {'date': 'December 01, 2020', 'posts_id': 2}]
+(Background on this error at: http://sqlalche.me/e/13/e3q8) (Background on this error at: http://sqlalche.me/e/13/7s2a)
 
 Fixed:
 1.The dates don't all convert pretty in the code page.
@@ -8,3 +22,6 @@ Fixed:
 
 2. Display most recent posts first instead of oldest posts first in layouts.
 - Used posts = Posts.query.order_by(Posts.id.desc()).all()
+
+3. I want the subscribe modal link to display "Success!" when a user subscribes. Not redirect to a new page.
+-Used some javascript. But it'll display success even if the route doesn't run.

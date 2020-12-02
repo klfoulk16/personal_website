@@ -17,11 +17,27 @@
                 <div id="phone_menu">
                     <li class="l"><a href="/code">Code</a></li>
                     <li class="l"><a href="/other">Other</a></li>
-                    <li class="r"><a href="/">Subscribe</a></li>
+                    <li class="r"><button class='btn' id='modal_open'>Subscribe</button></li>
                 </div>
             </ul>
-            <button id="phone_menu_btn" class="btn" onclick="showMenu()">Menu</button>
+            <button id="phone_menu_btn" class="btn" onclick=showMenu()>Menu</button>
         </nav> <!--/.main-header-->
+
+        <!-- The Modal -->
+        <div id="subscribe_modal" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span class="close" id='modal_close'>&times;</span>
+            <form action="/subscribe" method="POST" id='subscribe_form'>
+                <h2>Let's stay in touch!</h2>
+                <input class="form-element" autofocus name="first" placeholder="First Name" type="text" required>
+                <input class="form-element" name="last" placeholder="Last Name" type="text">
+                <input class='form-element' name='email' placeholder='Email' type='text'>
+                <button class="btn form-btn" id='subscribe_signup' type="submit">Sign up</button>
+            </form>
+            <h3 id="subscribe_message">I'll be in touch soon!</h3>
+          </div>
+        </div>
 
         <hr>
 
