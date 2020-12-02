@@ -46,8 +46,8 @@ app.secret_key = ***REMOVED***
 code I used to add myself to user db:
 >>> from app import db
 >>> from app import Admin
->>> user = Admin("klf16@my.fsu.edu", "password")
->>> db.session.add(user)
+>>> admin1 = Admin("klf16@my.fsu.edu", "password")
+>>> db.session.add(admin1)
 >>> db.session.commit()
 >>> exit()
 
@@ -68,6 +68,18 @@ class Posts(db.Model):
         self.body = body
         self.category = category
         self.date = datetime.date.today()
+
+class PostImages(db.Model):
+    __tablename__ = 'post_images'
+    id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer)
+    img_path = db.Column(db.String(175))
+    header = db.Column(db.Boolean)
+
+    def __init__(self, post_id, img_path, header):
+        self.post_id = h1
+        self.img_path = sample
+        self.header = body
 
 class Admin(db.Model):
     """An admin user capable of viewing reports.
