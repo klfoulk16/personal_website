@@ -11,14 +11,14 @@ app = Flask(__name__)
 
 """Set up the app config"""
 # Specify which environment we're using
-ENV = 'dev'
+ENV = 'prod'
 
 if ENV == 'dev':
     app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:secretsauce1234@localhost/personal_website'
 else:
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = ''
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://gtotkyyotgggjz:46228179cc6bdb1bfdd4e12cf32e3733ef268c4072b708ada6fe0de656c863b0@ec2-54-235-158-17.compute-1.amazonaws.com:5432/dfoci2qj5r331q'
 
 app.config.update(
 	#EMAIL SETTINGS
