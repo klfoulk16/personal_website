@@ -12,7 +12,7 @@ app = Flask(__name__)
 # Specify which environment we're using
 ENV = 'dev'
 
-if ENV == 'dev':
+if ENV == 'prod':
     app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = '***REMOVED***'
 else:
