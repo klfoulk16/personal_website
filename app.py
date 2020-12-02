@@ -46,7 +46,7 @@ app.secret_key = ***REMOVED***
 code I used to add myself to user db:
 >>> from app import db
 >>> from app import Admin
->>> user = User("klf16@my.fsu.edu", "password")
+>>> user = Admin("klf16@my.fsu.edu", "password")
 >>> db.session.add(user)
 >>> db.session.commit()
 >>> exit()
@@ -76,7 +76,7 @@ class Admin(db.Model):
     :param str password: encrypted password for the user
 
     """
-    __tablename__ = 'user'
+    __tablename__ = 'admin'
     email = db.Column(db.String, primary_key=True)
     password_hash = db.Column(db.String)
     authenticated = db.Column(db.Boolean, default=False)
@@ -186,7 +186,9 @@ def login():
     if request.method == "POST":
         email = request.form['email']
         user = Admin.query.get(email)
-        if user is not None and Admin.check_password(request.form['password']):
+        print(user.email, user.password_hash)
+        print(request.form['password'])
+        if user is not None and user.check_password(request.form['password']):
             login_user(user)
             flash('What would you like to do today?')
             return redirect(url_for('admin'))
