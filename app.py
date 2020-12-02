@@ -11,14 +11,14 @@ app = Flask(__name__)
 
 """Set up the app config"""
 # Specify which environment we're using
-ENV = 'dev'
+ENV = 'prod'
 
 if ENV == 'dev':
     app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = '***REMOVED***'
 else:
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = ''
+    app.config['SQLALCHEMY_DATABASE_URI'] = '***REMOVED***'
 
 app.config.update(
 	#EMAIL SETTINGS
