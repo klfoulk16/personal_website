@@ -3,15 +3,15 @@ import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # if you need to redo the db setup, drop the table and then run python in terminal and then these commands:
-    # >>> from app import db
+    # >>> from models import db
     # >>> db.create_all()
     # >>> exit()
 
 
 """
 code I used to add myself to user db:
->>> from app import db
->>> from app import User
+>>> from models import db
+>>> from models import Admin
 >>> user = User("klf16@my.fsu.edu", "password")
 >>> db.session.add(user)
 >>> db.session.commit()
@@ -35,7 +35,7 @@ class Posts(db.Model):
         self.category = category
         self.date = datetime.date.today()
 
-class User(db.Model):
+class Admin(db.Model):
     """An admin user capable of viewing reports.
 
     :param str email: email address of user
