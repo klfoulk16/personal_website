@@ -1,6 +1,7 @@
 Bugs:
 Unordered lists don't have bullet points.
 Footer doesn't stay at the bottom.
+I want the subscribe modal link to display "Success!" when a user subscribes. Not redirect to a new page.
 
 Fixed:
 1.The dates don't all convert pretty in the code page.
