@@ -236,6 +236,10 @@ a:link {
 		width: 40%;
 	}
 
+	#login {
+		width: 50%;
+	}
+
 	/* ---- Navigation ---- */
 
 	#phone_menu {
@@ -307,6 +311,5 @@ a:link {
 		margin-left: 1.25em;
 		margin-right: 1.25em;
 	}
-
 
 }

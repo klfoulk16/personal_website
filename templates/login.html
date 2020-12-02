@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/login" method="POST" class="container">
+    <form action="/login" method="POST" class="container" id='login'>
         {% if message %}
         <p style="color: red;">{{ message }}</p>
         {% endif %}

@@ -1,9 +1,23 @@
 from app import db
+import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # if you need to redo the db setup, drop the table and then run python in terminal and then these commands:
     # >>> from app import db
     # >>> db.create_all()
     # >>> exit()
+
+
+"""
+code I used to add myself to user db:
+>>> from app import db
+>>> from app import User
+>>> user = User("klf16@my.fsu.edu", "password")
+>>> db.session.add(user)
+>>> db.session.commit()
+>>> exit()
+
+"""
 
 class Posts(db.Model):
     __tablename__ = 'posts'
@@ -55,3 +69,19 @@ class User(db.Model):
     def is_anonymous(self):
         """False, as anonymous users aren't supported."""
         return False
+
+class Subscribers(db.Model):
+    __tablename__ = 'subscribers'
+    id = db.Column(db.Integer, primary_key=True)
+    first = db.Column(db.String(50))
+    last = db.Column(db.String(50))
+    email = db.Column(db.String(50))
+    still_subscribed = db.Column(db.Boolean, default=True)
+    date_subscribed = db.Column(db.Date)
+    date_unsubscribed = db.Column(db.Date)
+
+    def __init__(self, first, last, email):
+        self.first = first
+        self.last = last
+        self.email = email
+        self.date_subscribed = datetime.date.today()

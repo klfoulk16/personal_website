@@ -2,10 +2,8 @@
 
 from flask import Flask, flash, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Mail, Message
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-import datetime
 from models import *
 
 # Configure app
@@ -84,6 +82,16 @@ def post_layout(category):
 
 @app.route('/subscribe', methods=['POST'])
 def subscribe():
+    first = request.form['first']
+    last = request.form['last']
+    email = request.form['email']
+
+    data = Subscribers(first, last, email)
+    db.session.add(data)
+    db.session.commit()
+
+    # have this automatically send a welcome email to confirm people.
+    # maybe this should return some URL so we know that the person is subscribed?
     return ('', 204)
 
 """
@@ -132,17 +140,20 @@ def create():
 def admin():
     return render_template('admin.html')
 
+# send email to all marinas
+@app.route('/send-mail')
+def send_mail():
+    # get list of all marina's info
+    subs = Subscribers.query.filter_by(still_subscribed=True).all()
+    for sub in subs:
+        msg = Message("Hi everyone",
+        sender="foulkelly1@gmail.com",
+        recipients=[sub.email])
+        msg.body = "This is the body."
+        msg.html = render_template('/test-posts/test1.html')
+        mail.send(msg)
+    flash('Success, the mail has been sent.')
+    return redirect(url_for('admin'))
+
 if __name__ == '__main__':
     app.run()
-
-
-"""
-code I used to add myself to user db:
->>> from app import db
->>> from app import User
->>> user = User("klf16@my.fsu.edu", "password")
->>> db.session.add(user)
->>> db.session.commit()
->>> exit()
-
-"""
