@@ -1,4 +1,4 @@
-from flask import Flask, flash, render_template, request, redirect, url_for, session
+from flask import Flask, flash, render_template, request, redirect, url_for, Markup, session # am I using session?
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
@@ -170,9 +170,11 @@ def index():
 def view_post(id):
     current_post = Posts.query.filter_by(id=id).first()
     header = PostImages.query.filter_by(post_id=id, header=True).first()
-    body_imgs = PostImages.query.filter_by(post_id=id, header=False).all()
+
+    imgs = PostImages.query.filter_by(post_id=id, header=False).all()
+    body = Markup(current_post.body).format(imgs=imgs)
     current_post.date = current_post.date.strftime('%B %d, %Y')
-    return render_template('post.html', post=current_post, header=header, body_imgs=body_imgs)
+    return render_template('post.html', post=current_post, body=body, header=header)
 
 @app.route('/<category>', methods=['GET'])
 def post_layout(category):
@@ -232,7 +234,8 @@ def create():
         db.session.commit
 
         # preparing for image uploads
-        post_id = str(data.id)
+        post_id = Posts.query.order_by(Posts.id.desc()).first()
+        post_id = str(post_id.id)
         img_folder = os.path.join('static', 'post_imgs', post_id)
         if not os.path.exists(img_folder):
             os.makedirs(img_folder)
@@ -243,14 +246,15 @@ def create():
             header.save(header_location)
             img_data = PostImages(post_id, header_location, True)
             db.session.add(img_data)
+            db.session.commit()
         for img in request.files.getlist('body_images'):
             if img.filename != '':
                 img_location = os.path.join(img_folder, img.filename)
                 img.save(img_location)
                 img_data = PostImages(post_id, img_location, False)
                 db.session.add(img_data)
-        db.session.commit()
-        flash('Success, your post is live.')
+                db.session.commit()
+        flash("Success, your post is live.")
         return redirect(url_for('admin'))
 
     else:
