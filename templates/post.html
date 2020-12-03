@@ -7,9 +7,22 @@
 {% block main %}
 
 <!-- Have main image be here or video -->
-<img src="../{{ header_path }}">
+{% if post.youtube_vid %}
+<iframe width="420" height="315"
+src="https://www.youtube.com/embed/{{ post.youtube_vid }}">
+</iframe>
+{% endif %}
 
+{% if header_path %}
+<img src="../{{ header.img_path }}">
+{% endif %}
+
+{% if body_imgs %}
+<img src="../{{ body_imgs[0].img_path }}" alt="we can't find it">
+{% endif %}
 <hr>
+
+
 
 <div class="container inner">
     {{ post.body | safe }}

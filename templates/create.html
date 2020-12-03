@@ -7,13 +7,17 @@
 {% block main %}
 
 <form action="/create" method="POST" class="container" enctype="multipart/form-data">
-    <h1>Create New Post</h1>
+    <h1>Create New Post (#{{ post_id }})</h1>
     <h3>Post Title:</h3>
     <input type="text" name="h1" maxlength="125" />
     <h3>Sample:</h3>
     <textarea name="sample" cols="30" rows="3" maxlength="150"></textarea>
-    <h3>Header Image</h3>
+    <h3>Header Image:</h3>
     <input type="file" name="header" accept=".jpg,.png,.gif">
+    <h3>Youtube Video ID:</h3>
+    <input type="text" name="youtube_vid" maxlength="125" />
+    <h3>Body Images:</h3>
+    <input type="file" name="body_images" accept=".jpg,.png,.gif" multiple>
     <h3>Body:</h3>
     <textarea name="body" cols="30" rows="10"></textarea>
     <h3>Category:</h3>

@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 """Set up the app config"""
 # Specify which environment we're using
-ENV = 'prod'
+ENV = 'dev'
 
 if ENV == 'dev':
     app.debug = True
@@ -60,14 +60,16 @@ class Posts(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
     h1 = db.Column(db.String(100))
+    youtube_vid = db.Column(db.String(100))
     sample = db.Column(db.String(175))
     body = db.Column(db.Text())
     category = db.Column(db.String(200))
     date = db.Column(db.Date())
 
-    def __init__(self, h1, sample, body, category):
+    def __init__(self, h1, sample, youtube_vid, body, category):
         self.h1 = h1
         self.sample = sample
+        self.youtube_vid = youtube_vid
         self.body = body
         self.category = category
         self.date = datetime.date.today()
@@ -167,9 +169,10 @@ def index():
 @app.route('/post/<id>', methods=['GET'])
 def view_post(id):
     current_post = Posts.query.filter_by(id=id).first()
-    header_path = PostImages.query.filter_by(post_id=id, header=True).first()
+    header = PostImages.query.filter_by(post_id=id, header=True).first()
+    body_imgs = PostImages.query.filter_by(post_id=id, header=False).all()
     current_post.date = current_post.date.strftime('%B %d, %Y')
-    return render_template('post.html', post=current_post, header_path=header_path.img_path)
+    return render_template('post.html', post=current_post, header=header, body_imgs=body_imgs)
 
 @app.route('/<category>', methods=['GET'])
 def post_layout(category):
@@ -221,27 +224,42 @@ def create():
     if request.method == "POST":
         h1 = request.form['h1']
         sample = request.form['sample']
+        youtube_vid = request.form['youtube_vid']
         body = request.form['body']
         category = request.form['category']
-        data = Posts(h1, sample, body, category)
+        data = Posts(h1, sample, youtube_vid, body, category)
         db.session.add(data)
-        db.session.commit()
+        db.session.commit
+
+        # preparing for image uploads
+        post_id = str(data.id)
+        img_folder = os.path.join('static', 'post_imgs', post_id)
+        if not os.path.exists(img_folder):
+            os.makedirs(img_folder)
+
         header = request.files['header']
         if header.filename != '':
-            post_id = str(data.id)
-            img_folder = os.path.join('static', 'post_imgs', post_id)
-            if not os.path.exists(img_folder):
-                os.makedirs(img_folder)
-            header_location = os.path.join(img_folder, 'header')
+            header_location = os.path.join(img_folder, header.filename)
             header.save(header_location)
             img_data = PostImages(post_id, header_location, True)
             db.session.add(img_data)
-            db.session.commit()
+        for img in request.files.getlist('body_images'):
+            if img.filename != '':
+                img_location = os.path.join(img_folder, img.filename)
+                img.save(img_location)
+                img_data = PostImages(post_id, img_location, False)
+                db.session.add(img_data)
+        db.session.commit()
         flash('Success, your post is live.')
         return redirect(url_for('admin'))
 
     else:
-        return render_template('create.html')
+        post_id = Posts.query.order_by(Posts.id.desc()).first()
+        if post_id:
+            post_id = str(int(post_id.id) + 1)
+        else:
+            post_id = '1'
+        return render_template('create.html', post_id=post_id)
 
 @app.route('/admin', methods=['GET'])
 @login_required

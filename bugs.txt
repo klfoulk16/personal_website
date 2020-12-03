@@ -3,6 +3,8 @@ Bugs:
 -Footer doesn't stay at the bottom.
 -Go back and add a new email address to
 - Subscribe doesn't seem to be working
+- Remove Subscribe button styling on mobile layout
+- Get Subscribe hover to look the same as the other menu elements (button instead of link so it doesn't have same hover property)
 
 Fixed:
 1.The dates don't all convert pretty in the code page.
@@ -13,3 +15,12 @@ Fixed:
 
 3. I want the subscribe modal link to display "Success!" when a user subscribes. Not redirect to a new page.
 -Used some javascript. But it'll display success even if the route doesn't run.
+
+Constraints:
+
+1. I have to manually upload images because of heroku's ephemeral nature.
+
+Solution: Basically I'll upload the images through the localhost or just do it manually, then push to heroku and then create the post like normal. But the images won't stay, but they'll be there cause I pushed them.
+
+OR!! I can create the posts in the local site, but have it be in production mode so that I'm updating the actual database. Then push the app to heroku so it has the img files.
+Alternatives: Use imgur or AWS S3 but I decided to keep things simple.
