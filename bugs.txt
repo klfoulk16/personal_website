@@ -1,11 +1,11 @@
 To do:
 -- Give the posts slugs so that instead of displaying the post ID the URL will be the slug.
-- Perfect the appearance of the Posts
 - Delete the heroku databases (aside from Admin)
-- Test the uploading images process.
+- Test the heroku uploading images process.
 - Should I implement tags? So that within code/other people can look at exactly the type of thing that interests them?
 - Send mail: enable test email send. Allow me to create an email through the website and push it to followers. Connect new gmail account.
 - When does a user get automatically logged out??
+- Redo posts db so that there is a column that points to the header path (if exists). Remove header from the BodyImages table.
 
 
 Bugs:

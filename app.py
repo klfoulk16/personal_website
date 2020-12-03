@@ -60,31 +60,31 @@ class Posts(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
     h1 = db.Column(db.String(100))
+    header_path = db.Column(db.String(175))
     youtube_vid = db.Column(db.String(100))
     sample = db.Column(db.String(175))
     body = db.Column(db.Text())
     category = db.Column(db.String(200))
     date = db.Column(db.Date())
 
-    def __init__(self, h1, sample, youtube_vid, body, category):
+    def __init__(self, h1, sample, header_path, youtube_vid, body, category):
         self.h1 = h1
         self.sample = sample
+        self.header_path = header_path
         self.youtube_vid = youtube_vid
         self.body = body
         self.category = category
         self.date = datetime.date.today()
 
-class PostImages(db.Model):
-    __tablename__ = 'post_images'
+class BodyImages(db.Model):
+    __tablename__ = 'body_images'
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer)
     img_path = db.Column(db.String(175))
-    header = db.Column(db.Boolean)
 
-    def __init__(self, post_id, img_path, header):
+    def __init__(self, post_id, img_path):
         self.post_id = post_id
         self.img_path = img_path
-        self.header = header
 
 class Admin(db.Model):
     """An admin user capable of viewing reports.
@@ -164,17 +164,17 @@ def index():
     posts = Posts.query.order_by(Posts.id.desc()).all()
     for post in posts:
         post.date = post.date.strftime('%B %d, %Y')
+        post.header = BodyImages.query.filter_by(post_id=post.id, header=True).first()
     return render_template('index.html', posts=posts)
 
 @app.route('/post/<id>', methods=['GET'])
 def view_post(id):
     current_post = Posts.query.filter_by(id=id).first()
-    header = PostImages.query.filter_by(post_id=id, header=True).first()
 
-    imgs = PostImages.query.filter_by(post_id=id, header=False).all()
+    imgs = BodyImages.query.filter_by(post_id=id).all()
     body = Markup(current_post.body).format(imgs=imgs)
     current_post.date = current_post.date.strftime('%B %d, %Y')
-    return render_template('post.html', post=current_post, body=body, header=header)
+    return render_template('post.html', post=current_post, body=body)
 
 @app.route('/<category>', methods=['GET'])
 def post_layout(category):
@@ -223,46 +223,52 @@ def logout():
 @app.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
+    post_id = Posts.query.order_by(Posts.id.desc()).first()
+    if post_id:
+        post_id = str(int(post_id.id) + 1)
+    else:
+        post_id = '1'
     if request.method == "POST":
+        print("post id", post_id)
         h1 = request.form['h1']
+        print("h1", h1)
         sample = request.form['sample']
+        print("sample", sample)
         youtube_vid = request.form['youtube_vid']
+        print("youtube_vid", youtube_vid)
         body = request.form['body']
         category = request.form['category']
-        data = Posts(h1, sample, youtube_vid, body, category)
+        print("category", category)
+        header = request.files['header']
+        if header.filename != '':
+            img_folder = os.path.join('static', 'post_imgs', post_id)
+            if not os.path.exists(img_folder):
+                os.makedirs(img_folder)
+            header_path = os.path.join(img_folder, header.filename)
+            header.save(header_path)
+        else:
+            header_path = None
+        print('header', header_path)
+        # h1, sample, header_path, youtube_vid, body, category
+        data = Posts(h1, sample, header_path, youtube_vid, body, category)
+        print("data", data)
         db.session.add(data)
         db.session.commit
 
-        # preparing for image uploads
-        post_id = Posts.query.order_by(Posts.id.desc()).first()
-        post_id = str(post_id.id)
-        img_folder = os.path.join('static', 'post_imgs', post_id)
-        if not os.path.exists(img_folder):
-            os.makedirs(img_folder)
-
-        header = request.files['header']
-        if header.filename != '':
-            header_location = os.path.join(img_folder, header.filename)
-            header.save(header_location)
-            img_data = PostImages(post_id, header_location, True)
-            db.session.add(img_data)
-            db.session.commit()
-        for img in request.files.getlist('body_images'):
+        for img in request.files.getlist('body_imgs'):
             if img.filename != '':
+                img_folder = os.path.join('static', 'post_imgs', post_id)
+                if not os.path.exists(img_folder):
+                    os.makedirs(img_folder)
                 img_location = os.path.join(img_folder, img.filename)
                 img.save(img_location)
-                img_data = PostImages(post_id, img_location, False)
+                img_data = BodyImages(post_id, img_location)
                 db.session.add(img_data)
                 db.session.commit()
         flash("Success, your post is live.")
         return redirect(url_for('admin'))
 
     else:
-        post_id = Posts.query.order_by(Posts.id.desc()).first()
-        if post_id:
-            post_id = str(int(post_id.id) + 1)
-        else:
-            post_id = '1'
         return render_template('create.html', post_id=post_id)
 
 @app.route('/admin', methods=['GET'])
