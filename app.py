@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 """Set up the app config"""
 # Specify which environment we're using
-ENV = 'prod'
+ENV = 'dev'
 
 if ENV == 'dev':
     app.debug = True
@@ -164,7 +164,7 @@ def index():
     posts = Posts.query.order_by(Posts.id.desc()).all()
     for post in posts:
         post.date = post.date.strftime('%B %d, %Y')
-        post.header = BodyImages.query.filter_by(post_id=post.id, header=True).first()
+        post.header = BodyImages.query.filter_by(post_id=post.id).first()
     return render_template('index.html', posts=posts)
 
 @app.route('/post/<id>', methods=['GET'])
@@ -229,13 +229,13 @@ def create():
     else:
         post_id = '1'
     if request.method == "POST":
-        print("post id", post_id)
+        #print("post id", post_id)
         h1 = request.form['h1']
-        print("h1", h1)
+        #print("h1", h1)
         sample = request.form['sample']
-        print("sample", sample)
+        #print("sample", sample)
         youtube_vid = request.form['youtube_vid']
-        print("youtube_vid", youtube_vid)
+        #print("youtube_vid", youtube_vid)
         body = request.form['body']
         category = request.form['category']
         print("category", category)
@@ -248,10 +248,10 @@ def create():
             header.save(header_path)
         else:
             header_path = None
-        print('header', header_path)
+        #print('header', header_path)
         # h1, sample, header_path, youtube_vid, body, category
         data = Posts(h1, sample, header_path, youtube_vid, body, category)
-        print("data", data)
+        #print("data", data)
         db.session.add(data)
         db.session.commit
 
