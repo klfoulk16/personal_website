@@ -10,3 +10,6 @@ https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask
 
 Display Youtube Video:
 https://jameshfisher.com/2017/08/30/how-do-i-make-a-full-width-iframe/
+
+Creating Dynamic Body Image Plus thing
+https://stackoverflow.com/questions/37966612/how-to-add-multiple-input-field-inside-a-div-dynamically-using-javascript-jquery

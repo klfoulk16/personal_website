@@ -36,6 +36,9 @@
         <div class="container" id="blog-posts">
             {% for post in posts %}
             <div class="post-sample">
+                {% if header %}
+                <img src="../{{ header.img_path }}">
+                {% endif %}
                 <h1>{{ post.h1 }}</h1>
                 <h4>{{ post.date }}</h4>
                 <p>{{ post.sample }}</p>
