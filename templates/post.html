@@ -6,26 +6,24 @@
 
 {% block main %}
 
+<div class="container">
 <!-- Have main image be here or video -->
-{% if post.youtube_vid %}
-<iframe width="420" height="315"
-src="https://www.youtube.com/embed/{{ post.youtube_vid }}">
-</iframe>
-{% endif %}
-
-{% if header_path %}
-<img src="../{{ header.img_path }}">
-{% endif %}
-
-{% if body_imgs %}
-<img src="../{{ body_imgs[0].img_path }}" alt="we can't find it">
-{% endif %}
-<hr>
-
-
-
-<div class="container inner">
-    {{ post.body | safe }}
+    {% if header %}
+    <img src="../{{ header.img_path }}">
+    <hr>
+    {% elif post.youtube_vid %}
+    <div style="position:relative;padding-top:56.25%;">
+      <iframe src="https://www.youtube.com/embed/nckseQJ1Nlg" frameborder="0" allowfullscreen
+        style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+    </div>
+    <hr>
+    {% endif %}
 </div>
 
-{% endblock%}
+<div class="container inner">
+    <h1>{{ post.h1 }}</h1>
+    <h4>{{ post.date }}</h4>
+    {{ body }}
+</div>
+
+{% endblock %}

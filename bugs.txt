@@ -1,7 +1,16 @@
+To do:
+-- Give the posts slugs so that instead of displaying the post ID the URL will be the slug.
+- Perfect the appearance of the Posts
+- Delete the heroku databases (aside from Admin)
+- Test the uploading images process.
+- Should I implement tags? So that within code/other people can look at exactly the type of thing that interests them?
+- Send mail: enable test email send. Allow me to create an email through the website and push it to followers. Connect new gmail account.
+- When does a user get automatically logged out??
+
+
 Bugs:
--Unordered lists don't have bullet points.
--Footer doesn't stay at the bottom.
--Go back and add a new email address to
+- Unordered lists don't have bullet points.
+- Footer doesn't stay at the bottom.
 - Subscribe doesn't seem to be working
 - Remove Subscribe button styling on mobile layout
 - Get Subscribe hover to look the same as the other menu elements (button instead of link so it doesn't have same hover property)

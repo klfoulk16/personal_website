@@ -191,6 +191,13 @@ a:link {
 	padding: 1em .4em 0em;
 }
 
+/* -- Change'container' div in post to this if you decide you want the header image/video to be larger than everything else. --*/
+.post {
+	width: 90%;
+	margin: 0 auto;
+}
+
+
 
 /* ---- Page Elements ---- */
 

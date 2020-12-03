@@ -7,3 +7,6 @@ https://realpython.com/using-flask-login-for-user-management-with-flask/#login-a
 
 File Uploading:
 https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask
+
+Display Youtube Video:
+https://jameshfisher.com/2017/08/30/how-do-i-make-a-full-width-iframe/
