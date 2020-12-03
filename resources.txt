@@ -1,0 +1,9 @@
+https://dev.to/arrantate/create-a-static-blog-using-python-flask-1oab
+
+Login:
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-v-user-logins
+https://github.com/maxcountryman/flask-login
+https://realpython.com/using-flask-login-for-user-management-with-flask/#login-and-logout
+
+File Uploading:
+https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask
