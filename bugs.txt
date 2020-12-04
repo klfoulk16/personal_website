@@ -3,8 +3,7 @@ To do:
 - Should I implement tags? So that within code/other people can look at exactly the type of thing that interests them?
 - Send mail: enable test email send. Allow me to create an email through the website and push it to followers. Connect new gmail account.
 - When does a user get automatically logged out??
-- Subscribe should open up a new page congratulating them on subscribing. Right now the method is not good. 
-
+- Subscribe should open up a new page congratulating them on subscribing. Right now the method is not good.
 
 Bugs:
 - Unordered lists don't have bullet points.
@@ -12,6 +11,7 @@ Bugs:
 - Remove Subscribe button styling on mobile layout
 - Get Subscribe hover to look the same as the other menu elements (button instead of link so it doesn't have same hover property)
 - Can't add more than 1mb of images to a post. Want no one image to be above 1mb but total they can.
+- Adding images to email will be very finicky.
 
 Fixed:
 1.The dates don't all convert pretty in the code page.

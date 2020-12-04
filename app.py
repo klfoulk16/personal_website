@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 """Set up the app config"""
 # Specify which environment we're using
-ENV = 'dev'
+ENV = 'prod'
 
 if ENV == 'dev':
     app.debug = True
