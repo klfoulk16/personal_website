@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block main %}
-        <div id ="banner" class="container clearfix">
-            <div id="banner-left">
+        <div class="container clearfix banner">
+            <div class="banner-left" id="main-banner">
                 <img src="../static/meFSUGrad.jpg">
             </div>
-            <div id="banner-right">
+            <div class="banner-right">
                 <h1>Hiya, I'm Kelly</h1>
                 <h4>I like to code. And lots of other things. Find out more about my projects and other adventures below:</h4>
                 <a href='/code'><button class="l btn category_btn">Code</button></a>
@@ -17,23 +17,41 @@
             </div>
         </div>
 
-        <hr>
+        <hr style="margin-bottom:2em;">
 
         <!-- Add subscribe button here-->
 
-        <div class="container" id="blog-posts">
-            {% for post in posts %}
-            <div class="post-sample">
-                {% if post.header_path %}
-                <img src="../{{ post.header_path }}">
-                {% endif %}
-                <h1>{{ post.h1 }}</h1>
-                <h4>{{ post.date }}</h4>
+        {% for post in posts %}
+        <div class="container clearfix post_sample">
+            <div class="sample-left">
+                <img class="sample-img" src="../{{ post.header_path }}">
+            </div>
+            <div class="sample-right">
+                <h2>{{ post.h1 }}</h2>
+                <h4><i>{{ post.date }}</i></h4>
                 <p>{{ post.sample }}</p>
                 <a href='/post/{{post.id}}'><button class="btn">Read More</button></a>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
+
+<!--
+        <div class="container">
+            {% for post in posts %}
+                <div class="sample-left">
+                    {% if post.header_path %}
+                    <img id="annoying" src="../{{ post.header_path }}">
+                    {% endif %}
+                </div>
+                <div class="sample-left">
+                    <h1>{{ post.h1 }}</h1>
+                    <h4>{{ post.date }}</h4>
+                    <p>{{ post.sample }}</p>
+                    <a href='/post/{{post.id}}'><button class="btn">Read More</button></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div> --->
 
 {% endblock %}
 
