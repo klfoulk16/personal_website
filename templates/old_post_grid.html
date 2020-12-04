@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Deprecated
+{% endblock %}
+
+{% for post in posts %}
+<div class="container clearfix post_sample">
+    <div class="sample-left">
+        <img class="sample-img" src="../{{ post.header_path }}">
+    </div>
+    <div class="sample-right">
+        <h2>{{ post.h1 }}</h2>
+        <h4><i>{{ post.date }}</i></h4>
+        <p>{{ post.sample }}</p>
+        <a href='/post/{{post.id}}'><button class="btn">Read More</button></a>
+    </div>
+</div>
+{% endfor %}
+
+
+{% endblock %}

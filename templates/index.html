@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block main %}
-        <div id ="banner" class="container clearfix">
-            <div id="banner-left">
+        <div class="container clearfix banner">
+            <div class="banner-left" id="main-banner">
                 <img src="../static/meFSUGrad.jpg">
             </div>
-            <div id="banner-right">
+            <div class="banner-right">
                 <h1>Hiya, I'm Kelly</h1>
                 <h4>I like to code. And lots of other things. Find out more about my projects and other adventures below:</h4>
                 <a href='/code'><button class="l btn category_btn">Code</button></a>
@@ -19,38 +19,21 @@
 
         <hr>
 
-        <!-- Add subscribe button here-->
-
-        <div class="container" id="blog-posts">
+        <div class="container">
             {% for post in posts %}
             <div class="post-sample">
-                {% if post.header_path %}
-                <img src="../{{ post.header_path }}">
-                {% endif %}
-                <h1>{{ post.h1 }}</h1>
+                <h2>{{ post.h1 }}</h2>
                 <h4>{{ post.date }}</h4>
                 <p>{{ post.sample }}</p>
                 <a href='/post/{{post.id}}'><button class="btn">Read More</button></a>
             </div>
+            <hr style="width:100%;">
             {% endfor %}
         </div>
 
 {% endblock %}
 
 
-
-<!--create top menu-->
-
-<!--black line-->
-
-<!--intro to me, picture of me, two columns-->
-
-<!--black line-->
-
-<!--for now: previews of all of the posts-->
-
 <!--for later:
 // code block filled with tags of my posts -- leads to previews of all posts
 tagged with that thing-->
-
-<!--subscribe button-->
