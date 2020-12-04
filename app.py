@@ -188,14 +188,15 @@ def subscribe():
     first = request.form['first']
     last = request.form['last']
     email = request.form['email']
-
+    if Subscribers.query.filter_by(email=email).first():
+        return 'Sorry this email is already subscribed'
     data = Subscribers(first, last, email)
     db.session.add(data)
     db.session.commit()
 
     # have this automatically send a welcome email to confirm people.
     # maybe this should return some URL so we know that the person is subscribed?
-    return redirect(request.referrer, subscribed=True)
+    return '', 204
 
 """
 Handling the admin user (aka me).
@@ -268,19 +269,42 @@ def admin():
     return render_template('admin.html')
 
 # send email to all marinas
-@app.route('/send-mail')
+@app.route('/send-mail', methods=['GET', 'POST'])
+@login_required
 def send_mail():
-    # get list of all marina's info
-    subs = Subscribers.query.filter_by(still_subscribed=True).all()
-    for sub in subs:
-        msg = Message("Hi everyone",
-        sender="foulkelly1@gmail.com",
-        recipients=[sub.email])
-        msg.body = "This is the body."
-        msg.html = render_template('/test-posts/test1.html')
-        mail.send(msg)
-    flash('Success, the mail has been sent.')
-    return redirect(url_for('admin'))
+    if request.method == "POST":
+        # get list of all marina's info
+        subs = Subscribers.query.filter_by(still_subscribed=True).all()
+        # get the email information
+        subject = request.form['subject']
+        body_text = request.form['body_text']
+        body_html = request.form['body_html']
+        for sub in subs:
+            msg = Message(subject,
+            sender="foulkelly1@gmail.com",
+            recipients=[sub.email])
+            msg.body = body_text
+            msg.html = Markup(body_html)
+            mail.send(msg)
+        flash('Success, the mail has been sent.')
+        return redirect(url_for('admin'))
+    else:
+        return render_template('send-mail.html')
+
+@app.route('/send-test', methods=['POST'])
+@login_required
+def send_test():
+    # get the email information
+    subject = request.form['subject']
+    body_text = request.form['body_text']
+    body_html = request.form['body_html']
+    msg = Message(subject,
+    sender="foulkelly1@gmail.com",
+    recipients = ['klf16@my.fsu.edu'])
+    msg.body = body_text
+    msg.html = Markup(body_html)
+    mail.send(msg)
+    return '', 204
 
 if __name__ == '__main__':
     app.run()

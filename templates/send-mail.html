@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    New Post
+{% endblock %}
+
+{% block main %}
+
+<script>
+    function emailPreview() {
+        var email = document.getElementById('email_html').value;
+        var div = document.getElementById('email_preview');
+        var display = document.getElementById('html_preview');
+        div.style.display = "block";
+        display.innerHTML = email;
+    }
+
+    function sendTest() {
+        document.email_form.action = "/send-test"
+    }
+
+    function sendMail() {
+        document.email_form.action = "/send-mail"
+    }
+</script>
+
+<form name="email_form" action='' method='POST' class="container" enctype="multipart/form-data">
+    <h1>Send New Email</h1>
+    <h3>Subject (text):</h3>
+    <input type="text" name="subject" maxlength="125" />
+    <h3>Body (non-html):</h3>
+    <textarea name="body_text" cols="30" rows="3" maxlength="350"></textarea>
+    <h3>Body (html):</h3>
+    <p><i>No styles are automatically applied to this. Remember to add them in a style tag up top.</i></p>
+    <p><i>Also some emails don't render things right. Aka buttons aren't going to look right.</i></p>
+    <textarea name="body_html" cols="30" rows="20" id="email_html"></textarea>
+    <button class="btn form-btn" type="button" onclick="emailPreview()">Preview Email</button>
+    <button class="btn form-btn" type="submit" onclick="sendTest()">Send Test Email</button>
+    <button class="btn form-btn" type="submit" onclick="sendMail()">Send Emails</button>
+</form>
+
+<div id="email_preview" class='container'>
+    <div id="html_preview">
+    </div>
+</div>
+{% endblock %}

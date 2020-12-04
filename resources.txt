@@ -19,3 +19,7 @@ https://stackoverflow.com/questions/23530064/how-to-make-label-and-input-appear-
 
 Creating JS Body Image Adder:
 https://stackoverflow.com/questions/1950939/creating-input-field-for-html-form-but-adding-a-label-for-it-as-well
+
+
+Have send-email form have two different routes depending on button click.
+https://stackoverflow.com/questions/2753308/different-form-action-depending-on-button-pressed
