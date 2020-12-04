@@ -237,6 +237,19 @@ a:link {
 }
 
 
+/* ---- Email Send ----- */
+
+#email_preview {
+	margin-top: 2em;
+	padding: 1em;
+	border: solid 1px;
+	display: None;
+}
+
+#html_preview {
+	all: initial;
+}
+
 
 /* ---- Page Elements ---- */
 
