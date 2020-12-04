@@ -6,16 +6,24 @@
 
 {% block main %}
 <script>
-var id = 0;
+var id = 1;
 var newinput = function() {
-  var parent = document.getElementById("body_img_div")
-  var field = document.createElement("input")
-  field.name = "body_imgs"
-  field.style = "display:block;"
-  field.type = "file"
-  field.id = "in" + id;
-  field.accept = ".jpg,.png,.gif"
-  parent.appendChild(field);
+  var parent = document.getElementById("body_img_div");
+  var field = document.createElement("input");
+  field.name = "body_imgs";
+  field.style = "display:block;";
+  field.type = "file";
+  field.id = "img" + id;
+  field.accept = ".jpg,.png,.gif";
+  var label = document.createElement("label");
+  label.setAttribute = ("for", "img" + id);
+  label.innerHTML= id + " : ";
+  div = document.createElement("div");
+  div.id = "img" + id + "div";
+  parent.appendChild(document.createElement("BR"));
+  div.appendChild(label);
+  div.appendChild(field);
+  parent.appendChild(div);
   id += 1;
 }
 </script>
@@ -37,9 +45,13 @@ var newinput = function() {
     <input type="text" name="youtube_vid" maxlength="125" />
     <h3>Header Image:</h3>
     <input type="file" name="header" accept=".jpg,.png,.gif">
-    <h3>Body Images:</h3>
+    <h3>Body Images
+    <button type="button" name="button" onclick="newinput()">+</button></h3>
     <div id="body_img_div">
-        <button type="button" name="button" class='btn' onclick="newinput()">+</button>
+        <div id = "img0div">
+            <label for="img0">0 : </label>
+            <input type="file" id="img0" name="body_imgs" accept=".jpg,.png,.gif">
+        </div>
     </div>
     <h3>Body (html):</h3>
     <textarea name="body" cols="30" rows="10"></textarea>

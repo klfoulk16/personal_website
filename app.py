@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 """Set up the app config"""
 # Specify which environment we're using
-ENV = 'prod'
+ENV = 'dev'
 
 if ENV == 'dev':
     app.debug = True
@@ -229,16 +229,11 @@ def create():
     else:
         post_id = '1'
     if request.method == "POST":
-        #print("post id", post_id)
         h1 = request.form['h1']
-        #print("h1", h1)
         sample = request.form['sample']
-        #print("sample", sample)
         youtube_vid = request.form['youtube_vid']
-        #print("youtube_vid", youtube_vid)
         body = request.form['body']
         category = request.form['category']
-        print("category", category)
         header = request.files['header']
         if header.filename != '':
             img_folder = os.path.join('static', 'post_imgs', post_id)
@@ -248,13 +243,10 @@ def create():
             header.save(header_path)
         else:
             header_path = None
-        #print('header', header_path)
         # h1, sample, header_path, youtube_vid, body, category
         data = Posts(h1, sample, header_path, youtube_vid, body, category)
-        #print("data", data)
         db.session.add(data)
         db.session.commit
-
         for img in request.files.getlist('body_imgs'):
             if img.filename != '':
                 img_folder = os.path.join('static', 'post_imgs', post_id)
@@ -265,6 +257,7 @@ def create():
                 img_data = BodyImages(post_id, img_location)
                 db.session.add(img_data)
                 db.session.commit()
+            print("added images")
         flash("Success, your post is live.")
         return redirect(url_for('admin'))
 
