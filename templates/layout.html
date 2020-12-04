@@ -28,6 +28,8 @@
           <!-- Modal content -->
           <div class="modal-content">
             <span class="close" id='modal_close'>&times;</span>
+            {% if subscribed %}
+            {% else %}
             <form action="/subscribe" method="POST" id='subscribe_form'>
                 <h2>Let's stay in touch!</h2>
                 <input class="form-element" autofocus name="first" placeholder="First Name" type="text" required>
@@ -35,6 +37,7 @@
                 <input class='form-element' name='email' placeholder='Email' type='text'>
                 <button class="btn form-btn" id='subscribe_signup' type="submit">Sign up</button>
             </form>
+            {% endif %}
             <h3 id="subscribe_message">I'll be in touch soon!</h3>
           </div>
         </div>

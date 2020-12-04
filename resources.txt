@@ -13,3 +13,9 @@ https://jameshfisher.com/2017/08/30/how-do-i-make-a-full-width-iframe/
 
 Creating Dynamic Body Image Plus thing
 https://stackoverflow.com/questions/37966612/how-to-add-multiple-input-field-inside-a-div-dynamically-using-javascript-jquery
+
+Put Body Image Label and Input on Same Line:
+https://stackoverflow.com/questions/23530064/how-to-make-label-and-input-appear-on-the-same-line-on-an-html-form
+
+Creating JS Body Image Adder:
+https://stackoverflow.com/questions/1950939/creating-input-field-for-html-form-but-adding-a-label-for-it-as-well

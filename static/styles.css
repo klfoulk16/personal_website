@@ -53,6 +53,11 @@ a:link {
 	color: inherit;
 }
 
+#blog_intro {
+	text-align: center;
+	font-size: 2em;
+}
+
 /* --- Modal Box --- */
 /* The Modal */
 .modal {
@@ -185,14 +190,18 @@ a:link {
 	border: solid 1px black;
 }
 
-
-
-/* ---- Blog Posts ---- */
-
-#blog-posts, .inner {
+/* not sure where this is used */
+.inner {
 	padding: 1em .4em 0em;
 }
 
+/* ---- Blog Posts ---- */
+
+.post-sample {
+	padding: 2em 2em;
+}
+
+/* All of these are deprecated. Used with old_post_grid.html
 .post_sample {
 	margin-top: 1em;
 	margin-bottom: 1em;
@@ -219,6 +228,7 @@ a:link {
 
 }
 
+*/
 
 /* -- Change'container' div in post to this if you decide you want the header image/video to be larger than everything else. --*/
 .post {
@@ -341,6 +351,8 @@ a:link {
 	}
 
 	/* ----- Post Samples ----- */
+
+	/* Deprecated
 	.post_sample {
 		display: flex;
 		justify-content: center;
@@ -362,6 +374,7 @@ a:link {
 	.post_sample h1 {
 		font-size: 3em;
 	}
+	*/
 }
 
 @media (min-width: 1425px) {
