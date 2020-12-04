@@ -62,7 +62,7 @@ class Posts(db.Model):
     h1 = db.Column(db.String(100))
     header_path = db.Column(db.String(175))
     youtube_vid = db.Column(db.String(100))
-    sample = db.Column(db.String(175))
+    sample = db.Column(db.String(355))
     body = db.Column(db.Text())
     category = db.Column(db.String(200))
     date = db.Column(db.Date())
@@ -126,7 +126,7 @@ class Subscribers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first = db.Column(db.String(50))
     last = db.Column(db.String(50))
-    email = db.Column(db.String(50))
+    email = db.Column(db.String(50), unique=True)
     still_subscribed = db.Column(db.Boolean, default=True)
     date_subscribed = db.Column(db.Date)
     date_unsubscribed = db.Column(db.Date)
@@ -195,7 +195,7 @@ def subscribe():
 
     # have this automatically send a welcome email to confirm people.
     # maybe this should return some URL so we know that the person is subscribed?
-    return ('', 204)
+    return redirect(request.referrer, subscribed=True)
 
 """
 Handling the admin user (aka me).
@@ -246,7 +246,6 @@ def create():
         # h1, sample, header_path, youtube_vid, body, category
         data = Posts(h1, sample, header_path, youtube_vid, body, category)
         db.session.add(data)
-        db.session.commit
         for img in request.files.getlist('body_imgs'):
             if img.filename != '':
                 img_folder = os.path.join('static', 'post_imgs', post_id)
@@ -256,8 +255,7 @@ def create():
                 img.save(img_location)
                 img_data = BodyImages(post_id, img_location)
                 db.session.add(img_data)
-                db.session.commit()
-            print("added images")
+        db.session.commit()
         flash("Success, your post is live.")
         return redirect(url_for('admin'))
 

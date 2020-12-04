@@ -17,58 +17,23 @@
             </div>
         </div>
 
-        <hr style="margin-bottom:2em;">
+        <hr>
 
-        <!-- Add subscribe button here-->
-
-        {% for post in posts %}
-        <div class="container clearfix post_sample">
-            <div class="sample-left">
-                <img class="sample-img" src="../{{ post.header_path }}">
-            </div>
-            <div class="sample-right">
+        <div class="container">
+            {% for post in posts %}
+            <div class="post-sample">
                 <h2>{{ post.h1 }}</h2>
-                <h4><i>{{ post.date }}</i></h4>
+                <h4>{{ post.date }}</h4>
                 <p>{{ post.sample }}</p>
                 <a href='/post/{{post.id}}'><button class="btn">Read More</button></a>
             </div>
-        </div>
-        {% endfor %}
-
-<!--
-        <div class="container">
-            {% for post in posts %}
-                <div class="sample-left">
-                    {% if post.header_path %}
-                    <img id="annoying" src="../{{ post.header_path }}">
-                    {% endif %}
-                </div>
-                <div class="sample-left">
-                    <h1>{{ post.h1 }}</h1>
-                    <h4>{{ post.date }}</h4>
-                    <p>{{ post.sample }}</p>
-                    <a href='/post/{{post.id}}'><button class="btn">Read More</button></a>
-                </div>
-            </div>
+            <hr style="width:100%;">
             {% endfor %}
-        </div> --->
+        </div>
 
 {% endblock %}
 
 
-
-<!--create top menu-->
-
-<!--black line-->
-
-<!--intro to me, picture of me, two columns-->
-
-<!--black line-->
-
-<!--for now: previews of all of the posts-->
-
 <!--for later:
 // code block filled with tags of my posts -- leads to previews of all posts
 tagged with that thing-->
-
-<!--subscribe button-->
