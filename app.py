@@ -12,7 +12,7 @@ App Configuration
 app = Flask(__name__)
 
 # Specify which environment we're using
-ENV = 'prod'
+ENV = 'dev'
 
 if ENV == 'dev':
     app.debug = True
@@ -26,8 +26,9 @@ app.config.update(
 	MAIL_SERVER='smtp.gmail.com',
 	MAIL_PORT=465,
 	MAIL_USE_SSL=True,
-	MAIL_USERNAME = 'foulkelly1@gmail.com',
-	MAIL_PASSWORD = '***REMOVED***',
+	MAIL_USERNAME = 'kellyfoulkblog@gmail.com',
+	MAIL_PASSWORD = 'codingiscool',
+    MAIL_USE_TLS = False,
     #MISC SETTINGS
     SQLALCHEMY_TRACK_MODIFICATIONS = False,
     # Ensure templates are auto-reloaded
@@ -214,6 +215,15 @@ def subscribe():
     db.session.add(data)
     db.session.commit()
 
+    # send them a welcome email
+    subject = "Hi, it's Kelly"
+    msg = Message(subject,
+    sender="kellyfoulkblog@gmail.com",
+    recipients=[email])
+    msg.body = f"Hello {first},\n Thanks for subscribing! \n Best, \n Kelly"
+    msg.html = render_template('/emails/welcome.html', name=first)
+    mail.send(msg)
+
     # have this automatically send a welcome email to confirm people.
     # maybe this should return some URL so we know that the person is subscribed?
     return '', 204
@@ -319,10 +329,10 @@ def send_mail():
         body_html = request.form['body_html']
         for sub in subs:
             msg = Message(subject,
-            sender="foulkelly1@gmail.com",
+            sender="kellyfoulkblog@gmail.com",
             recipients=[sub.email])
-            msg.body = body_text
-            msg.html = Markup(body_html)
+            msg.body = f"Hello sub.first,\n{body_text}"
+            msg.html = Markup(body_html).format(name=sub.first)
             mail.send(msg)
         flash('Success, the mail has been sent.')
         return redirect(url_for('admin'))
@@ -340,10 +350,10 @@ def send_test():
     body_text = request.form['body_text']
     body_html = request.form['body_html']
     msg = Message(subject,
-    sender="foulkelly1@gmail.com",
+    sender="kellyfoulkblog@gmail.com",
     recipients = ['klf16@my.fsu.edu'])
     msg.body = body_text
-    msg.html = Markup(body_html)
+    msg.html = Markup(body_html).format(name="Kelly")
     mail.send(msg)
     return '', 204
 
