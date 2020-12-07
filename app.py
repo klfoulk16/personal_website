@@ -1,4 +1,4 @@
-from flask import Flask, flash, render_template, request, redirect, url_for, Markup, session # am I using session?
+from flask import Flask, flash, render_template, request, redirect, url_for, Markup
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
@@ -6,10 +6,11 @@ import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
-# Configure app
+"""
+App Configuration
+"""
 app = Flask(__name__)
 
-"""Set up the app config"""
 # Specify which environment we're using
 ENV = 'prod'
 
@@ -31,32 +32,45 @@ app.config.update(
     SQLALCHEMY_TRACK_MODIFICATIONS = False,
     # Ensure templates are auto-reloaded
     TEMPLATES_AUTO_RELOAD = True,
-    # ensure files bigger than 1MB aren't uploaded
+    # ensure post doesn't upload more than 1MB of files
     MAX_CONTENT_LENGTH = 1024 * 1024,
 	)
+
+@app.after_request
+def after_request(response):
+  response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+  response.headers["Expires"] = 0
+  response.headers["Pragma"] = "no-cache"
+  return response
 
 db = SQLAlchemy(app)
 mail = Mail(app)
 login_manager = LoginManager(app)
 app.secret_key = b'L@\xf1\xd6\xb0z\xb5\x8f\xc8Nj\xcat\xf9\xa7\x91'
 
-# if you need to redo the db setup, drop the table and then run python in terminal and then these commands:
-    # >>> from app import db
-    # >>> db.create_all()
-    # >>> exit()
-
 """
-code I used to add myself to user db:
->>> from app import db
->>> from app import Admin
->>> admin1 = Admin("klf16@my.fsu.edu", "password")
->>> db.session.add(admin1)
->>> db.session.commit()
->>> exit()
+Database Setup
+
+Tips:
+If you need to redo the db setup, drop the table and then run python in terminal and then these commands:
+    >>> from app import db
+    >>> db.create_all()
+    >>> exit()
+
+To add someone to Admin db:
+    >>> from app import db
+    >>> from app import Admin
+    >>> admin1 = Admin("klf16@my.fsu.edu", "password")
+    >>> db.session.add(admin1)
+    >>> db.session.commit()
+    >>> exit()
 
 """
 
 class Posts(db.Model):
+    """
+    Stores blog post information.
+    """
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
     h1 = db.Column(db.String(100))
@@ -77,6 +91,9 @@ class Posts(db.Model):
         self.date = datetime.date.today()
 
 class BodyImages(db.Model):
+    """
+    Stores the file locations of the images used in the body of the blog posts.
+    """
     __tablename__ = 'body_images'
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer)
@@ -86,11 +103,29 @@ class BodyImages(db.Model):
         self.post_id = post_id
         self.img_path = img_path
 
-class Admin(db.Model):
-    """An admin user capable of viewing reports.
+class Subscribers(db.Model):
+    """
+    These are the emails and names of people who have subscribed to the website.
+    """
+    __tablename__ = 'subscribers'
+    id = db.Column(db.Integer, primary_key=True)
+    first = db.Column(db.String(50))
+    last = db.Column(db.String(50))
+    email = db.Column(db.String(50), unique=True)
+    still_subscribed = db.Column(db.Boolean, default=True)
+    date_subscribed = db.Column(db.Date)
+    date_unsubscribed = db.Column(db.Date)
 
-    :param str email: email address of user
-    :param str password: encrypted password for the user
+    def __init__(self, first, last, email):
+        self.first = first
+        self.last = last
+        self.email = email
+        self.date_subscribed = datetime.date.today()
+
+class Admin(db.Model):
+    """
+    Database containing email and encrypted password for admin users. These users
+    can create posts, edit posts, delete posts, send emails, etc.
 
     """
     __tablename__ = 'admin'
@@ -121,46 +156,22 @@ class Admin(db.Model):
         """False, as anonymous users aren't supported."""
         return False
 
-class Subscribers(db.Model):
-    __tablename__ = 'subscribers'
-    id = db.Column(db.Integer, primary_key=True)
-    first = db.Column(db.String(50))
-    last = db.Column(db.String(50))
-    email = db.Column(db.String(50), unique=True)
-    still_subscribed = db.Column(db.Boolean, default=True)
-    date_subscribed = db.Column(db.Date)
-    date_unsubscribed = db.Column(db.Date)
-
-    def __init__(self, first, last, email):
-        self.first = first
-        self.last = last
-        self.email = email
-        self.date_subscribed = datetime.date.today()
-
 @login_manager.user_loader
 def load_user(user_id):
     """
-    Given *user_id*, return the associated User object.
-    :param unicode user_id: user_id (email) user to retrieve
-
+    Given a unique user_id (email), return the associated User object.
     """
     return Admin.query.get(user_id)
-
-# Ensure responses aren't cached
-@app.after_request
-def after_request(response):
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache"
-    return response
 
 
 """
 App Routes
 """
-
 @app.route('/')
 def index():
+    """
+    Renders the main home page of the blog - including a short display of all posts.
+    """
     posts = Posts.query.order_by(Posts.id.desc()).all()
     for post in posts:
         post.date = post.date.strftime('%B %d, %Y')
@@ -169,6 +180,9 @@ def index():
 
 @app.route('/post/<id>', methods=['GET'])
 def view_post(id):
+    """
+    Renders the post with a given id (the id of the post to render is passed with the route).
+    """
     current_post = Posts.query.filter_by(id=id).first()
 
     imgs = BodyImages.query.filter_by(post_id=id).all()
@@ -178,6 +192,9 @@ def view_post(id):
 
 @app.route('/<category>', methods=['GET'])
 def post_layout(category):
+    """
+    Renders a list of all the posts in a given category.
+    """
     posts = Posts.query.filter_by(category=category).order_by(Posts.id.desc()).all()
     for post in posts:
         post.date = post.date.strftime('%B %d, %Y')
@@ -185,6 +202,9 @@ def post_layout(category):
 
 @app.route('/subscribe', methods=['POST'])
 def subscribe():
+    """
+    Adds people to the subscribers database.
+    """
     first = request.form['first']
     last = request.form['last']
     email = request.form['email']
@@ -199,10 +219,13 @@ def subscribe():
     return '', 204
 
 """
-Handling the admin user (aka me).
+Admin-only Routes.
 """
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    Logs a user in (given the email and password are correct).
+    """
     if current_user.is_authenticated:
         return redirect(url_for('admin'))
     if request.method == "POST":
@@ -217,13 +240,21 @@ def login():
         return render_template('login.html')
 
 @app.route('/logout')
+@login_required
 def logout():
+    """
+    Logs a user out of the app.
+    """
     logout_user()
     return redirect(url_for('index'))
 
 @app.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
+    """
+    Get: renders the screen where the user can create a new post.
+    Post: Adds the new post's information to the post and body images database.
+    """
     post_id = Posts.query.order_by(Posts.id.desc()).first()
     if post_id:
         post_id = str(int(post_id.id) + 1)
@@ -266,12 +297,19 @@ def create():
 @app.route('/admin', methods=['GET'])
 @login_required
 def admin():
+    """
+    Renders the admin panel.
+    """
     return render_template('admin.html')
 
 # send email to all marinas
 @app.route('/send-mail', methods=['GET', 'POST'])
 @login_required
 def send_mail():
+    """
+    The user can send out email updates - as well as see a rough preview of what the
+    email html may look like and send out a test email.
+    """
     if request.method == "POST":
         # get list of all marina's info
         subs = Subscribers.query.filter_by(still_subscribed=True).all()
@@ -294,6 +332,9 @@ def send_mail():
 @app.route('/send-test', methods=['POST'])
 @login_required
 def send_test():
+    """
+    Sends a test email to my email.
+    """
     # get the email information
     subject = request.form['subject']
     body_text = request.form['body_text']
