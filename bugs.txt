@@ -12,6 +12,7 @@ Bugs:
 - Get Subscribe hover to look the same as the other menu elements (button instead of link so it doesn't have same hover property)
 - Can't add more than 1mb of images to a post. Want no one image to be above 1mb but total they can.
 - Adding images to email will be very finicky.
+- 34 and 39-44 are these necessary? What is causing the app to reload CSS? Why isn't it updating right now?
 
 Fixed:
 1.The dates don't all convert pretty in the code page.
