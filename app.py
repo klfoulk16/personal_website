@@ -12,7 +12,7 @@ App Configuration
 app = Flask(__name__)
 
 # Specify which environment we're using
-ENV = 'dev'
+ENV = 'prod'
 
 if ENV == 'dev':
     app.debug = True
