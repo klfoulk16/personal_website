@@ -59,6 +59,11 @@ a:link {
 	font-size: 2em;
 }
 
+.caption {
+	padding-top: 1em;
+	text-align: center;
+}
+
 /* --- Modal Box --- */
 /* The Modal */
 .modal {
@@ -232,9 +237,8 @@ a:link {
 */
 
 /* -- Change'container' div in post to this if you decide you want the header image/video to be larger than everything else. --*/
-.post {
-	width: 90%;
-	margin: 0 auto;
+.post img {
+	padding-top: 2em;
 }
 
 

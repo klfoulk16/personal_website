@@ -1,11 +1,11 @@
 Sample:
 Welcome to my blog! Here you'll find updates about the latest coding (and other!) projects I'm cooking up. Stay tuned for python, climbing etc. I'm also proud to say that I made this from scratch, soon I'll give you a tour.
 
-<script>
+<style>
     p {
-        background-color: pink;
+        background: pink;
     }
-</script>
+</style>
 
 <p>Welcome to my new blog. Last month I joined the Recurse Center's Winter 1 Batch and made coding my full-time (currently unpaid) job. I fell in love with coding last March and it's high time I created a place to share my projects. So! This blog will serve as a platform to said my coding projects (and a few life adventures). I've heard that one of the best ways to make sure you understand something is to explain it...so I'll try to do that here.</p>
 
@@ -21,3 +21,62 @@ Welcome to my blog! Here you'll find updates about the latest coding (and other!
 <p>Besides code, I might probably photo drop stuff from my latest adventures traveling, climbing, hiking, etc. Maybe I'll also share some non-tech projects I'm working on. Who knows - basically whatever's floating my boat at the moment.</p>
 
 <p><i>P.S. If something's not working on this blog, please let me know at klf16@my.fsu.edu, I made it from scractch so bugs are highly likely. Soon I'll create a post about how I made everything!</i></p>
+
+Post 2: This website
+
+<p>I'm pretty proud to say that I designed this blog you're looking at from scratch. Okay, maybe I did copy and paste a bit of Javascript from Stack Overflow, but who doesn't? This was a fun and interesting project because I had originally started learning to code through <a href='https://teamtreehouse.com/tracks/front-end-web-development'>Team Treehouse's front-end web development course</a> - so CSS, HTML, and Javascript are a bit like old friends that I had long forgotten. The key is the <i>forgotten</i> part. It definitely took a bit of memory jogging and head banging to bring myself back up to speed, but I'd say it turned out well.</p>
+
+<p>You can find the code for this website <a href="https://github.com/klfoulk16/personal_website">here.</a></p>
+
+<h2>The Why</h2>
+<ol><li>At Recurse, you are highly encouraged to document your projects and create a small portfolio of what you've done. I'd dare say my work isn't at 'portfolio' level yet, but hopefully one day it will be.</li>
+<li>I also wanted to try my hand at designing another flask web app. I'd messed around with some of it's capabilities in the past, but by implementing the 'Wordpress' and 'MailChimp' aspects of this blog I got to dive in a lot deeper.</li>
+<li>I found CSS tedious and annoying previously. I wanted to try my hand at it again now that I have more experience with other languages. I still find it rather confusing and annoying, but perhaps less so now that I have a greater understanding.</li></ol>
+
+<h2>The What</h2>
+<p>The blog displays a list of my projects and adventures. You can click on posts to read them, watch videos and see images. You can subscribe and get an automatic welcome email that is sent by Flask-mail. Once you've logged in, you can create posts, upload images, send emails (including view previews and send test emails) and eventually edit/delete posts. These functions are reserved for my use only.</p>
+
+ <img src="../{imgs[0].img_path}">
+<p class='caption'><i>Image of the admin panel after you have just logged in</i></p>
+
+<img src="../{imgs[1].img_path}">
+<p class='caption'><i>Image of the Create Post page</i></p>
+
+<img src="../{imgs[2].img_path}">
+<p class='caption'><i>Image of the Send Email page.</i></p>
+
+<img src="../{imgs[3].img_path}">
+<p class='caption'><i>The 'send test post' and 'preview' buttons for the send email page. The preview creates a small preview window by the button where you can preview the effect of different CSS styles on the email html.</i></p>
+
+<h2>The How</h2>
+<p>This explanation could get fairly involved, but I'll try to keep it simple in the following three paragraphs:</p>
+<p>The first key is flask. Flask is a wonderful python framework that allows you to create dynamic websites. You define each of the website's routes (aka website paths such as /home or /create) to render an html page (using the GET method) and/or perform some sort of function such as add data to a database or send emails (using the POST method). You can also populate the html pages with information that is generated when you call the functions defined by these routes.</p>
+
+<img src="../{imgs[4].img_path}">
+<p class='caption'><i>Image of two of this app's routes.</i></p>
+
+<p>There are several packages you can install such as Flask-login, flask-mail and flask-SQLAlchemy that allow you to easily add additional functionalities beyond the basic framework.</p>
+<p>Javascript helps with some of the on-page dynamic-ness. Such as how when the screen's width is less than 769 pixels (ie on mobile), the top menu turns into a dynamic dropdown menu. As well as the modal subscribe pop up window.
+<p>CSS makes everything pretty. I wanted a simple minimalistic design that was focused on clean lines and a black and white color palette. This way the focus would be on the text and images. I played around a lot with floats and flex box to display the banners and top menu the way I liked. My goal was to not use bootstrap and I'm proud to say I did not.<p>
+
+<h2>Potential Next Steps:</h2>
+<ol>
+    <li>Add a "Tags" database so that I could allow readers to find posts they're interested in using tags such as "Python" or "Flask."</li>
+     <li>Read up on security and make sure that my databases and such are secure against insertions (please no one try anything).</li>
+     <li>Refactor the CSS code and consolidate it. Get rid of similar styling on various element id's and create universal styles. Get rid of things that are unnecessary.</li>
+</ol>
+
+<h2>Conclusion</h2>
+<p>Fun project. It took me 6 days to get this MVP model up and running. This project could go on and on and on because there's so many little features I could add, but it's time to tie a pretty little bow on it for now. Hopefully, I actually post on it.</p>
+
+
+Post 3: Solving Sudoku Puzzles:
+
+<p>Teaching a program to solve a sudoku puzzle was a fun way to familiarize myself with the backtracking search algorithm and get more comfortable with recursion.
+
+<h2>The Why</h2>
+<p>I was taking Havard's Intro to AI course on edX and the idea popped into my head week 3's chapter on Optimization.
+The course had me create a Crossword puzzle generator, but I wanted to play around with constraint satisfaction more.</p>
+
+<h2>The How</h2>
+<p>I did not use any libraries other than the python standard library.

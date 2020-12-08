@@ -27,7 +27,7 @@ app.config.update(
 	MAIL_PORT=465,
 	MAIL_USE_SSL=True,
 	MAIL_USERNAME = 'kellyfoulkblog@gmail.com',
-	MAIL_PASSWORD = 'codingiscool',
+	MAIL_PASSWORD = '***REMOVED***',
     MAIL_USE_TLS = False,
     #MISC SETTINGS
     SQLALCHEMY_TRACK_MODIFICATIONS = False,
@@ -168,7 +168,7 @@ def load_user(user_id):
 """
 App Routes
 """
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
     """
     Renders the main home page of the blog - including a short display of all posts.
