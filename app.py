@@ -12,7 +12,7 @@ App Configuration
 app = Flask(__name__)
 
 # Specify which environment we're using
-ENV = 'prod'
+ENV = 'dev'
 
 if ENV == 'dev':
     app.debug = True
@@ -303,6 +303,21 @@ def create():
 
     else:
         return render_template('create.html', post_id=post_id)
+
+@app.route('/edit/<id>', methods=['GET', 'POST'])
+@login_required
+def edit(id):
+    post = Posts.query.filter_by(id=id).first()
+    if request.method == 'GET':
+        return render_template('edit.html', post=post)
+    else:
+        post.h1 = request.form['h1']
+        post.sample = request.form['sample']
+        post.youtube_vid = request.form['youtube_vid']
+        post.body = request.form['body']
+        db.session.commit()
+        flash('Success, the post has been updated.')
+        return redirect(url_for('admin'))
 
 @app.route('/admin', methods=['GET'])
 @login_required

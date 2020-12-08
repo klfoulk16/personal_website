@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    New Post
+{% endblock %}
+
+{% block main %}
+<form action="/edit/{{ post.id }}" method="POST" class="container">
+    <h1>Edit Post #{{ post_id }}</h1>
+    <i>If you are uploading images:
+        <ol>
+            <li>Make sure ENV is set to 'prod' in app.py.</li>
+            <li>Create the post locally using 'python3 app.py' (the post and image info will be pushed to the production database).</li>
+            <li>Afterwards don't forget to commit your changes and 'push origin heroku' to make sure that the images are stored in the /static file in heroku's directory.</li>
+        </ol>
+    </i>
+    <h3>Post Title (text):</h3>
+    <input type="text" name="h1" maxlength="125" value="{{ post.h1 }}"/>
+    <h3>Sample (text):</h3>
+    <textarea name="sample" cols="30" rows="3" maxlength="350">{{ post.sample }}</textarea>
+    <h3>Youtube Video ID:</h3>
+    <input type="text" name="youtube_vid" maxlength="125" value="{{ post.youtube_vid }}"/>
+    <h3>Body (html):</h3>
+    <p><i>Using your body images: &ltimg src="../{imgs[0].img_path}"&gt</i></p>
+    <textarea name="body" cols="30" rows="10">{{ post.body }}</textarea>
+    <button class="btn form-btn" type="submit">Edit Post</button>
+</form>
+{% endblock %}
