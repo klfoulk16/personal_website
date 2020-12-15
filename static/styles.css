@@ -242,9 +242,9 @@ a:link {
 }
 
 
-/* ---- Email Send ----- */
+/* ---- Email Preview and Post Preview----- */
 
-#email_preview {
+#email_preview, #post_preview {
 	margin-top: 2em;
 	padding: 1em;
 	border: solid 1px;

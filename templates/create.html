@@ -26,6 +26,14 @@ var newinput = function() {
   parent.appendChild(div);
   id += 1;
 }
+
+function postPreview() {
+    var body = document.getElementById('body_html').value;
+    var div = document.getElementById('post_preview');
+    var display = document.getElementById('body_html_preview');
+    div.style.display = "block";
+    display.innerHTML = body;
+}
 </script>
 
 <form action="/create" method="POST" class="container" enctype="multipart/form-data">
@@ -55,7 +63,7 @@ var newinput = function() {
     </div>
     <h3>Body (html):</h3>
     <p><i>Using your body images: &ltimg src="../{imgs[0].img_path}"&gt</i></p>
-    <textarea name="body" cols="30" rows="10"></textarea>
+    <textarea name="body" id='body_html' cols="30" rows="10"></textarea>
     <h3>Category:</h3>
     <select name="category">
         <option value="">Select Category</option>
@@ -64,5 +72,11 @@ var newinput = function() {
         <option value="other">Other</option>
     </select>
     <button class="btn form-btn" type="submit">Create Post</button>
+    <button class="btn form-btn" type="button" onclick="postPreview()">Preview Post</button>
 </form>
+
+<div id="post_preview" class='container'>
+    <div id="body_html_preview">
+    </div>
+</div>
 {% endblock %}
