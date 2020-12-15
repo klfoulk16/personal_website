@@ -1,0 +1,41 @@
+Self-Directed Pandas Crash Course
+
+Want to learn pandas, but don't know where to start? That was my position about a week ago. In this post, I'll explain how I structured my learning process during my one week 'crash course.' By no means am I an expert now, but I feel confident to say I can accomplish essential data cleaning and visualization tasks.
+
+
+<p>Want to learn pandas, but don't know where to start? That was my position about a week ago. In this post, I'll explain how I structured my learning process during my one week 'crash course.' By no means am I an expert now, but I feel confident to say I can accomplish essential data cleaning and visualization tasks.</p>
+
+<h2>My Learning Process</h2>
+
+<ol>
+<li>First, I worked through the Pandas documentation, including their <a href='https://pandas.pydata.org/pandas-docs/stable/user_guide/10min.html'>10 Minutes to Pandas guide</a>. I made sure I ran each example in a Jupyter notebook and understood what it was doing.</li>
+<li>Second, I worked through the <a href='https://github.com/ajcr/100-pandas-puzzles'>100 Pandas Puzzles notebook</a> that <a href='https://github.com/ajcr'>Alex Riley</a> created. during this, I attempted to rely more on the Pandas documentation than on Stack Overflow.</li>
+<li>Third, I downloaded the Denver 2010 Neighborhood Demographics dataset from denvergov.org. I used this to practice cleaning, indexing into and visualizing data.</li>
+</ol>
+
+<img src="../{imgs[0].img_path}">
+<h3>Denver Neighborhood Demographics Project</h3>
+<p>My goal for this project was to get some hands on experience manipulating, cleaning and visualizing a random data set that I found online. I chose the Denver Neighborhood Demographics dataset (from the 2010 census) because it was a relatively smaller dataset so it was less intimidating for a beginner. I also am interested in moving to Denver so I figured learning more about the city would be interesting, even if the data was older.</p>
+
+<h4>Resources</h4>
+<p>You can find the dataset <a href='https://www.denvergov.org/opendata/dataset/city-and-county-of-denver-census-neighborhood-demographics-2010'>here.</a> I also used <a href='https://towardsdatascience.com/exploratory-data-analysis-in-python-c9a77dfa39ce'>this tutorial</a> about Exploratory data analysis as a rough guide for the project.
+
+<h4>Steps</h4>
+<ol>
+<li>Setting Up the Environment</li>
+<p>This was relatively simple and involved importing pandas and reading the data in from a CSV file I had downloaded to my laptop. I also made sure that all columns would be displayed if I ran df.head() so I could get a sense of what information was included.</p>
+<li>Understanding the Data</li>
+<p>This involved perusing the data to see what information I was interested in modeling. I looked at some of the basic statistical data using df.describe() and I also made sure to check for any null values, duplicate rows, and that all the data types were appropriate.</p>
+<li>Cleaning</li>
+<p>Fortunately there were no duplicate rows, no null values, and all of the datatypes were suitable for the information they held. Cleaning simply involved dropping unnecessary columns and renaming the remaining ones to be more reader-friendly.</p>
+<li>Visualization</li>
+<p>At this point I began to create graphs using the data. I decided to explore the total population distribution, racial makeup, and gender distribution of Denver's neighborhoods. I played around with creating several different graph types and overlaying two charts on top of each other.</p>
+</ol>
+<img src="../{imgs[0].img_path}">
+<h3>Why Did I Learn Pandas?</h3>
+<p>My desire to learn Pandas comes from my interest in AI and Machine Learning. When I worked through Harvard's Intro to AI course on edX, they specifically said not to use Pandas and NumPy if you weren't already familiar with them. This lead to me feeling a bit behind the ball when I looked into pursuing my own ML projects after I finished the course. I now understand why Pandas is so popular - the ease with which you can clean and analyze data is awesome!<p>
+
+<p>I also find data analytics fascinating in general. One of the things I love about coding is you essentially have an army of robots ready to do your bidding. I especially see this with data analytics. To have hand-plotted those charts or run each of those calculations through a calculator would have taken ages...that's a bit of a rustic example, but it shows how cool the world is today.</p>
+
+<h3>Conclusion</h3>
+<p>I hope to do a more in-depth project using Pandas in a few weeks. Only this time I will set out with a clear goal in mind as opposed to this time where my goal was to merely 'mess around.' Learning Pandas was fun and I can't wait to use my new skills, but I found messing around with no purpose to be rather boring. Perhaps my next project will involve using Pandas to format data for some sort of ML task. We'll see! Today I plan to redo my development environment and start learning how to web scrape.</p>
