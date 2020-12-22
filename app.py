@@ -11,6 +11,7 @@ from flask_login import (
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from dotenv import load_dotenv
 
 """
 App Configuration
@@ -18,26 +19,25 @@ App Configuration
 app = Flask(__name__)
 
 # Specify which environment we're using
-ENV = "prod"
+ENV = "dev"
+
+# Get environment variables
+load_dotenv()
 
 if ENV == "dev":
     app.debug = True
-    app.config[
-        "SQLALCHEMY_DATABASE_URI"
-    ] = "***REMOVED***"
 else:
     app.debug = False
-    app.config[
-        "SQLALCHEMY_DATABASE_URI"
-    ] = "***REMOVED***"
 
 app.config.update(
+    # DATABASE
+    SQLALCHEMY_DATABASE_URI=os.getenv("SQLALCHEMY_DATABASE_URI"),
     # EMAIL SETTINGS
-    MAIL_SERVER="smtp.gmail.com",
-    MAIL_PORT=465,
+    MAIL_SERVER=os.getenv("MAIL_SERVER"),
+    MAIL_PORT=os.getenv("MAIL_PORT"),
     MAIL_USE_SSL=True,
-    MAIL_USERNAME="kellyfoulkblog@gmail.com",
-    MAIL_PASSWORD="***REMOVED***",
+    MAIL_USERNAME=os.getenv("MAIL_USERNAME"),
+    MAIL_PASSWORD=os.getenv("MAIL_PASSWORD"),
     MAIL_USE_TLS=False,
     # MISC SETTINGS
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
