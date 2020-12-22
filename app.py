@@ -18,18 +18,12 @@ App Configuration
 """
 app = Flask(__name__)
 
-# Specify which environment we're using
-ENV = "dev"
-
 # Get environment variables
 load_dotenv()
 
-if ENV == "dev":
-    app.debug = True
-else:
-    app.debug = False
-
 app.config.update(
+    # ENV
+    FLASK_ENV=os.getenv("FLASK_ENV"),
     # DATABASE
     SQLALCHEMY_DATABASE_URI=os.getenv("SQLALCHEMY_DATABASE_URI"),
     # EMAIL SETTINGS
@@ -45,6 +39,7 @@ app.config.update(
     TEMPLATES_AUTO_RELOAD=True,
     # ensure post doesn't upload more than 1MB of files
     MAX_CONTENT_LENGTH=1024 * 1024,
+    SECRET_KEY=os.getenv("SECRET_KEY")
 )
 
 
@@ -59,7 +54,7 @@ def after_request(response):
 db = SQLAlchemy(app)
 mail = Mail(app)
 login_manager = LoginManager(app)
-app.secret_key = ***REMOVED***
+app.secret_key = os.getenv("SECRET_KEY")
 
 """
 Database Setup
