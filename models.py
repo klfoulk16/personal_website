@@ -3,9 +3,9 @@ import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # if you need to redo the db setup, drop the table and then run python in terminal and then these commands:
-    # >>> from models import db
-    # >>> db.create_all()
-    # >>> exit()
+# >>> from models import db
+# >>> db.create_all()
+# >>> exit()
 
 
 """
@@ -19,8 +19,9 @@ code I used to add myself to user db:
 
 """
 
+
 class Posts(db.Model):
-    __tablename__ = 'posts'
+    __tablename__ = "posts"
     id = db.Column(db.Integer, primary_key=True)
     h1 = db.Column(db.String(100))
     sample = db.Column(db.String(175))
@@ -35,6 +36,7 @@ class Posts(db.Model):
         self.category = category
         self.date = datetime.date.today()
 
+
 class Admin(db.Model):
     """An admin user capable of viewing reports.
 
@@ -42,7 +44,8 @@ class Admin(db.Model):
     :param str password: encrypted password for the user
 
     """
-    __tablename__ = 'user'
+
+    __tablename__ = "user"
     email = db.Column(db.String, primary_key=True)
     password_hash = db.Column(db.String)
     authenticated = db.Column(db.Boolean, default=False)
@@ -70,8 +73,9 @@ class Admin(db.Model):
         """False, as anonymous users aren't supported."""
         return False
 
+
 class Subscribers(db.Model):
-    __tablename__ = 'subscribers'
+    __tablename__ = "subscribers"
     id = db.Column(db.Integer, primary_key=True)
     first = db.Column(db.String(50))
     last = db.Column(db.String(50))
