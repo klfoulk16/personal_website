@@ -35,26 +35,25 @@ app.config.update(
     MAIL_USE_TLS=False,
     # MISC SETTINGS
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
-    # Ensure templates are auto-reloaded
-    TEMPLATES_AUTO_RELOAD=True,
-    # ensure post doesn't upload more than 1MB of files
+    # ensure user doesn't upload more than 1MB of files
     MAX_CONTENT_LENGTH=1024 * 1024,
-    SECRET_KEY=os.getenv("SECRET_KEY")
+    SECRET_KEY=os.getenv("SECRET_KEY"),
 )
 
-
-@app.after_request
-def after_request(response):
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache"
-    return response
+# Make sure site isn't cached if in dev mode.
+ENV = "dev"
+if ENV == "dev":
+    @app.after_request
+    def after_request(response):
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Expires"] = 0
+        response.headers["Pragma"] = "no-cache"
+        return response
 
 
 db = SQLAlchemy(app)
 mail = Mail(app)
 login_manager = LoginManager(app)
-app.secret_key = os.getenv("SECRET_KEY")
 
 """
 Database Setup
