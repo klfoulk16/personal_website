@@ -67,7 +67,7 @@ If you need to redo the db setup, drop the table and then run python in terminal
 To add someone to Admin db:
     >>> from app import db
     >>> from app import Admin
-    >>> admin1 = Admin("klf16@my.fsu.edu", "password")
+    >>> admin1 = Admin("kelly", "kelly")
     >>> db.session.add(admin1)
     >>> db.session.commit()
     >>> exit()
@@ -339,13 +339,14 @@ def edit(id):
         post.sample = request.form["sample"]
         post.youtube_vid = request.form["youtube_vid"]
         post.body = request.form["body"]
+        print(post.header_path)
         header = request.files["header"]
         if header.filename != "":
-            img_folder = os.path.join("static", "post_imgs", post_id)
+            img_folder = os.path.join("static", "post_imgs", id)
             if not os.path.exists(img_folder):
                 os.makedirs(img_folder)
-            header_path = os.path.join(img_folder, header.filename)
-            header.save(header_path)
+            post.header_path = os.path.join(img_folder, header.filename)
+            header.save(post.header_path)
         db.session.commit()
         flash("Success, the post has been updated.")
         return redirect(url_for("admin"))
