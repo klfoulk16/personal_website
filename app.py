@@ -339,6 +339,13 @@ def edit(id):
         post.sample = request.form["sample"]
         post.youtube_vid = request.form["youtube_vid"]
         post.body = request.form["body"]
+        header = request.files["header"]
+        if header.filename != "":
+            img_folder = os.path.join("static", "post_imgs", post_id)
+            if not os.path.exists(img_folder):
+                os.makedirs(img_folder)
+            header_path = os.path.join(img_folder, header.filename)
+            header.save(header_path)
         db.session.commit()
         flash("Success, the post has been updated.")
         return redirect(url_for("admin"))
