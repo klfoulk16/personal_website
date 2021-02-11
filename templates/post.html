@@ -6,18 +6,18 @@
 
 {% block main %}
 
-{% if post.header_path %}
-<div class="container">
-<!-- Have main image be here or video -->
-    <img src="../{{ post.header_path }}">
-</div>
-<hr>
-{% elif post.youtube_vid %}
+{% if post.youtube_vid %}
 <div class="container">
     <div style="position:relative;padding-top:56.25%;">
       <iframe src="https://www.youtube.com/embed/{{post.youtube_vid}}" frameborder="0" allowfullscreen
         style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
     </div>
+</div>
+<hr>
+{% elif post.header_path %}
+<div class="container">
+<!-- Have main image be here or video -->
+    <img src="../{{ post.header_path }}">
 </div>
 <hr>
 {% endif %}

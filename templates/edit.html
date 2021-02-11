@@ -18,6 +18,8 @@
     <input type="text" name="h1" maxlength="125" value="{{ post.h1 }}"/>
     <h3>Sample (text):</h3>
     <textarea name="sample" cols="30" rows="3" maxlength="350">{{ post.sample }}</textarea>
+    <h3>Header Image:</h3>
+    <input type="file" name="header" accept=".jpg,.png,.gif" value="{{ post.header_path }}">
     <h3>Youtube Video ID:</h3>
     <input type="text" name="youtube_vid" maxlength="125" value="{{ post.youtube_vid }}"/>
     <h3>Body (html):</h3>
