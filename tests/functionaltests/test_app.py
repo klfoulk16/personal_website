@@ -1,4 +1,5 @@
 import pytest
+import os
 from app import db, Posts, Subscribers, Admin
 
 def test_index_get(client):
@@ -178,36 +179,63 @@ def test_logout_post(client):
     assert response.status_code == 405
 
 
-# def test_create_get(client):
-#     """
-#     GIVEN a Flask application configured for testing
-#     WHEN the '/create' route is run (GET)
-#     THEN check that the response is valid and user is logged out
-#     """
-#     login(client, "kelly", "kelly")
-#     assert client.get('/create').status_code == 200
-#     response = client.get('/create', follow_redirects=True)
-#     assert response.status_code == 200
-#     assert b"Hiya, I'm Kelly" in response.data
-#     assert client.get('/create').status_code == 401
+def test_create_get(client):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/create' route is run (GET)
+    THEN check that the response is valid
+    """
+    login(client, "kelly", "kelly")
+    response = client.get('/create')
+    assert response.status_code == 200
+    assert b'Create New Post' in response.data
 
 
-# def test_create_post(client):
-#     """
-#     GIVEN a Flask application
-#     WHEN the '/create' page is posted to (POST)
-#     THEN check that a '405' status code is returned
-#     """
-#     login(client, "kelly", "kelly")
+def test_create_post_with_header_file(client, post_to_upload):
+    """
+    GIVEN a Flask application
+    WHEN the '/create' page is posted to (POST)
+    THEN check that posts are properly created if header file not included
+    """
+    r = login(client, "kelly", "kelly")
+    assert r.status_code == 200
+    response = client.post(
+        '/create', data=post_to_upload, follow_redirects=True)
+    assert response.status_code == 200
+    assert b'Success, your post is live.' in response.data
+    post = Posts.query.filter_by(h1="This is the test post").first() 
+    assert post is not None
 
-#     response = client.post(
-#         '/create', data=dict(
-#             h1="testfirst",
-#             last="testlast",
-#             email="test@example.com"
-#         )
-#     )
-#     assert response.status_code == 500
+    # make sure a file path for nonexistent header image was not made
+    assert not os.path.exists(post.header_path)
+
+    db.session.delete(post)
+    db.session.commit()
+    assert Posts.query.filter_by(h1="This is the test post").first() is None
+
+
+def test_create_post_with_header_file(client, post_to_upload2):
+    """
+    GIVEN a Flask application
+    WHEN the '/create' page is posted to (POST)
+    THEN check that posts are properly created if header file included
+    """
+    r = login(client, "kelly", "kelly")
+    response = client.post(
+        '/create', data=post_to_upload2, follow_redirects=True)
+    assert response.status_code == 200
+    assert b'Success, your post is live.' in response.data
+    post = Posts.query.filter_by(h1="This is the second test post").first() 
+    assert post is not None
+    # make sure file path for header image was made
+    assert os.path.exists(post.header_path)
+
+    # clean it all up
+    os.remove(post.header_path)
+
+    db.session.delete(post)
+    db.session.commit()
+    assert Posts.query.filter_by(h1="This is the second test post").first() is None
 
 
 def test_create_auth(client):
