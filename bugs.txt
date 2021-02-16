@@ -16,6 +16,7 @@ Bugs:
 - why are the blog posts expanding outside of their container???
 - refactor subscribe flow
 - should I switch the user to an environment variable??
+- links don't have any CSS styling. invisible.
 - post body should not be allowed to be none
 - post location in the laptop is based off the number of posts currently in the database, not the real id. need to just get rid of this.
 
