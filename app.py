@@ -340,7 +340,6 @@ def edit(id):
         post.sample = request.form["sample"]
         post.youtube_vid = request.form["youtube_vid"]
         post.body = request.form["body"]
-        print(post.header_path)
         header = request.files["header"]
         if header.filename != "":
             img_folder = os.path.join("static", "post_imgs", id)
