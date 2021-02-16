@@ -146,11 +146,12 @@ class Admin(db.Model):
     __tablename__ = "admin"
     email = db.Column(db.String, primary_key=True)
     password_hash = db.Column(db.String)
-    authenticated = db.Column(db.Boolean, default=False)
+    authenticated = db.Column(db.Boolean)
 
     def __init__(self, email, password):
         self.email = email
         self.password_hash = generate_password_hash(password)
+        self.authenticated = False
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -221,7 +222,7 @@ def post_layout(category):
     return render_template("post_layout.html", posts=posts, category=category)
 
 
-@app.route("/subscribe", methods=["POST"])
+@app.route("/subscribe", methods=['POST'])
 def subscribe():
     """
     Adds people to the subscribers database.
