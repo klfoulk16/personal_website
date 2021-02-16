@@ -16,7 +16,11 @@ Bugs:
 - why are the blog posts expanding outside of their container???
 - refactor subscribe flow
 - should I switch the user to an environment variable??
+- post body should not be allowed to be none
+- post location in the laptop is based off the number of posts currently in the database, not the real id. need to just get rid of this.
 
+Problems with the current app testing flow:
+- for subscribe/create tests, if they fail the item is still left in the database. this will be fixed with app factory setup. thank goodness.
 
 Fixed:
 1.The dates don't all convert pretty in the code page.
