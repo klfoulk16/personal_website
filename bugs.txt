@@ -14,6 +14,8 @@ Bugs:
 - Adding images to email will be very finicky.
 - styles 34 and 39-44 are these necessary? What is causing the app to reload CSS? Why isn't it updating right now?
 - why are the blog posts expanding outside of their container???
+- refactor subscribe flow
+- should I switch the user to an environment variable??
 
 
 Fixed:
