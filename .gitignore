@@ -1,0 +1,8 @@
+.DS_Store
+.env
+__pycache__/
+tests/__pycache__/
+tests/functionaltests/__pycache__/
+tests/unittests/__pycache__/
+venv/
+.pytest_cache
