@@ -10,7 +10,7 @@ def test_index_get(client):
     WHEN the '/' page is requested (GET)
     THEN check that the response is valid
     """
-    response = client.get('/')
+    response = client.get("/")
     assert response.status_code == 200
     assert b"Hiya, I'm Kelly" in response.data
     assert b"Subscribe" in response.data
@@ -28,7 +28,7 @@ def test_index_post(client):
     WHEN the '/' page is posted to (POST)
     THEN check that a '405' status code is returned
     """
-    response = client.post('/')
+    response = client.post("/")
     assert response.status_code == 405
     assert b"Hiya, I'm Kelly" not in response.data
 
@@ -41,10 +41,11 @@ def test_view_post_get(client):
     """
     post = Posts.query.first()
     if post:
-        response = client.get(f'/post/{post.id}')
+        response = client.get(f"/post/{post.id}")
         assert response.status_code == 200
         assert post.h1.encode() in response.data
         assert post.body.encode() in response.data
+
 
 def test_view_post_post(client):
     """
@@ -54,10 +55,11 @@ def test_view_post_post(client):
     """
     post = Posts.query.first()
     if post:
-        response = client.post(f'/post/{post.id}')
+        response = client.post(f"/post/{post.id}")
         assert response.status_code == 405
         assert post.h1.encode() not in response.data
         assert post.body.encode() not in response.data
+
 
 def test_post_layout_get(client):
     """
@@ -66,12 +68,13 @@ def test_post_layout_get(client):
     THEN check that the response is valid
     """
     for c in ["code", "other"]:
-        response = client.get(f'/{c}')
+        response = client.get(f"/{c}")
         assert response.status_code == 200
         posts = Posts.query.filter_by(category=c).all()
         for post in posts:
             assert post.h1.encode() in response.data
             assert post.sample.encode() in response.data
+
 
 def test_post_layout_post(client):
     """
@@ -80,7 +83,7 @@ def test_post_layout_post(client):
     THEN check that a '405' status code is returned
     """
     for c in ["code", "other"]:
-        response = client.post(f'/{c}')
+        response = client.post(f"/{c}")
         assert response.status_code == 405
         post = Posts.query.filter_by(category=c).first()
         if post:
@@ -96,9 +99,9 @@ def test_subscribe_get(client):
     WHEN the '/subscribe' page is requested (GET)
     THEN check that a '405' status code is returned (method not allowed)
     """
-    response = client.get('/subscribe')
+    response = client.get("/subscribe")
     assert response.status_code == 405
-    
+
 
 def test_subscribe_post(client):
     """
@@ -106,16 +109,15 @@ def test_subscribe_post(client):
     WHEN the '/subscribe' page is posted to (POST)
     THEN check that the response is valid and a subcriber is added to the db
     """
-    assert Subscribers.query.filter_by(email="test@example.com").first() is None # if this isn't none, the test won't work
+    assert (
+        Subscribers.query.filter_by(email="test@example.com").first() is None
+    )  # if this isn't none, the test won't work
     response = client.post(
-        '/subscribe', data=dict(
-            first="testfirst",
-            last="testlast",
-            email="test@example.com"
-        )
+        "/subscribe",
+        data=dict(first="testfirst", last="testlast", email="test@example.com"),
     )
     assert response.status_code == 204
-    sub = Subscribers.query.filter_by(email="test@example.com").first() 
+    sub = Subscribers.query.filter_by(email="test@example.com").first()
     assert sub is not None
 
     # spring cleaning cause no app factory yay
@@ -125,14 +127,13 @@ def test_subscribe_post(client):
 
 # functions to aid with testing login
 def login(client, email, password):
-    return client.post('/login', data=dict(
-        email=email,
-        password=password
-    ), follow_redirects=True)
+    return client.post(
+        "/login", data=dict(email=email, password=password), follow_redirects=True
+    )
 
 
 def logout(client):
-    return client.get('/logout', follow_redirects=True)
+    return client.get("/logout", follow_redirects=True)
 
 
 def test_login_get(client):
@@ -141,11 +142,10 @@ def test_login_get(client):
     WHEN the '/login' page is requested (GET)
     THEN check that the response is valid
     """
-    response = client.get('/login')
+    response = client.get("/login")
     assert response.status_code == 200
     assert b"Email" in response.data
     assert b"Password" in response.data
-
 
 
 def test_login_post(client):
@@ -168,11 +168,11 @@ def test_logout_get(client):
     THEN check that the response is valid and user is logged out
     """
     login(client, "kelly", "kelly")
-    assert client.get('/create').status_code == 200
-    response = client.get('/logout', follow_redirects=True)
+    assert client.get("/create").status_code == 200
+    response = client.get("/logout", follow_redirects=True)
     assert response.status_code == 200
     assert b"Hiya, I'm Kelly" in response.data
-    assert client.get('/create').status_code == 401
+    assert client.get("/create").status_code == 401
 
 
 def test_logout_post(client):
@@ -181,7 +181,7 @@ def test_logout_post(client):
     WHEN the '/logout' page is posted to (POST)
     THEN check that a '405' status code is returned
     """
-    response = client.post('/logout')
+    response = client.post("/logout")
     assert response.status_code == 405
 
 
@@ -192,10 +192,10 @@ def test_create_get(client):
     THEN check that the response is valid
     """
     r = login(client, "kelly", "kelly")
-    assert r.status_code == 200 # test will fail is this doesn't work
-    response = client.get('/create')
+    assert r.status_code == 200  # test will fail is this doesn't work
+    response = client.get("/create")
     assert response.status_code == 200
-    assert b'Create New Post' in response.data
+    assert b"Create New Post" in response.data
 
 
 def test_create_post_without_header_file(client, post_to_upload_without_file):
@@ -205,12 +205,13 @@ def test_create_post_without_header_file(client, post_to_upload_without_file):
     THEN check that posts are properly created if header file not included
     """
     r = login(client, "kelly", "kelly")
-    assert r.status_code == 200 # test will fail is this doesn't work
+    assert r.status_code == 200  # test will fail is this doesn't work
     response = client.post(
-        '/create', data=post_to_upload_without_file, follow_redirects=True)
+        "/create", data=post_to_upload_without_file, follow_redirects=True
+    )
     assert response.status_code == 200
-    assert b'Success, your post is live.' in response.data
-    post = Posts.query.filter_by(h1="This is the test post").first() 
+    assert b"Success, your post is live." in response.data
+    post = Posts.query.filter_by(h1="This is the test post").first()
     assert post is not None
 
     # make sure a file path for nonexistent header image was not made
@@ -228,13 +229,14 @@ def test_create_post_with_header_file(client, post_to_upload_with_file):
     THEN check that posts are properly created if header file included
     """
     r = login(client, "kelly", "kelly")
-    assert r.status_code == 200 # test will fail is this doesn't work
+    assert r.status_code == 200  # test will fail is this doesn't work
 
     response = client.post(
-        '/create', data=post_to_upload_with_file, follow_redirects=True)
+        "/create", data=post_to_upload_with_file, follow_redirects=True
+    )
     assert response.status_code == 200
-    assert b'Success, your post is live.' in response.data
-    post = Posts.query.filter_by(h1="This is the second test post").first() 
+    assert b"Success, your post is live." in response.data
+    post = Posts.query.filter_by(h1="This is the second test post").first()
     assert post is not None
     # make sure file path for header image was made
     assert os.path.exists(post.header_path)
@@ -253,7 +255,7 @@ def test_create_auth(client):
     WHEN the '/create' page is posted to (POST)
     THEN check that a '401' not authorized status code is returned
     """
-    response = client.get('/create')
+    response = client.get("/create")
     assert response.status_code == 401
 
 
@@ -264,15 +266,15 @@ def test_edit_post_get(client):
     THEN check that the response is valid if page exists
     """
     r = login(client, "kelly", "kelly")
-    assert r.status_code == 200 # test will fail is this doesn't work
+    assert r.status_code == 200  # test will fail is this doesn't work
     # don't know what posts are in db...so need to check and see
     post = Posts.query.first()
     # if there's no posts in the db this test will fail
     assert post is not None
     # get the edit page
-    response = client.get(f'/edit/{post.id}')
+    response = client.get(f"/edit/{post.id}")
     assert response.status_code == 200
-    assert b'Edit' in response.data
+    assert b"Edit" in response.data
 
 
 @pytest.mark.xfail
@@ -283,7 +285,7 @@ def test_edit_nonexistant_post_get(client):
     THEN check that the response is not valid if page does not exist
     """
     r = login(client, "kelly", "kelly")
-    assert r.status_code == 200 # test will fail is this doesn't work
+    assert r.status_code == 200  # test will fail is this doesn't work
     # get last id of post in db
     post = Posts.query.order_by(Posts.id.desc()).first()
     # if there's no posts in the db set id to one, otherwise increment id by one
@@ -292,12 +294,14 @@ def test_edit_nonexistant_post_get(client):
     else:
         id = post.id + 1
     # get the edit page
-    response = client.get(f'/edit/{id}')
-    assert response.status_code == 404 # not found
-    assert b'This post does not exist' in response.data
+    response = client.get(f"/edit/{id}")
+    assert response.status_code == 404  # not found
+    assert b"This post does not exist" in response.data
 
 
-def test_edit_post_with_no_header_files(client, post_to_upload_without_file, post_to_edit_without_file):
+def test_edit_post_with_no_header_files(
+    client, post_to_upload_without_file, post_to_edit_without_file
+):
     """
     GIVEN a Flask application
     WHEN the '/edit/<id>' page is posted to (POST)
@@ -308,31 +312,38 @@ def test_edit_post_with_no_header_files(client, post_to_upload_without_file, pos
 
     # create post to edit
     response = client.post(
-        '/create', data=post_to_upload_without_file, follow_redirects=True)
-    orig_post = Posts.query.filter_by(h1="This is the test post").first() 
+        "/create", data=post_to_upload_without_file, follow_redirects=True
+    )
+    orig_post = Posts.query.filter_by(h1="This is the test post").first()
 
     response = client.post(
-        f'/edit/{orig_post.id}', data=post_to_edit_without_file, follow_redirects=True)
+        f"/edit/{orig_post.id}", data=post_to_edit_without_file, follow_redirects=True
+    )
     assert response.status_code == 200
-    assert b'Success, the post has been updated.' in response.data
-    assert Posts.query.filter_by(h1="This is the test post").first()  is None
+    assert b"Success, the post has been updated." in response.data
+    assert Posts.query.filter_by(h1="This is the test post").first() is None
 
-    post = Posts.query.filter_by(h1="This is the test edit post without a file").first() 
+    post = Posts.query.filter_by(h1="This is the test edit post without a file").first()
     assert post is not None
     assert post.youtube_vid == "videdited"
     assert post.sample == "Sample for edited post without file"
-    assert post.body == """<p>This is the test edit post without a file....Want to learn pandas, but don't know where to start? That was my position about a week ago. In this post, I'll explain how I structured my learning process during my one week 'crash course.' By no means am I an expert now, but I feel confident to say I can accomplish essential data cleaning and visualization tasks.</p>
+    assert (
+        post.body
+        == """<p>This is the test edit post without a file....Want to learn pandas, but don't know where to start? That was my position about a week ago. In this post, I'll explain how I structured my learning process during my one week 'crash course.' By no means am I an expert now, but I feel confident to say I can accomplish essential data cleaning and visualization tasks.</p>
 
 <p>You can find the git repository and associated Jupyter notebooks <a href='https://github.com/klfoulk16/learning_pandas'>here.</a></p>
 
 <h2>My Learning Process</h2>"""
+    )
 
     # clean it all up
     db.session.delete(post)
     db.session.commit()
 
 
-def test_edit_post_with_header_file(client, post_to_upload_without_file, post_to_edit_with_file):
+def test_edit_post_with_header_file(
+    client, post_to_upload_without_file, post_to_edit_with_file
+):
     """
     GIVEN a Flask application
     WHEN the '/edit/<id>' page is posted to (POST)
@@ -343,16 +354,18 @@ def test_edit_post_with_header_file(client, post_to_upload_without_file, post_to
 
     # create post to edit
     response = client.post(
-        '/create', data=post_to_upload_without_file, follow_redirects=True)
-    orig_post = Posts.query.filter_by(h1="This is the test post").first() 
+        "/create", data=post_to_upload_without_file, follow_redirects=True
+    )
+    orig_post = Posts.query.filter_by(h1="This is the test post").first()
 
     response = client.post(
-        f'/edit/{orig_post.id}', data=post_to_edit_with_file, follow_redirects=True)
+        f"/edit/{orig_post.id}", data=post_to_edit_with_file, follow_redirects=True
+    )
     assert response.status_code == 200
-    assert b'Success, the post has been updated.' in response.data
-    assert Posts.query.filter_by(h1="This is the test post").first()  is None
+    assert b"Success, the post has been updated." in response.data
+    assert Posts.query.filter_by(h1="This is the test post").first() is None
 
-    post = Posts.query.filter_by(h1="This is the test edit post with a file").first() 
+    post = Posts.query.filter_by(h1="This is the test edit post with a file").first()
     assert post is not None
 
     # make sure file path for header image was made
@@ -363,10 +376,13 @@ def test_edit_post_with_header_file(client, post_to_upload_without_file, post_to
     try:
         os.rmdir(os.path.join("static", "post_imgs", str(post.id)))
     except OSError as e:
-        pass # directory not empty because actually posts are using it
+        pass  # directory not empty because actually posts are using it
     db.session.delete(post)
     db.session.commit()
-    assert Posts.query.filter_by(h1="This is the test edit post with a file").first() is None
+    assert (
+        Posts.query.filter_by(h1="This is the test edit post with a file").first()
+        is None
+    )
 
 
 def test_edit_auth(client):
@@ -380,7 +396,7 @@ def test_edit_auth(client):
     # if there's no posts in the db this test will fail
     assert post is not None
     # get the edit page
-    response = client.get(f'/edit/{post.id}')
+    response = client.get(f"/edit/{post.id}")
     assert response.status_code == 401
 
 
@@ -393,13 +409,13 @@ def test_admin_get(client):
     r = login(client, "kelly", "kelly")
     assert r.status_code == 200
 
-    response = client.get('/admin')
+    response = client.get("/admin")
     assert response.status_code == 200
-    assert b'Howdy!' in response.data
-    assert b'Create Post' in response.data
-    assert b'Edit Post'  in response.data
-    assert b'Delete Post'  in response.data
-    assert b'Send Mail' in response.data
+    assert b"Howdy!" in response.data
+    assert b"Create Post" in response.data
+    assert b"Edit Post" in response.data
+    assert b"Delete Post" in response.data
+    assert b"Send Mail" in response.data
 
 
 def test_admin_post(client):
@@ -408,7 +424,7 @@ def test_admin_post(client):
     WHEN the '/admin page is posted to (POST)
     THEN check that a '405' status code is returned
     """
-    response = client.post('/admin')
+    response = client.post("/admin")
     assert response.status_code == 405
     assert b"Howdy!" not in response.data
 
@@ -419,7 +435,7 @@ def test_admin_auth(client):
     WHEN the '/admin' page is posted to (POST)
     THEN check that a '401' not authorized status code is returned
     """
-    response = client.get('/admin')
+    response = client.get("/admin")
     assert response.status_code == 401
 
 
@@ -432,9 +448,9 @@ def test_send_mail_get(client):
     r = login(client, "kelly", "kelly")
     assert r.status_code == 200
 
-    response = client.get('/send-mail')
+    response = client.get("/send-mail")
     assert response.status_code == 200
-    assert b'Send New Email' in response.data
+    assert b"Send New Email" in response.data
 
 
 @pytest.mark.skip
@@ -449,7 +465,7 @@ def test_send_mail_post(client, email):
     r = login(client, "kelly", "kelly")
     assert r.status_code == 200
 
-    response = client.post('/send-mail', data=email, follow_redirects=True)
+    response = client.post("/send-mail", data=email, follow_redirects=True)
     assert response.status_code == 200
     assert b"Success, the mail has been sent." in response.data
 
@@ -460,7 +476,7 @@ def test_send_mail_auth(client):
     WHEN the '/send-mail' page is posted to (POST)
     THEN check that a '401' not authorized status code is returned
     """
-    response = client.get('/send-mail')
+    response = client.get("/send-mail")
     assert response.status_code == 401
 
 
@@ -472,7 +488,7 @@ def test_send_test_mail_get(client):
     THEN check that a '405' status code is returned
     """
     # despite being a post only route, this still returns a page
-    response = client.get('/send-test')
+    response = client.get("/send-test")
     assert response.status_code == 405
 
 
@@ -487,7 +503,7 @@ def test_send_test_mail_post(client, email):
     r = login(client, "kelly", "kelly")
     assert r.status_code == 200
 
-    response = client.post('/send-test', data=email, follow_redirects=True)
+    response = client.post("/send-test", data=email, follow_redirects=True)
     assert response.status_code == 204
 
 
@@ -497,5 +513,5 @@ def test_send_test_mail_auth(client):
     WHEN the '/send-test' page is posted to (POST) when a user is not authenticated
     THEN check that a '401' not authorized status code is returned
     """
-    response = client.post('/send-test')
+    response = client.post("/send-test")
     assert response.status_code == 401

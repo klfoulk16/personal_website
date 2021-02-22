@@ -4,6 +4,7 @@ import time
 from werkzeug.security import generate_password_hash
 import datetime
 
+
 def test_posts_model():
     """
     GIVEN a Posts model
@@ -24,6 +25,7 @@ def test_posts_model():
     assert post.body == body
     assert post.category == category
     assert post.date == datetime.date.today()
+
 
 def test_body_images():
     """
@@ -65,9 +67,9 @@ def test_admin():
     """
     email = "nelly@kelly.com"
     password = "weeeeeeeeeeee"
-    
+
     admin = Admin(email, password)
-    
+
     assert admin.email == email
     # returns different hashes each time
     # assert admin.password_hash == generate_password_hash(password)
