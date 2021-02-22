@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+
+<channel>
+  <title>Kelly Foulk</title>
+  <link>http://kellyfoulk.herokuapp.com/</link>
+  <description>Code and adventure. Mainly code.</description>
+  {% for post in posts %}
+  <item>
+    <title>{{ post.title }}</title>
+    <link>http://kellyfoulk.herokuapp.com/post/{{ post.id }}</link>
+    <description>{{ post.sample }}</description>
+    <pubDate>{{ post.date.strftime('%a, %d %b %y %T') }} UTC</pubDate>
+  </item>
+  {% endfor %}
+</channel>
+
+</rss>
