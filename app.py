@@ -1,4 +1,13 @@
-from flask import Flask, flash, render_template, request, redirect, url_for, Markup
+from flask import (
+    Flask,
+    flash,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    Markup,
+    Response
+)
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from flask_login import (
@@ -247,6 +256,12 @@ def subscribe():
     # maybe this should return some URL so we know that the person is subscribed?
     return "", 204
 
+
+@app.route('/rss')
+def rss():
+    posts = Posts.query.all()
+    xml = render_template("rss.xml", posts=posts)
+    return Response(xml, mimetype='text/xml')
 
 """
 Admin-only Routes.

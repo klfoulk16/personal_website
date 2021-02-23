@@ -23,6 +23,8 @@ Bugs:
 - can't edit category
 - can access /edit route without admin priviliges just not edit/id
 - if the route doesn't exist there's no 404 page not found error - it just takes you to a blank page
+- turn post headers to links in index/categories
+- migrate db to aware datetimes with an hour
 
 Problems with the current app testing flow:
 - for subscribe/create tests, if they fail the item is still left in the database. this will be fixed with app factory setup. thank goodness.
