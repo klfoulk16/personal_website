@@ -34,7 +34,7 @@ app.config.update(
     # ENV
     FLASK_ENV=os.getenv("FLASK_ENV"),
     # DATABASE
-    SQLALCHEMY_DATABASE_URI=os.getenv("SQLALCHEMY_DATABASE_URI"),
+    SQLALCHEMY_DATABASE_URI=os.getenv("DATABASE_URL"),
     # EMAIL SETTINGS
     MAIL_SERVER=os.getenv("MAIL_SERVER"),
     MAIL_PORT=os.getenv("MAIL_PORT"),
