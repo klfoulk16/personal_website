@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 
 <channel>
   <title>Kelly Foulk</title>
   <link>http://kellyfoulk.herokuapp.com/</link>
+  <atom:link href="http://kellyfoulk.herokuapp.com/rss" rel="self" type="application/rss+xml" />
   <description>Code and adventure. Mainly code.</description>
   {% for post in posts %}
   <item>
-    <title>{{ post.title }}</title>
+    <title>{{ post.h1 }}</title>
     <link>http://kellyfoulk.herokuapp.com/post/{{ post.id }}</link>
     <description>{{ post.sample }}</description>
-    <pubDate>{{ post.date.strftime('%a, %d %b %y %T') }} UTC</pubDate>
+    <pubDate>{{ post.date.strftime('%a, %d %b %y %T') }} GMT</pubDate>
+    <guid>{{post.id}}</guid>
   </item>
   {% endfor %}
 </channel>
