@@ -1,7 +1,5 @@
 import pytest
 from app import Posts, BodyImages, Subscribers, Admin
-import time
-from werkzeug.security import generate_password_hash
 import datetime
 
 
