@@ -1,8 +1,6 @@
 """Unit and functional test suite for Blog."""
 
-from app import db
-
-__all__ = ["setup_db", "setup_app", "teardown_db"]
+from database import db
 
 
 def setup_db(app):

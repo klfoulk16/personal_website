@@ -1,8 +1,7 @@
 import pytest
 import os
-from app import db, Posts, Subscribers, Admin, mail
-from flask_login import logout_user
-
+from database import Posts, Subscribers, Admin
+from app import mail
 
 def test_index_get(client):
     """
