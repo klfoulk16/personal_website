@@ -15,3 +15,7 @@ My personal website.
 
 
 Note: There will be some major refactoring of the structure of this app in the coming weeks.
+
+Environment Variables:
+
+Can I create a config.py file that has my various configurations for the app? Have environment variables actually stored as environment variables versus in a dotenv file with dotenv? Create a simple script to run to set up my environment for me -activate env and add env vars??
