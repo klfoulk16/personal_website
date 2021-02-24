@@ -1,17 +1,27 @@
-"""What to Test?
-What should you test?
+"""Unit and functional test suite for Blog."""
 
-Again, unit tests should focus on testing small units of code in isolation.
+from app import db
 
-For example, in a Flask app, you may use unit tests to test:
+__all__ = ["setup_db", "setup_app", "teardown_db"]
 
-Database models
-Utility functions that your view functions call
-Functional tests, meanwhile, should focus on how the view functions operate.
 
-For example:
+def setup_db(app):
+    """Method used to build a database"""
+    db.app = app
+    db.create_all()
 
-Nominal conditions (GET, POST, etc.) for a view function
-Invalid HTTP methods are handled properly for a view function
-Invalid data is passed to a view function
-Focus on testing scenarios that the end user will interact with. The experience that the users of your product have is paramount!"""
+
+def teardown_db():
+    """Method used to destroy a database"""
+    db.session.remove()
+    db.drop_all()
+    db.session.bind.dispose()
+
+
+def clean_db():
+    """Clean all data, leaving schema as is
+    Suitable to be run before each db-aware test. This is much faster than
+    dropping whole schema an recreating from scratch.
+    """
+    for table in reversed(db.metadata.sorted_tables):
+        db.session.execute(table.delete())
