@@ -25,6 +25,8 @@ Bugs:
 - if the route doesn't exist there's no 404 page not found error - it just takes you to a blank page
 - turn post headers to links in index/categories
 - migrate db to aware datetimes with an hour
+- get rid of the hardcoded env for the app caches of css
+- remove flask env from default config - have it set as env var
 
 Problems with the current app testing flow:
 - for subscribe/create tests, if they fail the item is still left in the database. this will be fixed with app factory setup. thank goodness.
