@@ -263,10 +263,10 @@ def rss():
     xml = render_template("rss.xml", posts=posts)
     return Response(xml, mimetype='text/xml')
 
+
 """
 Admin-only Routes.
 """
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -395,7 +395,7 @@ def send_mail():
             msg = Message(
                 subject, sender="kellyfoulkblog@gmail.com", recipients=[sub.email]
             )
-            msg.body = f"Hello sub.first,\n{body_text}"
+            msg.body = f"Hello {sub.first},\n{body_text}"
             msg.html = Markup(body_html).format(name=sub.first)
             mail.send(msg)
         flash("Success, the mail has been sent.")
