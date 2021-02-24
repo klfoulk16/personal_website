@@ -194,10 +194,6 @@ def create_app(test_config=None):
 
     with app.app_context():
         db.create_all()
-        if Admin.query.first() is None:
-            admin1 = Admin("kelly", "kelly")
-            db.session.add(admin1)
-            db.session.commit()
 
     @login_manager.user_loader
     def load_user(user_id):
