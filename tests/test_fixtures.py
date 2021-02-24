@@ -1,5 +1,5 @@
 import pytest
-from app import Posts, Subscribers, BodyImages, Admin, db
+from database import Posts, Subscribers, BodyImages, Admin, db
 
 """Tests to make sure app fixtures are working properly"""
 
