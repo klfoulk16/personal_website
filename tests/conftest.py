@@ -1,19 +1,69 @@
 import pytest
-from app import app
+from app import create_app, Admin, db, Posts, Subscribers
 import io
+import dotenv
+import os
+from tests import setup_db, teardown_db, clean_db
 
+dotenv.load_dotenv()
 
-# @pytest.fixture
-# def app():
-#     test_app = app.app.config.update(TESTING=True)
-#     # it's bad practice to update config after app is already set up
-#     # that may lead to things not working properly, we'll see -- din't work
-#     return test_app
+@pytest.fixture
+def app(codepost1, otherpost1, admin_user, subscriber1):
+    app = create_app({
+        'TESTING': True,
+        'SQLALCHEMY_DATABASE_URI': os.getenv("TEST_DATABASE_URL"),
+    })
+
+    # make sure db is clean to start
+    with app.app_context():
+        clean_db()
+        db.session.add(codepost1)
+        db.session.add(otherpost1)
+        db.session.add(admin_user)
+        db.session.add(subscriber1)
+        db.session.commit()
+
+    yield app
+    
+    with app.app_context():
+        teardown_db()
 
 
 @pytest.fixture
-def client():
+def client(app):
     return app.test_client()
+
+
+@pytest.fixture
+def admin_user():
+    return Admin("kelly", "kelly")
+
+
+@pytest.fixture
+def subscriber1():
+    return Subscribers("Kelly", "Foulk", "klf16@my.fsu.edu")
+
+
+@pytest.fixture
+def codepost1():
+    h1 = "Header 1 for the test post"
+    header_path = "/stuff/stuff/stuff/stuff"
+    youtube_vid = "80938203"
+    sample = "Hi this is a sample"
+    body = "<p>hi I edited this</p>"
+    category = "code"
+    return Posts(h1, sample, header_path, youtube_vid, body, category)
+
+
+@pytest.fixture
+def otherpost1():
+    h1 = "H1 for the other test post"
+    header_path = ""
+    youtube_vid = "1111111"
+    sample = "Sample for the other test post"
+    body = "<p>Hi this is sample stuff for the other test post</p>"
+    category = "other"
+    return Posts(h1, sample, header_path, youtube_vid, body, category)
 
 
 @pytest.fixture
