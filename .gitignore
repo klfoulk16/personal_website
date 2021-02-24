@@ -6,3 +6,5 @@ tests/functionaltests/__pycache__/
 tests/unittests/__pycache__/
 venv/
 .pytest_cache
+graveyard
+latest.dump
