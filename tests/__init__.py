@@ -1,6 +1,6 @@
 """Unit and functional test suite for Blog."""
 
-from database import db
+from application.database import db
 
 
 def setup_db(app):
