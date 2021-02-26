@@ -1,7 +1,7 @@
 import pytest
 import os
-from database import Posts, Subscribers, Admin
-from app import mail
+from application.database import Posts, Subscribers, Admin
+from application import mail
 
 def test_index_get(client):
     """
@@ -224,6 +224,9 @@ def test_create_post_with_header_file(client, post_to_upload_with_file, app):
     WHEN the '/create' page is posted to (POST)
     THEN check that posts are properly created if header file included
     """
+    # this test will only work if run from root personal_website directory, so let's check that
+    assert os.path.split(os.getcwdb())[1] == b'personal_website'
+
     r = login(client, "kelly", "kelly")
     assert r.status_code == 200  # test will fail is this doesn't work
 
@@ -236,10 +239,15 @@ def test_create_post_with_header_file(client, post_to_upload_with_file, app):
         post = Posts.query.filter_by(h1="This is the second test post").first()
         assert post is not None
         # make sure file path for header image was made
-        assert os.path.exists(post.header_path)
+        assert os.path.exists(os.path.join("application", post.header_path))
 
-    # clean it all up
-    os.remove(post.header_path)
+    # clean image up
+    os.remove(os.path.join("application", post.header_path))
+    # clean extra directory
+    try:
+        os.rmdir(os.path.join("application", "static", "post_imgs", str(post.id)))
+    except OSError as e:
+        pass  # directory not empty because actually posts are using it
 
 
 def test_create_auth(client):
@@ -323,6 +331,9 @@ def test_edit_post_with_header_file(app, client, post_to_upload_without_file, po
     WHEN the '/edit/<id>' page is posted to (POST)
     THEN check that posts are properly edited if header file is added
     """
+    # this test will only work if run from root personal_website directory, so let's check that
+    assert os.path.split(os.getcwdb())[1] == b'personal_website'
+
     r = login(client, "kelly", "kelly")
     assert r.status_code == 200
 
@@ -346,14 +357,16 @@ def test_edit_post_with_header_file(app, client, post_to_upload_without_file, po
         assert post is not None
 
     # make sure file path for header image was made
-    assert os.path.exists(post.header_path)
+    assert os.path.exists(os.path.join("application", post.header_path))
 
-    # clean it all up
-    os.remove(post.header_path)
+    # clean image up
+    os.remove(os.path.join("application", post.header_path))
+    # clean extra directory
     try:
-        os.rmdir(os.path.join("static", "post_imgs", str(post.id)))
+        os.rmdir(os.path.join("application", "static", "post_imgs", str(post.id)))
     except OSError as e:
         pass  # directory not empty because actually posts are using it
+
 
 
 def test_edit_auth(client):

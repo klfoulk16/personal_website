@@ -1,6 +1,6 @@
 import pytest
-from app import create_app
-from database import Admin, db, Posts, Subscribers
+from application import create_app
+from application.database import Admin, db, Posts, Subscribers
 import io
 import dotenv
 import os

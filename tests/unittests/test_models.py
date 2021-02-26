@@ -1,5 +1,5 @@
 import pytest
-from database import Posts, BodyImages, Subscribers, Admin
+from application.database import Posts, BodyImages, Subscribers, Admin
 import datetime
 
 

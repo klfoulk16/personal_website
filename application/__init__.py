@@ -18,7 +18,7 @@ from flask_login import (
 )
 import os
 from dotenv import load_dotenv
-from database import db, Admin, Posts, Subscribers, BodyImages
+from application.database import db, Admin, Posts, Subscribers, BodyImages
 
 """
 App Configuration
@@ -209,11 +209,13 @@ def create_app(test_config=None):
             category = request.form["category"]
             header = request.files["header"]
             if header.filename != "":
-                img_folder = os.path.join("static", "post_imgs", post_id)
+                # image folder and save location need to be usable from top level of directory
+                img_folder = os.path.join("application", "static", "post_imgs", post_id)
                 if not os.path.exists(img_folder):
                     os.makedirs(img_folder)
-                header_path = os.path.join(img_folder, header.filename)
-                header.save(header_path)
+                header.save(os.path.join(img_folder, header.filename))
+                # 'header_path' assumes we're in the 'templates' directory
+                header_path = os.path.join("static", "post_imgs", post_id, header.filename)
             else:
                 header_path = None
             # h1, sample, header_path, youtube_vid, body, category
@@ -221,12 +223,14 @@ def create_app(test_config=None):
             db.session.add(data)
             for img in request.files.getlist("body_imgs"):
                 if img.filename != "":
-                    img_folder = os.path.join("static", "post_imgs", post_id)
+                    # image folder and save location need to be usable from top level of directory
+                    img_folder = os.path.join("application", "static", "post_imgs", post_id)
                     if not os.path.exists(img_folder):
                         os.makedirs(img_folder)
-                    img_location = os.path.join(img_folder, img.filename)
-                    img.save(img_location)
-                    img_data = BodyImages(post_id, img_location)
+                    img.save(os.path.join(img_folder, img.filename))
+                    # img_path assumes we're in the 'templates' directory
+                    img_path = os.path.join("static", "post_imgs", post_id, img.filename)
+                    img_data = BodyImages(post_id, img_path)
                     db.session.add(img_data)
             db.session.commit()
             flash("Success, your post is live.")
@@ -249,11 +253,13 @@ def create_app(test_config=None):
             post.body = request.form["body"]
             header = request.files["header"]
             if header.filename != "":
-                img_folder = os.path.join("static", "post_imgs", id)
+                # image folder and save location need to be usable from top level of directory
+                img_folder = os.path.join("application", "static", "post_imgs", id)
                 if not os.path.exists(img_folder):
                     os.makedirs(img_folder)
-                post.header_path = os.path.join(img_folder, header.filename)
-                header.save(post.header_path)
+                header.save(os.path.join(img_folder, header.filename))
+                # 'header_path' assumes we're in the 'templates' directory
+                post.header_path = os.path.join("static", "post_imgs", id, header.filename)
             db.session.commit()
             flash("Success, the post has been updated.")
             return redirect(url_for("admin"))
