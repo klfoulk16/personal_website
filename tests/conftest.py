@@ -42,7 +42,7 @@ def admin_user():
 
 @pytest.fixture
 def subscriber1():
-    return Subscribers("Kelly", "Foulk", "klf16@my.fsu.edu")
+    return Subscribers("SubFirst", "SubLast", "test_email@email.com")
 
 
 @pytest.fixture
@@ -132,6 +132,6 @@ def email():
     """Email for use with the send/test email routes"""
     return dict(
         subject="Fake Email Subject",
-        body_text="Hi {name}, This is the text of the message",
+        body_text="This is the text of the message",
         body_html="<p>Hi {name},</p><p>This is the text of the message</p>",
     )
