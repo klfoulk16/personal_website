@@ -16,7 +16,7 @@ Bugs:
 - why are the blog posts expanding outside of their container???
 - refactor subscribe flow
 - should I switch the user to an environment variable??
-- links don't have any CSS styling. invisible.
+- Some of the buttons don't have stying for hover.
 - post body should not be allowed to be none
 - post location in the laptop is based off the number of posts currently in the database, not the real id. need to just get rid of this.
 - should not be able to open route 'edit' for a post that has been deleted or doesn't exist.
@@ -29,8 +29,9 @@ Bugs:
 - remove flask env from default config - have it set as env var
 - old images are not removed from file system if the post is edited to get rid of them...is this how I want things to work?
 
-Problems with the current app testing flow:
-- for subscribe/create tests, if they fail the item is still left in the database. this will be fixed with app factory setup. thank goodness.
+Environment Variables:
+
+Can I create a config.py file that has my various configurations for the app? Have environment variables actually stored as environment variables versus in a dotenv file with dotenv? Create a simple script to run to set up my environment for me -activate env and add env vars??
 
 Fixed:
 1.The dates don't all convert pretty in the code page.
