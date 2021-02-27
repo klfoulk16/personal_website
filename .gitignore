@@ -9,3 +9,4 @@ venv/
 graveyard
 latest.dump
 .coverage
+dev-env.sh
