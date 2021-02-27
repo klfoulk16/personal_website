@@ -1,13 +1,17 @@
 function showMenu() {
     // expand phone header menu
-    const phone_menu_btn = document.getElementById('phone_menu_btn');
-    const phone_menu = document.getElementById('phone_menu');
+    const phone_menu_btn = document.getElementById('phone-menu-btn');
+    const phone_menu_elements = document.getElementsByClassName('phone-menu-dropdown');
 
-    if (phone_menu.style.display == 'block') {
-      phone_menu.style.display = 'none';
-      phone_menu_btn.textContent = 'Menu';
+    if (phone_menu_elements[0].style.display == 'block') {
+        for (var i = 0; i < phone_menu_elements.length; i++) { 
+        phone_menu_elements[i].style.display = 'none';
+        }
+        phone_menu_btn.textContent = 'Menu';
     } else {
-        phone_menu.style.display = 'block';
+        for (var i = 0; i < phone_menu_elements.length; i++) { 
+            phone_menu_elements[i].style.display = 'block';
+        }
         phone_menu_btn.textContent = 'Hide';
     }
 };
@@ -16,7 +20,7 @@ function showMenu() {
 //Get the Modal
 var modal = document.getElementById('subscribe_modal');
 //Get button that opens modal
-var open = document.getElementById('modal_open');
+var open = document.getElementById('subscribe-link');
 //Get element that closes the modal
 var close = document.getElementById('modal_close');
 //When user clicks open button, open modal

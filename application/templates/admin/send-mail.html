@@ -24,7 +24,7 @@
     }
 </script>
 
-<form name="email_form" action='' method='POST' class="container" enctype="multipart/form-data">
+<form name="email_form" action='' method='POST' enctype="multipart/form-data">
     <h1>Send New Email</h1>
     <h3>Subject (text):</h3>
     <input type="text" name="subject" maxlength="125" />
@@ -35,12 +35,12 @@
     <p><i>No styles are automatically applied to this. Remember to add them in a style tag up top.</i></p>
     <p><i>Also some emails don't render things right. Aka buttons aren't going to look right.</i></p>
     <textarea name="body_html" cols="30" rows="20" id="email_html">Hi {name},</textarea>
-    <button class="btn form-btn" type="button" onclick="emailPreview()">Preview Email</button>
-    <button class="btn form-btn" type="submit" onclick="sendTest()">Send Test Email</button>
-    <button class="btn form-btn" type="submit" onclick="sendMail()">Send Emails</button>
+    <button type="button" onclick="emailPreview()">Preview Email</button>
+    <button type="submit" onclick="sendTest()">Send Test Email</button>
+    <button type="submit" onclick="sendMail()">Send Emails</button>
 </form>
 
-<div id="email_preview" class='container'>
+<div id="email_preview">
     <div id="html_preview">
     </div>
 </div>

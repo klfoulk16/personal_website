@@ -5,19 +5,17 @@
 {% endblock %}
 
 {% block main %}
-    <div class="container inner">
-        <h1>Howdy!</h1>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <h3>{{ message }}</h3>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        <a class="btn_a" href='/admin/create'><button class="btn admin-btn">Create Post</button></a>
-        <a class="btn_a" href='/admin/edit'><button class="btn admin-btn">Edit Post</button></a>
-        <a class="btn_a" href='/admin/delete'><button class="btn admin-btn">Delete Post</button></a>
-        <a class="btn_a" href='/admin/send-mail'><button class="btn admin-btn" action="admin.send-mail">Send Mail</button></a>
-        <a class="btn_a" href='/admin/logout'><button class="btn admin-btn">Logout</button></a>
-    </div>
+<h1>Howdy!</h1>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <h3>{{ message }}</h3>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+<a class="btn-link uncolored-link" href='/admin/create'><button>Create Post</button></a>
+<a class="btn-link uncolored-link" href='/admin/edit'><button>Edit Post</button></a>
+<a class="btn-link uncolored-link" href='/admin/delete'><button>Delete Post</button></a>
+<a class="btn-link uncolored-link" href='/admin/send-mail'><button action="admin.send-mail">Send Mail</button></a>
+<a class="btn-link uncolored-link" href='/admin/logout'><button>Logout</button></a>
 {% endblock %}

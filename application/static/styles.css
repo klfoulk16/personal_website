@@ -1,15 +1,46 @@
+/* menu buttons are off from words... */
+
 /* =================================
   Base Element Styles
-  # Ensure responses aren't cached
 ==================================== */
 
 * {
-	box-sizing: border-box;
+	/* make sure boxes don't go outside forms */
+    box-sizing: border-box;
+}
+
+html {
+	/* Situating the footer */
+	position: relative;
+	min-height: 100vh;
+}
+
+header {
+	margin-top: 1em;
 }
 
 body {
-	padding-top: 1em;
 	font-family: Arial, sans-serif;
+	padding-bottom: 5rem;    /* White-Space to Include Footer*/
+}
+  
+footer {
+	/* Situating the footer */
+	position: absolute;
+	bottom: 0;
+	height: 1.5rem;            /* Footer height */
+}
+
+h1, h3, h4 {
+	font-family: "Geneva", sans-serif;
+}
+
+h3 {
+	font-weight: 400;
+}
+
+img {
+	max-width: 100%;
 }
 
 a {
@@ -24,25 +55,6 @@ a:visited {
 
 a:hover {
 	border-bottom: .75px solid rgb(106, 128, 255);
-	/* color:#9eacff; */
-}
-
-h1 {
-	font-family: "Geneva", sans-serif;
-}
-
-img {
-	max-width: 100%;
-}
-
-footer {
-	margin-top: 10em;
-	margin-bottom: 1em;
-	text-align: center;
-}
-
-hr {
-	width: 80%;
 }
 
 textarea {
@@ -54,77 +66,9 @@ input {
 	width: 100%;
 }
 
-.btn, select {
-	background: none;
-	padding: .5em 1.25em;
-	border: solid 1px;
-	font-family: "Geneva", sans-serif;
-}
-
-#blog_intro {
-	text-align: center;
-	font-size: 2em;
-}
-
-.caption {
-	padding-top: 1em;
-	text-align: center;
-}
-
-/* --- Modal Box --- */
-/* The Modal */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-#subscribe_message {
-	display:none;
-}
-
 /* =================================
-  Base Layout Styles
+	Container Styles
 ==================================== */
-
-/* ---- Layout Containers ---- */
-
-.container {
-	width: 80%;
-	margin: 0 auto;
-}
 
 /* ---- Float clearfix ---- */
 
@@ -134,188 +78,199 @@ input {
 	clear: both;
 }
 
-/* ---- Buttons with Links Inside---- */
+/* ---- Layout Containers ---- */
 
-.btn_a, h2 .header_link {
-	border-bottom: None;
-	color: black;
+.container {
+	width: 80%;
+	/* keep everything centered */
+	margin: 0 auto;
 }
 
-.btn_a:hover {
-	color: #3F4234;
-	border-bottom: None;
+.block {
+	/* block of content in site */
+	padding: 1em 0em;
 }
 
- /* gets rid of that weird blue box around buttons when clicked */
-:focus {outline:0 !important;}
 
-/* ---- Navigation ---- */
+/* =================================
+	Core Blog Elements
+==================================== */
 
+/* --- Main Nav Menu --- */
 
-.main-nav a {
-	border-bottom: None;
-	font-family: "Geneva", sans-serif;
+#main-nav > *, #phone-menu-btn {
+	/* ensure consistent padding */
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#nav-menu-title {
 	display: block;
-	text-align: left;
-	padding: 10px 15px;
-	color: black;
+	font-size: 1.75em;
 }
 
-.main-nav a:hover, .btn_hover:hover {
-	color: #3F4234;
-}
-
-.main-nav ol,
- ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-#phone_menu {
+.phone-menu-dropdown {
+	/* hide dropdown elements initially */
 	display: none;
 }
 
-#title {
-	font-size: 1.5em;
+#main-nav a {
+	/* get rid of link bottom border and coloring */
+	border-bottom: None;
+	color: black;
 }
 
-#menu {
-	float: left;
+#main-nav a:hover {
+	color: #3F4234;
 }
 
-#phone_menu_btn {
+#phone-menu-btn {
 	float: right;
-	margin-top:0.4em;
 }
 
-#phone_menu_btn:visited {
+#main-nav {
+	float: left;
+	font-family: "Geneva", sans-serif;
+}
+
+#subscribe-link {
 	border: none;
+	padding: 0;
 }
 
-/* Home Page */
 
-/* ---- Banner ---- */
+/* --- Modal Windows --- */
 
-.banner {
-	padding-top: 1em;
-	padding-bottom: 1em;
+/* The Modal */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.banner img {
-	padding: .4em;
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
 }
 
-.banner h4 {
-	font-weight: normal;
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
 }
 
-.banner-right {
-	margin: .4em
+.close:hover,
+.close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
 }
 
-.banner-left {
-	margin: .4em;
+
+/* --- Banners --- */
+
+/* banner image should have small black outline...*/
+#banner-img {
 	border: solid 1px black;
-}
-
-/* not sure where this is used */
-.inner {
-	padding: 1em .4em 0em;
-}
-
-/* ---- Blog Posts ---- */
-
-.post-sample {
-	padding: 2em 2em;
-}
-
-/* All of these are deprecated. Used with old_post_grid.html
-.post_sample {
-	margin-top: 1em;
-	margin-bottom: 1em;
-}
-
-.post_sample img {
 	padding: .4em;
 }
 
-.post_sample h4 {
-	font-weight: normal;
-}
-
-.sample-right {
-	margin: .4em
-}
-
-.sample-left {
-	margin: .4em;
-}
-
-.sample-img {
-	overflow:hidden;
-
-}
-
-*/
-
-/* -- Change'container' div in post to this if you decide you want the header image/video to be larger than everything else. --*/
-.post img {
-	padding-top: 2em;
-}
-
-
-/* ---- Email Preview and Post Preview----- */
-
-#email_preview, #post_preview {
-	margin-top: 2em;
-	padding: 1em;
-	border: solid 1px;
-	display: None;
-}
-
-#html_preview {
-	all: initial;
-}
-
-
-/* ---- Page Elements ---- */
-
-.category_btn {
+#banner button {
+	/* allows buttons to expand with window */
 	width: 45%;
-	font-size: 1.25em;
 }
 
-/* Forms */
+#banner h1 {
+	font-size: 2.25em;
+	margin: 0.5em 0 0 0; /* padding down from image above, no padding below */
+}
 
-.form-btn {
-	margin-top: 2em;
-	display: block;
+/* ----The Iconic Black and White Line Border Style ----- */
+button, select, .form-element {
+	padding: .5em 1.25em;
+	border: solid 1px;
+}
+
+/* ---- Forms ---- */
+
+form button {
+	margin-top: 1em;
 	width: 100%;
 }
 
-.form-element {
-	padding: .5em 1.25em;
-	border: solid 1px;
-	font-family: "Geneva", sans-serif;
-	margin-top: 1em;
-}
-
-/* --- Create Post Form --- */
-
 #body_img_div label {
+	/* Keep number on same line as Upload button */
     float:left;
 	height: 20px;
 	padding-top: 3px;
 	width: 30px;
 }
+
 #body_img_div input {
     width: 300px;
 }
 
-/* ---- Admin Panel ---- */
-.admin-btn {
-	margin-bottom: 1em;
+.form-element {
+	font-family: "Geneva", sans-serif;
+	margin-top: 1em;
+}
+
+
+/* --- Buttons --- */
+
+button {
+	background: none;
+}
+
+button:hover {
+	color: #3F4234;
+}
+
+/* gets rid of that weird blue box around buttons when clicked */
+:focus {outline:0 !important;}
+
+
+/* ---- Link Styling ---- */
+
+h2 .uncolored-link, .uncolored-link {
+	/* I don't know why, but to get the post sample h2 to be black,
+	I have to expicitly declare h2 here */
+	border-bottom: None;
+	color: black;
+}
+
+.btn-link:hover {
+	border-bottom: None;
+}
+
+/* =================================
+	Unique Element Styles
+==================================== */
+
+/* Initially Hide Subscribe Message In Subscribe Modal */
+#subscribe_message {
+	display:none;
+}
+
+#email_preview, #post_preview {
+    margin-top: 2em;
+    padding: 1em;
+    border: solid 1px;
+    display: None;
 }
 
 /* =================================
@@ -326,115 +281,93 @@ input {
 
 	/* ---- Layout Containers ---- */
 
-	#page-wrap {
+	.container {
 		width: 75%;
 		margin: 0 auto;
 	}
 
-	.modal-content {
+	/* ----- Main Nav Styles ---- */
+
+	#main-nav > * {
+		display: block !important;
+	}
+
+	#main-nav {
+		width: 100%;
+		display: flex;
+		align-items: center;
+	}
+
+	.nav-nontitle-link {
+		line-height: 2em;
+	}
+
+	.left-nav-item {
+		margin-right: 1em;
+	}
+
+	#phone-menu-btn {
+		display: None;
+	}
+
+	#subscribe-link {
+		padding: .5em 1.25em;
+		border: solid 1px;
+		margin-left: auto;
+	}
+
+	/* ----- Banner Styles ---- */
+
+	#banner {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		/* margin-top: 2em;
+		margin-bottom: 2em; */
+	}
+
+	#banner-text {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		margin-left: 5%; /* keep padding between text and image */
+	}
+
+	#banner-img {
+		flex-shrink: 1.5; /* image will shrink if text runs out of room */
+	}
+
+	#banner h1 {
+		font-size: 2.75em;
+		margin: 0;
+	}
+
+
+	/* ----- Other Styles ---- */
+
+	/* Modifies modal window. */
+	.small-width-element {
 		width: 40%;
+		margin: 0 auto;
 	}
-
-	#login {
-		width: 50%;
-	}
-
-	/* ---- Navigation ---- */
-
-	#phone_menu {
-		display: contents!important;
-	}
-
-	#menu, #phone_menu_btn {
-		float: none;
-	}
-
-	.l {
-		float: left;
-	}
-
-	.r {
-		float: right;
-	}
-
-	#phone_menu li {
-		display: inline-block;
-		margin-left: 15px;
-		padding-top: .45em;
-	}
-
-	#phone_menu_btn {
-		display: none;
-	}
-
-	/* ---- Banner ---- */
-
-	.banner {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-top: 3em;
-		margin-bottom: 3em;
-	}
-
-	.banner-right {
-		width: 50%;
-		margin-left: 1em;
-	}
-
-	.banner-left {
-		width: 50%;
-		margin-right: 1em;
-	}
-
-	.banner h1 {
-		font-size: 3em;
-	}
-
-	/* ----- Post Samples ----- */
-
-	/* Deprecated
-	.post_sample {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-top: .5em;
-		margin-bottom: .5em;
-	}
-
-	.sample-right {
-		width: 50%;
-		margin-left: 1em;
-	}
-
-	.sample-left {
-		width: 50%;
-		margin-right: 1em;
-	}
-
-	.post_sample h1 {
-		font-size: 3em;
-	}
-	*/
 }
 
-@media (min-width: 1425px) {
+@media (min-width: 1025px) {
 
-	#page-wrap {
-		width: 65%;
+	/* ---- Layout Containers ---- */
+
+	.container {
+		width: 55%;
+		margin: 0 auto;
 	}
 
-	.modal-content {
+
+	/* ----- Other Styles ---- */
+
+	/* Modifies modal window. */
+	.small-width-element {
 		width: 25%;
-	}
-
-	.banner h4 {
-		font-size: 1.25em;
-	}
-
-	.banner-right, .banner-left {
-		margin-left: 1.25em;
-		margin-right: 1.25em;
+		margin: 0 auto;
 	}
 
 }
