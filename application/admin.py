@@ -1,4 +1,4 @@
-"""Handles all routes for the admin side of the app"""
+"""Blueprint for the admin side of the app"""
 
 from flask import (
     Flask,
@@ -23,6 +23,7 @@ import os
 from dotenv import load_dotenv
 from application.database import db, Admin, Posts, Subscribers, BodyImages
 
+load_dotenv()
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
