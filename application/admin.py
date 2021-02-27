@@ -18,10 +18,7 @@ from flask_login import (
     current_user,
 )
 import os
-from dotenv import load_dotenv
 from application.database import db, Admin, Posts, Subscribers, BodyImages
-
-load_dotenv()
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 

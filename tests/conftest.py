@@ -2,11 +2,9 @@ import pytest
 from application import create_app
 from application.database import Admin, db, Posts, Subscribers
 import io
-import dotenv
 import os
 from tests import setup_db, teardown_db, clean_db
 
-dotenv.load_dotenv()
 
 @pytest.fixture
 def app(codepost1, otherpost1, admin_user, subscriber1):

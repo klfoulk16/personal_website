@@ -8,13 +8,9 @@ from flask import (
     Blueprint
 )
 import os
-from dotenv import load_dotenv
 from application.database import db, Posts, Subscribers, BodyImages
 from application.admin import mail
 from flask_mail import Message
-
-# Load environment variables
-load_dotenv()
 
 bp = Blueprint('blog', __name__)
 

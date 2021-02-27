@@ -30,10 +30,6 @@ Bugs:
 - old images are not removed from file system if the post is edited to get rid of them...is this how I want things to work?
 - if you don't enter a message body (only html) you'll get a server error
 
-Environment Variables:
-
-Can I create a config.py file that has my various configurations for the app? Have environment variables actually stored as environment variables versus in a dotenv file with dotenv? Create a simple script to run to set up my environment for me -activate env and add env vars??
-
 Fixed:
 1.The dates don't all convert pretty in the code page.
 -added .all() after db query.
