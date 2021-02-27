@@ -7,13 +7,24 @@
 	box-sizing: border-box;
 }
 
-a {
-	text-decoration: none;
-}
-
 body {
 	padding-top: 1em;
 	font-family: Arial, sans-serif;
+}
+
+a {
+	text-decoration: None;
+	color:rgb(106, 128, 255);
+	border-bottom: .75px solid rgba(106, 128, 255, .4);
+}
+
+a:visited {
+	color:#6a80ff;
+}
+
+a:hover {
+	border-bottom: .75px solid rgb(106, 128, 255);
+	/* color:#9eacff; */
 }
 
 h1 {
@@ -48,10 +59,6 @@ input {
 	padding: .5em 1.25em;
 	border: solid 1px;
 	font-family: "Geneva", sans-serif;
-}
-
-a:link {
-	color: inherit;
 }
 
 #blog_intro {
@@ -127,10 +134,26 @@ a:link {
 	clear: both;
 }
 
+/* ---- Buttons with Links Inside---- */
+
+.btn_a, h2 .header_link {
+	border-bottom: None;
+	color: black;
+}
+
+.btn_a:hover {
+	color: #3F4234;
+	border-bottom: None;
+}
+
+ /* gets rid of that weird blue box around buttons when clicked */
+:focus {outline:0 !important;}
 
 /* ---- Navigation ---- */
 
+
 .main-nav a {
+	border-bottom: None;
 	font-family: "Geneva", sans-serif;
 	display: block;
 	text-align: left;
@@ -138,7 +161,7 @@ a:link {
 	color: black;
 }
 
-.main-nav a:hover {
+.main-nav a:hover, .btn_hover:hover {
 	color: #3F4234;
 }
 
