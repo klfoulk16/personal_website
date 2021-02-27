@@ -39,10 +39,10 @@
                 {% if post.header_path %}
                 <img src="../{{ post.header_path }}">
                 {% endif %}
-                <h1>{{ post.h1 }}</h1>
+                <h2><a class="header_link" href='/post/{{post.id}}'>{{ post.h1 }}</a></h2>
                 <h4>{{ post.date }}</h4>
                 <p>{{ post.sample }}</p>
-                <a href='/post/{{post.id}}'><button class="btn">Read More</button></a>
+                <a class="btn_a" href='/post/{{post.id}}'><button class="btn">Read More</button></a>
             </div>
             <hr style="width:100%;">
             {% endfor %}

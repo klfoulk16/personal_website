@@ -12,8 +12,8 @@
             <div class="banner-right">
                 <h1>Hiya, I'm Kelly</h1>
                 <h4>I like to code. And lots of other things. Find out more about my projects and other adventures below:</h4>
-                <a href='/code'><button class="l btn category_btn">Code</button></a>
-                <a href='/other'><button class="r btn category_btn">Other</button></a>
+                <a class="btn_a" href='/code'><button class="l btn category_btn">Code</button></a>
+                <a class="btn_a" href='/other'><button class="r btn category_btn">Other</button></a>
             </div>
         </div>
 
@@ -22,10 +22,10 @@
         <div class="container">
             {% for post in posts %}
             <div class="post-sample">
-                <h2>{{ post.h1 }}</h2>
+                <h2><a class="header_link" href='/post/{{post.id}}'>{{ post.h1 }}</a></h2>
                 <h4>{{ post.date }}</h4>
                 <p>{{ post.sample }}</p>
-                <a href='/post/{{post.id}}'><button class="btn">Read More</button></a>
+                <a class="btn_a" href='/post/{{post.id}}'><button class="btn">Read More</button></a>
             </div>
             <hr style="width:100%;">
             {% endfor %}
