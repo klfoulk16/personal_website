@@ -1,14 +1,12 @@
 """Blueprint for the admin side of the app"""
 
 from flask import (
-    Flask,
     flash,
     render_template,
     request,
     redirect,
     url_for,
     Markup,
-    Response,
     Blueprint
 )
 from flask_mail import Mail, Message
