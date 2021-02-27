@@ -5,12 +5,14 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/admin/login" method="POST" class="container" id='login'>
-        {% if message %}
-        <p style="color: red;">{{ message }}</p>
-        {% endif %}
-        <input class="form-element" autocomplete="off" autofocus name="email" placeholder="Email" type="text" required></p>
-        <input class="form-element" name="password" placeholder="Password" type="password" required>
-        <button class="btn form-btn" type="submit">Log In</button>
-    </form>
+<form action="/admin/login" method="POST" class="container" id='login'>
+    {% if message %}
+    <p style="color: red;">{{ message }}</p>
+    {% else %}
+    <h4>Knock, knock, who's there?</h4>
+    {% endif %}
+    <input class="form-element" autocomplete="off" autofocus name="email" placeholder="Email" type="text" required>
+    <input class="form-element" name="password" placeholder="Password" type="password" required>
+    <button class="btn form-btn" type="submit">Log In</button>
+</form>
 {% endblock %}
