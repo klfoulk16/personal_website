@@ -138,8 +138,8 @@ def create_app(test_config=None):
 
         # send them a welcome email
         subject = "Hi, it's Kelly"
-        msg = Message(subject, sender="kellyfoulkblog@gmail.com", recipients=[email])
-        msg.body = f"Hello {first},\n Thanks for subscribing! \n Best, \n Kelly"
+        msg = Message(subject, sender=os.getenv("MAIL_USERNAME"), recipients=[email])
+        msg.body = f"Hello {first},\nThanks for subscribing!\nBest,\n Kelly"
         msg.html = render_template("/emails/welcome.html", name=first)
         mail.send(msg)
 
@@ -291,7 +291,7 @@ def create_app(test_config=None):
             body_html = request.form["body_html"]
             for sub in subs:
                 msg = Message(
-                    subject, sender="kellyfoulkblog@gmail.com", recipients=[sub.email]
+                    subject, sender=os.getenv("MAIL_USERNAME"), recipients=[sub.email]
                 )
                 msg.body = f"Hello {sub.first},\n{body_text}"
                 msg.html = Markup(body_html).format(name=sub.first)
@@ -313,7 +313,7 @@ def create_app(test_config=None):
         body_text = request.form["body_text"]
         body_html = request.form["body_html"]
         msg = Message(
-            subject, sender="kellyfoulkblog@gmail.com", recipients=["klf16@my.fsu.edu"]
+            subject, sender=os.getenv("MAIL_USERNAME"), recipients=[os.getenv("TEST_EMAIL")]
         )
         msg.body = body_text
         msg.html = Markup(body_html).format(name="Kelly")

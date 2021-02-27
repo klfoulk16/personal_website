@@ -113,12 +113,21 @@ def test_subscribe_post(client, app):
     with app.app_context():
         sub = Subscribers.query.filter_by(email="test@example.com").first()
         assert sub is None
+    first = "testfirst"
+    last = "testlast"
+    email = "test@example.com" 
+    with mail.record_messages() as outbox:
+        response = client.post(
+            "/subscribe",
+            data=dict(first=first, last=last, email=email),
+        )
+        assert response.status_code == 204
 
-    response = client.post(
-        "/subscribe",
-        data=dict(first="testfirst", last="testlast", email="test@example.com"),
-    )
-    assert response.status_code == 204
+        # assert email was sent to the new with the correct subject
+        assert len(outbox) == 1
+        assert outbox[0].subject == "Hi, it's Kelly"
+        assert outbox[0].body == f"Hello {first},\nThanks for subscribing!\nBest,\n Kelly"
+        assert outbox[0].html == f"<p>Hi {first},</p>\n<p>Thanks for subscribing!</p>\n<p>Best,</p>\n<p>Kelly</p>"
 
     with app.app_context():
         sub = Subscribers.query.filter_by(email="test@example.com").first()
@@ -441,8 +450,10 @@ def test_send_mail_post(client, email, app):
     THEN check that a 200 status code is returned and proper number of emails are sent
     """
     assert app.testing is True
-    # eventually this will be a more comprehensive test
-    # track that the proper number of emails are sent? not right now with current setup
+    # make sure the database is set up correctly
+    with app.app_context():
+        sub = Subscribers.query.filter_by(first="SubFirst").first()
+        assert sub is not None
     r = login(client, "kelly", "kelly")
     assert r.status_code == 200
     with mail.record_messages() as outbox:
@@ -453,7 +464,8 @@ def test_send_mail_post(client, email, app):
         # assert email was sent to the one subscriber in the db with the correct subject
         assert len(outbox) == 1
         assert outbox[0].subject == "Fake Email Subject"
-
+        assert outbox[0].body == f"Hello {sub.first},\nThis is the text of the message"
+        assert outbox[0].html == f"<p>Hi {sub.first},</p><p>This is the text of the message</p>"
 
 def test_send_mail_auth(client):
     """
