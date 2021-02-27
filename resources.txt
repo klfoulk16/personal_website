@@ -23,3 +23,6 @@ https://stackoverflow.com/questions/1950939/creating-input-field-for-html-form-b
 
 Have send-email form have two different routes depending on button click.
 https://stackoverflow.com/questions/2753308/different-form-action-depending-on-button-pressed
+
+Wonderful tutorial about link styling.
+https://www.webfx.com/blog/web-design/hyperlink-design/#:~:text=According%20to%20a%20study%20by,they%20are%20blue%20and%20underlined.
