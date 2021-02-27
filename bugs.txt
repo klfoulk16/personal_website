@@ -28,6 +28,7 @@ Bugs:
 - get rid of the hardcoded env for the app caches of css
 - remove flask env from default config - have it set as env var
 - old images are not removed from file system if the post is edited to get rid of them...is this how I want things to work?
+- if you don't enter a message body (only html) you'll get a server error
 
 Environment Variables:
 
