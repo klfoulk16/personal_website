@@ -12,8 +12,8 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/styles.css">
-    <link rel="stylesheet" href="../static/Normalize.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='Normalize.css')}}">
     <title>Kelly Foulk</title>
     <!--Contain's the basic layout for the home page, which I will be populating with information from the database.-->
 </head>
@@ -50,6 +50,6 @@
 </body>
 <footer>
     <span>&copy;2020 Kelly Foulk.</span>
-    <script src="../static/scripts.js"></script>
+    <script src="{{url_for('static', filename='scripts.js')}}"></script>
 </footer>
 </html>
