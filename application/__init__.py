@@ -55,16 +55,6 @@ def create_app(test_config=None):
     if test_config is not None:
         app.config.from_mapping(test_config)
 
-    # Make sure site isn't cached if in dev mode. Get rid of this awful crap.
-    ENV = "dev"
-    if ENV == "dev":
-        @app.after_request
-        def after_request(response):
-            response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-            response.headers["Expires"] = 0
-            response.headers["Pragma"] = "no-cache"
-            return response
-
     db.init_app(app)
     mail.init_app(app)
     login_manager.init_app(app)
