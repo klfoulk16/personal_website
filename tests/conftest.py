@@ -4,6 +4,7 @@ from application.database import Admin, db, Posts, Subscribers
 import io
 import os
 from tests import setup_db, teardown_db, clean_db
+from werkzeug.security import generate_password_hash
 
 
 @pytest.fixture
@@ -35,7 +36,7 @@ def client(app):
 
 @pytest.fixture
 def admin_user():
-    return Admin("kelly", "kelly")
+    return Admin("kelly", generate_password_hash("kelly"))
 
 
 @pytest.fixture
