@@ -14,10 +14,6 @@ from flask_mail import Message
 
 bp = Blueprint('blog', __name__)
 
-@bp.route("/styles")
-def base_styles():
-    return render_template("base-styles.html")
-
 @bp.route("/", methods=["GET"])
 def index():
     """
