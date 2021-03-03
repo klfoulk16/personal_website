@@ -33,10 +33,9 @@ def test_login_post(client, app):
     WHEN the '/login' page is posted to (POST)
     THEN check that response is valid and person is logged in
     """
-    with app.app_context():
-        admin = Admin.query.filter_by(email="kelly").first()
-        assert admin.check_password("kelly")
-    response = login(client, admin.email, "kelly")
+    response = client.post(
+        "admin/login", data={"email": "kelly", "password": "kelly"}, follow_redirects=True
+        )
     assert response.status_code == 200
     assert b"What would you like to do today?" in response.data
 

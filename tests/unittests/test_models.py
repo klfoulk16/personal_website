@@ -64,7 +64,7 @@ def test_admin():
     THEN also check that methods are properly defined
     """
     email = "nelly@kelly.com"
-    password = "weeeeeeeeeeee"
+    password = "weeeeeeeeeeee" #this is not encrypted but should be when sending to database
 
     admin = Admin(email, password)
 
@@ -73,7 +73,6 @@ def test_admin():
     # assert admin.password_hash == generate_password_hash(password)
     assert admin.authenticated is False
 
-    assert admin.check_password(password) is True
     # none of these return what they're supposed to according to the code I copied
     # hence why I'm going to remove flask-login
     # assert admin.is_active is True
