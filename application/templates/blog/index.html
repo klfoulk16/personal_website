@@ -5,35 +5,30 @@
 {% endblock %}
 
 {% block main %}
-        <div class="container clearfix banner">
-            <div class="banner-left" id="main-banner">
-                <img src="../static/meFSUGrad.jpg">
-            </div>
-            <div class="banner-right">
-                <h1>Hiya, I'm Kelly</h1>
-                <h4>I like to code. And lots of other things. Find out more about my projects and other adventures below:</h4>
-                <a class="btn_a" href='/code'><button class="l btn category_btn">Code</button></a>
-                <a class="btn_a" href='/other'><button class="r btn category_btn">Other</button></a>
-            </div>
+<div class="block" id="banner">
+    <div id="banner-img">
+        <img src="../static/meFSUGrad.jpg">
+    </div>
+    <div id="banner-text">
+        <h1>Hiya, I'm Kelly</h1>
+        <h4>I like to code. And lots of other things. Find out more about my projects and other adventures below...</h4>
+        <div>
+            <a class="btn-link uncolored-link" href='/code'><button>Code</button></a>
+            <a class="btn-link uncolored-link" href='/other'><button>Other</button></a>
         </div>
+    </div>
+</div>
 
-        <hr>
+<hr>
 
-        <div class="container">
-            {% for post in posts %}
-            <div class="post-sample">
-                <h2><a class="header_link" href='/post/{{post.id}}'>{{ post.h1 }}</a></h2>
-                <h4>{{ post.date }}</h4>
-                <p>{{ post.sample }}</p>
-                <a class="btn_a" href='/post/{{post.id}}'><button class="btn">Read More</button></a>
-            </div>
-            <hr style="width:100%;">
-            {% endfor %}
-        </div>
+{% for post in posts %}
+<div class="block">
+    <h2><a class="uncolored-link" href='/post/{{post.id}}'>{{ post.h1 }}</a></h2>
+    <h4>{{ post.date }}</h4>
+    <p>{{ post.sample }}</p>
+    <a class="btn-link uncolored-link" href='/post/{{post.id}}'><button class="btn">Read More</button></a>
+</div>
+<hr>
+{% endfor %}
 
 {% endblock %}
-
-
-<!--for later:
-// code block filled with tags of my posts -- leads to previews of all posts
-tagged with that thing-->

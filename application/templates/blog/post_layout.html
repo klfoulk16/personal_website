@@ -7,45 +7,40 @@
 {% endblock %}
 
 {% block main %}
-        <div class="container clearfix banner">
-            {% if category == 'other' %}
-                <div class="banner-left">
-                    <img src="../static/climbing-annapolis-rocks.JPG">
-                </div>
-                <div class="banner-right">
-                    <h1>Adventure Time!</h1>
-                    <h4>Here you'll find some of the adventures I've been going on. Climbing, backpacking, traveling, etc.</h4>
-                </div>
-            {% endif %}
-            {% if category == 'code' %}
-                <div class="banner-left">
-                    <img src="../static/me_coding.gif">
-                </div>
-                <div class="banner-right">
-                    <h1>Let's Code!</h1>
-                    <h4>Here you'll find all things code and tech-related. Mainly my projects.</h4>
-                    <i>P.S. I wish I typed as fast as this cat. </i>
-                </div>
-            {% endif %}
+<div class="block" id="banner">
+    {% if category == 'other' %}
+        <div id="banner-img">
+            <img src="../static/climbing-annapolis-rocks.JPG">
         </div>
-
-        <hr>
-
-        <!-- Add subscribe button here-->
-
-        <div class="container" id="blog-posts">
-            {% for post in posts %}
-            <div class="post-sample">
-                {% if post.header_path %}
-                <img src="../{{ post.header_path }}">
-                {% endif %}
-                <h2><a class="header_link" href='/post/{{post.id}}'>{{ post.h1 }}</a></h2>
-                <h4>{{ post.date }}</h4>
-                <p>{{ post.sample }}</p>
-                <a class="btn_a" href='/post/{{post.id}}'><button class="btn">Read More</button></a>
-            </div>
-            <hr style="width:100%;">
-            {% endfor %}
+        <div id="banner-text">
+            <h1>Adventure Time!</h1>
+            <h4>Here you'll find some of the adventures I've been going on. Climbing, backpacking, traveling, etc.</h4>
         </div>
+    {% endif %}
+    {% if category == 'code' %}
+        <div id="banner-img">
+            <img style="display: block; margin-left: auto; margin-right: auto;" src="../static/me_coding.gif">
+        </div>
+        <div id="banner-text">
+            <h1>Let's Code!</h1>
+            <h4>Here you'll find all things code and tech-related. Mainly my projects.</h4>
+            <i>P.S. I wish I typed as fast as this cat. </i>
+        </div>
+    {% endif %}
+</div>
+
+<hr>
+
+<!-- Add subscribe button here-->
+
+{% for post in posts %}
+<div class="block">
+    <h2><a class="uncolored-link" href='/post/{{post.id}}'>{{ post.h1 }}</a></h2>
+    <h4>{{ post.date }}</h4>
+    <p>{{ post.sample }}</p>
+    <a class="btn-link uncolored-link" href='/post/{{post.id}}'><button class="btn">Read More</button></a>
+</div>
+<hr>
+{% endfor %}
 
 {% endblock %}

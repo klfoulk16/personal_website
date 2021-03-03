@@ -12,51 +12,44 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/styles.css">
-    <link rel="stylesheet" href="../static/Normalize.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='Normalize.css')}}">
     <title>Kelly Foulk</title>
     <!--Contain's the basic layout for the home page, which I will be populating with information from the database.-->
 </head>
 
-<body>
-    <div id="page-wrap">
-        <nav class="main-nav container clearfix">
-            <ul id="menu">
-                <li class="l" id="title"><a href="/">Kelly Foulk</a></li>
-                <div id="phone_menu">
-                    <li class="l"><a href="/code">Code</a></li>
-                    <li class="l"><a href="/other">Other</a></li>
-                    <li class="r"><button class='btn btn_hover' id='modal_open'>Subscribe</button></li>
-                </div>
-            </ul>
-            <button id="phone_menu_btn" class="btn btn_hover" onclick=showMenu()>Menu</button>
-        </nav> <!--/.main-header-->
-
-        <!-- The Modal -->
-        <div id="subscribe_modal" class="modal">
-          <!-- Modal content -->
-          <div class="modal-content">
-            <span class="close" id='modal_close'>&times;</span>
-            <form action="/subscribe" method="POST" id='subscribe_form'>
-                <h2>Let's stay in touch!</h2>
-                <input class="form-element" autofocus name="first" placeholder="First Name" type="text" required>
-                <input class="form-element" name="last" placeholder="Last Name" type="text">
-                <input class='form-element' name='email' placeholder='Email' type='text'>
-                <button class="btn form-btn" id='subscribe_signup' type="submit">Sign up</button>
-            </form>
-            <h3 id="subscribe_message">I'll be in touch soon!</h3>
-          </div>
+<header>
+    <nav class="clearfix">
+        <div id="main-nav">
+            <a href="/" class="left-nav-item" id="nav-menu-title">Kelly Foulk</a>
+            <a href="/code" class="phone-menu-dropdown left-nav-item nav-nontitle-link">Code</a>
+            <a href="/other"class="phone-menu-dropdown left-nav-item nav-nontitle-link">Other</a>
+            <button class='phone-menu-dropdown' id='subscribe-link'>Subscribe</button>
         </div>
-
-        <hr>
-
-        {% block main %}{% endblock %}
-
-        <footer>
-            <span>&copy;2020 Kelly Foulk.</span>
-        </footer>
+        <button id="phone-menu-btn" onclick=showMenu()>Menu</button>
+    </nav> <!--/.main-header-->
+    <!-- The Modal -->
+    <div id="subscribe_modal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content small-width-element">
+        <span class="close" id='modal_close'>&times;</span>
+        <form action="/subscribe" method="POST" id='subscribe_form'>
+            <h2>Let's stay in touch!</h2>
+            <input class="form-element" autofocus name="first" placeholder="First Name" type="text" required>
+            <input class="form-element" name="last" placeholder="Last Name" type="text">
+            <input class='form-element' name='email' placeholder='Email' type='text'>
+            <button id='subscribe_signup' type="submit">Sign up</button>
+        </form>
+        <h3 id="subscribe_message">I'll be in touch soon!</h3>
+        </div>
     </div>
-
-    <script src="../static/scripts.js"></script>
+    <hr>
+</header>
+<body class="container">
+    {% block main %}{% endblock %}
 </body>
+<footer>
+    <span>&copy;2020 Kelly Foulk.</span>
+    <script src="{{url_for('static', filename='scripts.js')}}"></script>
+</footer>
 </html>

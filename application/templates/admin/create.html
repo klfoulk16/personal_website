@@ -36,15 +36,9 @@ function postPreview() {
 }
 </script>
 
-<form action="/admin/create" method="POST" class="container" enctype="multipart/form-data">
+<form action="/admin/create" method="POST" enctype="multipart/form-data">
     <h1>Create New Post (#{{ post_id }})</h1>
-    <i>If you are uploading images:
-        <ol>
-            <li>Make sure ENV is set to 'prod' in app.py.</li>
-            <li>Create the post locally using 'python3 app.py' (the post and image info will be pushed to the production database).</li>
-            <li>Afterwards don't forget to commit your changes and 'push origin heroku' to make sure that the images are stored in the /static file in heroku's directory.</li>
-        </ol>
-    </i>
+    <i>If you are uploading images don't forget to add them to /post_imgs/{{post_id}} and push them to heroku.</i>
     <h3>Post Title (text):</h3>
     <input type="text" name="h1" maxlength="125" />
     <h3>Sample (text):</h3>
@@ -53,14 +47,14 @@ function postPreview() {
     <input type="text" name="youtube_vid" maxlength="125" />
     <h3>Header Image:</h3>
     <input type="file" name="header" accept=".jpg,.png,.gif">
-    <h3>Body Images
-    <button type="button" name="button" onclick="newinput()">+</button></h3>
+    <h3>Body Images</h3>
     <div id="body_img_div">
         <div id = "img0div">
             <label for="img0">0 : </label>
             <input type="file" id="img0" name="body_imgs" accept=".jpg,.png,.gif">
         </div>
     </div>
+    <button type="button" name="button" onclick="newinput()">Add Image</button>
     <h3>Body (html):</h3>
     <p><i>Using your body images: &ltimg src="../{imgs[0].img_path}"&gt</i></p>
     <textarea name="body" id='body_html' cols="30" rows="10"></textarea>
@@ -75,7 +69,7 @@ function postPreview() {
     <button class="btn form-btn" type="button" onclick="postPreview()">Preview Post</button>
 </form>
 
-<div id="post_preview" class='container'>
+<div id="post_preview">
     <div id="body_html_preview">
     </div>
 </div>
