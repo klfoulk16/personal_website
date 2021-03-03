@@ -48,7 +48,7 @@ def base_styles():
     """Displays examples of some core CSS styles."""
     return render_template("admin/base-styles.html")
 
-
+  
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     """

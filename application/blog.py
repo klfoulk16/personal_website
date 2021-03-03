@@ -14,6 +14,7 @@ from flask_mail import Message
 
 bp = Blueprint('blog', __name__)
 
+
 @bp.route("/", methods=["GET"])
 def index():
     """

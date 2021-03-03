@@ -1,5 +1,3 @@
-/* menu buttons are off from words... */
-
 /* =================================
   Base Element Styles
 ==================================== */
@@ -286,6 +284,7 @@ h2 .uncolored-link, .uncolored-link {
 		margin: 0 auto;
 	}
 
+  
 	/* ----- Main Nav Styles ---- */
 
 	#main-nav > * {
