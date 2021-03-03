@@ -1,5 +1,4 @@
 import datetime
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -77,13 +76,10 @@ class Admin(db.Model):
     password_hash = db.Column(db.String)
     authenticated = db.Column(db.Boolean)
 
-    def __init__(self, email, password):
+    def __init__(self, email, password_hash):
         self.email = email
-        self.password_hash = generate_password_hash(password)
+        self.password_hash = password_hash
         self.authenticated = False
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
 
     def is_active(self):
         """True, as all users are active."""

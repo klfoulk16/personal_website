@@ -19,6 +19,7 @@ from flask_login import (
 )
 import os
 from application.database import db, Admin, Posts, Subscribers, BodyImages
+from werkzeug.security import check_password_hash
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -52,7 +53,7 @@ def login():
     if request.method == "POST":
         email = request.form["email"]
         user = Admin.query.get(email)
-        if user is not None and user.check_password(request.form["password"]):
+        if user is not None and check_password_hash(user.password_hash, (request.form["password"])):
             login_user(user)
             flash("What would you like to do today?")
             return redirect(url_for("admin.admin"))
