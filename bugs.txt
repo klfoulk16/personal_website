@@ -1,50 +1,21 @@
-To do:
+Ideas:
 -- Give the posts slugs so that instead of displaying the post ID the URL will be the slug.
 - Should I implement tags? So that within code/other people can look at exactly the type of thing that interests them?
-- Send mail: enable test email send. Allow me to create an email through the website and push it to followers. Connect new gmail account.
 - When does a user get automatically logged out??
-- Subscribe should open up a new page congratulating them on subscribing. Right now the method is not good.
 
 Bugs:
-- Unordered lists don't have bullet points.
-- Footer doesn't stay at the bottom.
-- Remove Subscribe button styling on mobile layout
-- Get Subscribe hover to look the same as the other menu elements (button instead of link so it doesn't have same hover property)
+- Subscribe should open up a new page congratulating them on subscribing. Right now the method is not good.
 - Can't add more than 1mb of images to a post. Want no one image to be above 1mb but total they can.
 - Adding images to email will be very finicky.
-- styles 34 and 39-44 are these necessary? What is causing the app to reload CSS? Why isn't it updating right now?
-- why are the blog posts expanding outside of their container???
 - refactor subscribe flow
-- should I switch the user to an environment variable??
-- Some of the buttons don't have stying for hover.
+- should I switch the admin user to an environment variable??
 - post body should not be allowed to be none
 - post location in the laptop is based off the number of posts currently in the database, not the real id. need to just get rid of this.
 - should not be able to open route 'edit' for a post that has been deleted or doesn't exist.
 - can't edit category
 - can access /edit route without admin priviliges just not edit/id
-- if the route doesn't exist there's no 404 page not found error - it just takes you to a blank page
+- if most routes don't exist there's no 404 page not found error - it just takes you to a blank page
 - turn post headers to links in index/categories
 - migrate db to aware datetimes with an hour
-- get rid of the hardcoded env for the app caches of css
-- remove flask env from default config - have it set as env var
 - old images are not removed from file system if the post is edited to get rid of them...is this how I want things to work?
 - if you don't enter a message body (only html) you'll get a server error
-
-Fixed:
-1.The dates don't all convert pretty in the code page.
--added .all() after db query.
-
-2. Display most recent posts first instead of oldest posts first in layouts.
-- Used posts = Posts.query.order_by(Posts.id.desc()).all()
-
-3. I want the subscribe modal link to display "Success!" when a user subscribes. Not redirect to a new page.
--Used some javascript. But it'll display success even if the route doesn't run.
-
-Constraints:
-
-1. I have to manually upload images because of heroku's ephemeral nature.
-
-Solution: Basically I'll upload the images through the localhost or just do it manually, then push to heroku and then create the post like normal. But the images won't stay, but they'll be there cause I pushed them.
-
-OR!! I can create the posts in the local site, but have it be in production mode so that I'm updating the actual database. Then push the app to heroku so it has the img files.
-Alternatives: Use imgur or AWS S3 but I decided to keep things simple.
