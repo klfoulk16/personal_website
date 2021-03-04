@@ -72,27 +72,9 @@ class Admin(db.Model):
     """
 
     __tablename__ = "admin"
-    email = db.Column(db.String, primary_key=True)
+    username = db.Column(db.String, primary_key=True)
     password_hash = db.Column(db.String)
-    authenticated = db.Column(db.Boolean)
 
-    def __init__(self, email, password_hash):
-        self.email = email
+    def __init__(self, username, password_hash):
+        self.username = username
         self.password_hash = password_hash
-        self.authenticated = False
-
-    def is_active(self):
-        """True, as all users are active."""
-        return True
-
-    def get_id(self):
-        """Return the email address to satisfy Flask-Login's requirements."""
-        return self.email
-
-    def is_authenticated(self):
-        """Return True if the user is authenticated."""
-        return self.authenticated
-
-    def is_anonymous(self):
-        """False, as anonymous users aren't supported."""
-        return False

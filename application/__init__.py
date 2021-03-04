@@ -2,11 +2,13 @@ from flask import Flask
 import os
 from application.database import db, Admin
 from application.admin import mail
+from flask_migrate import Migrate
 
 """
 App Configuration
 """
 
+migrate = Migrate()
 
 def create_app(test_config=None):
 
@@ -37,6 +39,7 @@ def create_app(test_config=None):
 
     db.init_app(app)
     mail.init_app(app)
+    migrate.init_app(app, db)
 
     with app.app_context():
         db.create_all()

@@ -41,11 +41,11 @@ def login():
     Logs a user in (given the email and password are correct).
     """
     if request.method == "POST":
-        email = request.form["email"]
-        user = Admin.query.get(email)
+        username = request.form["username"]
+        user = Admin.query.get(username)
         if user is not None and check_password_hash(user.password_hash, (request.form["password"])):
             session.clear()
-            session['user_id'] = user.email
+            session['user_id'] = user.username
             flash("What would you like to do today?")
             return redirect(url_for("admin.admin"))
         return render_template("admin/login.html", message="Username or password incorrect.")
