@@ -7,31 +7,62 @@ from flask import (
     redirect,
     url_for,
     Markup,
-    Blueprint
+    Blueprint,
+    abort,
+    session
 )
 from flask_mail import Mail, Message
-from flask_login import (
-    LoginManager,
-    login_user,
-    login_required,
-    logout_user,
-    current_user,
-)
 import os
 from application.database import db, Admin, Posts, Subscribers, BodyImages
 from werkzeug.security import check_password_hash
+import functools
 
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
-login_manager = LoginManager()
 mail = Mail()
 
-@login_manager.user_loader
-def load_user(user_id):
+def login_required(view):
     """
-    Given a unique user_id (email), return the associated User object.
+    Creates wrap that prevents unlogged in viewers from accessing admin-only routes.
     """
-    return Admin.query.get(user_id)
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if session.get('user_id') is None:
+            return redirect(url_for('admin.login'))
+
+        return view(**kwargs)
+
+    return wrapped_view
+
+
+@bp.route("/login", methods=["GET", "POST"])
+def login():
+    """
+    Logs a user in (given the email and password are correct).
+    """
+    if request.method == "POST":
+        email = request.form["email"]
+        user = Admin.query.get(email)
+        if user is not None and check_password_hash(user.password_hash, (request.form["password"])):
+            session.clear()
+            session['user_id'] = user.email
+            flash("What would you like to do today?")
+            return redirect(url_for("admin.admin"))
+        return render_template("admin/login.html", message="Username or password incorrect.")
+    elif session.get('user_id') is not None:
+        return redirect(url_for("admin.admin"))
+    else:
+        return render_template("admin/login.html")
+
+
+@bp.route("/logout")
+@login_required
+def logout():
+    """
+    Logs a user out of the app.
+    """
+    session.clear()
+    return redirect(url_for("index"))
 
 
 @bp.route("/", methods=["GET"])
@@ -44,38 +75,12 @@ def admin():
 
 
 @bp.route("/styles")
-def base_styles():
-    """Displays examples of some core CSS styles."""
-    return render_template("admin/base-styles.html")
-
-
-@bp.route("/login", methods=["GET", "POST"])
-def login():
-    """
-    Logs a user in (given the email and password are correct).
-    """
-    if current_user.is_authenticated:
-        return redirect(url_for("admin.admin"))
-    if request.method == "POST":
-        email = request.form["email"]
-        user = Admin.query.get(email)
-        if user is not None and check_password_hash(user.password_hash, (request.form["password"])):
-            login_user(user)
-            flash("What would you like to do today?")
-            return redirect(url_for("admin.admin"))
-        return render_template("admin/login.html", message="Username or password incorrect.")
-    else:
-        return render_template("admin/login.html")
-
-
-@bp.route("/logout")
 @login_required
-def logout():
+def base_styles():
     """
-    Logs a user out of the app.
+    Displays examples of some core CSS styles.
     """
-    logout_user()
-    return redirect(url_for("index"))
+    return render_template("admin/base-styles.html")
 
 
 @bp.route("/create", methods=["GET", "POST"])
@@ -163,9 +168,7 @@ def send_mail():
     email html may look like and send out a test email.
     """
     if request.method == "POST":
-        # get list of all marina's info
         subs = Subscribers.query.filter_by(still_subscribed=True).all()
-        # get the email information
         subject = request.form["subject"]
         body_text = request.form["body_text"]
         body_html = request.form["body_html"]
@@ -188,7 +191,8 @@ def send_test():
     """
     Sends a test email to my email.
     """
-    # get the email information
+    if 'user_id' not in session:
+        abort(401)
     subject = request.form["subject"]
     body_text = request.form["body_text"]
     body_html = request.form["body_html"]
