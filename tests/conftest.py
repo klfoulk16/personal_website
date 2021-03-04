@@ -41,10 +41,10 @@ class AuthActions(object):
     def __init__(self, client):
         self._client = client
 
-    def login(self, email='test', password='test'):
+    def login(self, username='test', password='test'):
         return self._client.post(
             '/admin/login',
-            data={'email': email, 'password': password},
+            data={'username': username, 'password': password},
             follow_redirects=True
         )
 
