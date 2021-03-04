@@ -34,9 +34,35 @@ def client(app):
     return app.test_client()
 
 
+class AuthActions(object):
+    """
+    Handles logging a user in for @login_required views
+    """
+    def __init__(self, client):
+        self._client = client
+
+    def login(self, email='test', password='test'):
+        return self._client.post(
+            '/admin/login',
+            data={'email': email, 'password': password},
+            follow_redirects=True
+        )
+
+    def logout(self):
+        return self._client.get('/admin/logout', follow_redirects=True)
+
+
+@pytest.fixture
+def auth(client):
+    """
+    Fixture to simplify authentication for testing.
+    """
+    return AuthActions(client)
+
+
 @pytest.fixture
 def admin_user():
-    return Admin("kelly", generate_password_hash("kelly"))
+    return Admin("test", generate_password_hash("test"))
 
 
 @pytest.fixture
