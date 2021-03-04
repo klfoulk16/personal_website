@@ -19,3 +19,4 @@ Bugs:
 - migrate db to aware datetimes with an hour
 - old images are not removed from file system if the post is edited to get rid of them...is this how I want things to work?
 - if you don't enter a message body (only html) you'll get a server error
+- is there a gmail email authentication process??
