@@ -63,19 +63,9 @@ def test_admin():
     THEN check the email, password_hash and authenticated fields are defined correctly
     THEN also check that methods are properly defined
     """
-    email = "nelly@kelly.com"
+    username = "nelly@kelly.com"
     password = "weeeeeeeeeeee" #this is not encrypted but should be when sending to database
 
-    admin = Admin(email, password)
-
-    assert admin.email == email
-    # returns different hashes each time
-    # assert admin.password_hash == generate_password_hash(password)
-    assert admin.authenticated is False
-
-    # none of these return what they're supposed to according to the code I copied
-    # hence why I'm going to remove flask-login
-    # assert admin.is_active is True
-    # assert admin.get_id is email
-    # assert admin.is_authenticated is False
-    # assert admin.is_anonymous is False
+    admin = Admin(username, password)
+    assert admin.username == username
+    assert admin.password_hash == password

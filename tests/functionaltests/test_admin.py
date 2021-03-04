@@ -14,7 +14,7 @@ def test_login_get(client):
     """
     response = client.get("admin/login")
     assert response.status_code == 200
-    assert b"Email" in response.data
+    assert b"Username" in response.data
     assert b"Password" in response.data
 
     # make sure user_id isn't somehow already stored
