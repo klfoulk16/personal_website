@@ -10,7 +10,7 @@
     <title>{{ post.h1 }}</title>
     <link>http://kellyfoulk.herokuapp.com/post/{{ post.id }}</link>
     <description>{{ post.sample }}</description>
-    <pubDate>{{ post.date.strftime('%a, %d %b %Y %T') }} GMT</pubDate>
+    <pubDate>{{ post.date.strftime('%a, %d %b %Y %T %z') }}</pubDate>
     <guid isPermaLink="false">{{post.id}}</guid>
   </item>
   {% endfor %}

@@ -8,7 +8,7 @@ from flask_migrate import Migrate
 App Configuration
 """
 
-migrate = Migrate()
+migrate = Migrate(compare_type=True)
 
 def create_app(test_config=None):
 
@@ -18,6 +18,10 @@ def create_app(test_config=None):
     app.config.from_mapping(
         # DATABASE
         SQLALCHEMY_DATABASE_URI=os.getenv("DATABASE_URL"),
+        # MISC SETTINGS
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
+        # make sure all datetime values are displayed in UTC
+        SQLALCHEMY_ENGINE_OPTIONS = {"connect_args": {"options": "-c timezone=utc"}},
         SECRET_KEY=os.getenv("SECRET_KEY"),
         # ENV
         FLASK_ENV=os.getenv("FLASK_ENV"),
@@ -28,8 +32,6 @@ def create_app(test_config=None):
         MAIL_USERNAME=os.getenv("MAIL_USERNAME"),
         MAIL_PASSWORD=os.getenv("MAIL_PASSWORD"),
         MAIL_USE_TLS=False,
-        # MISC SETTINGS
-        SQLALCHEMY_TRACK_MODIFICATIONS=False,
         # ensure user doesn't upload more than 1MB of files
         MAX_CONTENT_LENGTH=1024 * 1024
     )

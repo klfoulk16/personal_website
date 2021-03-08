@@ -16,7 +16,7 @@ class Posts(db.Model):
     sample = db.Column(db.String(355))
     body = db.Column(db.Text())
     category = db.Column(db.String(200))
-    date = db.Column(db.Date())
+    date = db.Column(db.DateTime(timezone=True))
 
     def __init__(self, h1, sample, header_path, youtube_vid, body, category):
         self.h1 = h1
@@ -25,7 +25,8 @@ class Posts(db.Model):
         self.youtube_vid = youtube_vid
         self.body = body
         self.category = category
-        self.date = datetime.date.today()
+        print(datetime.datetime.now(datetime.timezone.utc))
+        self.date = datetime.datetime.now()
 
 
 class BodyImages(db.Model):
