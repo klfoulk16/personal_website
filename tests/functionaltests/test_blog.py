@@ -131,3 +131,23 @@ def test_subscribe_post(client, app):
     with app.app_context():
         sub = Subscribers.query.filter_by(email="test@example.com").first()
         assert sub is not None
+
+
+def test_rss_get(client):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/rss' page is requested (GET)
+    THEN check that a '200' status code is returned (method not allowed)
+    """
+    response = client.get("/rss")
+    assert response.status_code == 200
+
+
+def test_rss_post(client):
+    """
+    GIVEN a Flask application
+    WHEN the '/rss' page is posted to (POST)
+    THEN check that a '405' status code is returned
+    """
+    response = client.post("/rss")
+    assert response.status_code == 405

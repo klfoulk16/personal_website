@@ -83,5 +83,5 @@ def subscribe():
 @bp.route('/rss')
 def rss():
     posts = Posts.query.all()
-    xml = render_template("rss.xml", posts=posts)
+    xml = render_template("blog/rss.xml", posts=posts)
     return Response(xml, mimetype='text/xml')
