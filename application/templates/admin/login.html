@@ -7,7 +7,7 @@
 {% block main %}
 <form action="/admin/login" method="POST" class="container" id='login'>
     {% if message %}
-    <p style="color: red;">{{ message }}</p>
+    <p class='error-message'>{{ message }}</p>
     {% else %}
     <h4>Knock, knock, who's there?</h4>
     {% endif %}

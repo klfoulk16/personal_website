@@ -103,7 +103,7 @@ def test_subscribe_get(client):
     assert response.status_code == 405
 
 
-def test_subscribe_post(client, app):
+def test_successful_subscribe_post(client, app):
     """
     GIVEN a Flask application
     WHEN the '/subscribe' page is posted to (POST)
@@ -120,7 +120,7 @@ def test_subscribe_post(client, app):
             "/subscribe",
             data=dict(first=first, last=last, email=email),
         )
-        assert response.status_code == 204
+        assert response.status == "200 OK"
 
         # assert email was sent to the new with the correct subject
         assert len(outbox) == 1
@@ -131,6 +131,31 @@ def test_subscribe_post(client, app):
     with app.app_context():
         sub = Subscribers.query.filter_by(email="test@example.com").first()
         assert sub is not None
+
+def test_bad_subscribe_post(client):
+    """
+    GIVEN a Flask application
+    WHEN the '/subscribe' page is posted to (POST)
+    THEN check that duplicate emails are not subscribed
+    """
+    first = "testfirst"
+    last = "testlast"
+    email = "test@example.com"
+    # put first email in
+    client.post(
+            "/subscribe",
+            data=dict(first=first, last=last, email=email),
+        ) 
+    with mail.record_messages() as outbox:
+        # put duplicate email in
+        response = client.post(
+            "/subscribe",
+            data=dict(first=first, last=last, email=email),
+        )
+        assert response.status == "200 Duplicate Email"
+
+        # assert email was sent
+        assert len(outbox) == 0
 
 
 def test_rss_get(client):

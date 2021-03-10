@@ -33,14 +33,15 @@
         <!-- Modal content -->
         <div class="modal-content small-width-element">
         <span class="close" id='modal_close'>&times;</span>
-        <form action="/subscribe" method="POST" id='subscribe_form'>
-            <h2>Let's stay in touch!</h2>
-            <input class="form-element" autofocus name="first" placeholder="First Name" type="text" required>
+        <h2 id='initial-subscribe-message'>Let's stay in touch!</h2>
+        <p class='error-message' id="subscribe-dup-email-message">This email is already subscribed, try another.</p>
+        <form action="/subscribe" method="POST" id='subscribe-form'>
+            <input class="form-element" autofocus name="first" placeholder="First Name" type="text">
             <input class="form-element" name="last" placeholder="Last Name" type="text">
-            <input class='form-element' name='email' placeholder='Email' type='text'>
+            <input class='form-element' name='email' placeholder='Email' type="email" required>
             <button id='subscribe_signup' type="submit">Sign up</button>
         </form>
-        <h3 id="subscribe_message">I'll be in touch soon!</h3>
+        <h3 id="subscribe-success-message">I'll be in touch soon!</h3>
         </div>
     </div>
     <hr>
