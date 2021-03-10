@@ -11,3 +11,4 @@ latest.dump
 .coverage
 dev-env.sh
 create-admin-user.txt
+db-backups/

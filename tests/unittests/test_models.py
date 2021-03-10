@@ -22,7 +22,6 @@ def test_posts_model():
     assert post.sample == sample
     assert post.body == body
     assert post.category == category
-    assert post.date == datetime.date.today()
 
 
 def test_body_images():
