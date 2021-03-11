@@ -63,7 +63,7 @@ def subscribe():
     last = request.form["last"]
     email = request.form["email"]
     if Subscribers.query.filter_by(email=email).first():
-        return "Sorry this email is already subscribed"
+        return "Database Integrity Error", "200 Duplicate Email"
     data = Subscribers(first, last, email)
     db.session.add(data)
     db.session.commit()
@@ -74,10 +74,7 @@ def subscribe():
     msg.body = f"Hello {first},\nThanks for subscribing!\nBest,\n Kelly"
     msg.html = render_template("/emails/welcome.html", name=first)
     mail.send(msg)
-
-    # have this automatically send a welcome email to confirm people.
-    # maybe this should return some URL so we know that the person is subscribed?
-    return "", 204
+    return "", 200
 
 
 @bp.route('/rss')

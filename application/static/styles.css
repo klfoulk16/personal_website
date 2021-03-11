@@ -257,12 +257,19 @@ h2 .uncolored-link, .uncolored-link {
 	border-bottom: None;
 }
 
+/* --- Other ---- */
+
+.error-message {
+	/* used in subscribe form and login */
+	color: red;
+}
+
 /* =================================
 	Unique Element Styles
 ==================================== */
 
 /* Initially Hide Subscribe Message In Subscribe Modal */
-#subscribe_message {
+#subscribe-success-message, #subscribe-dup-email-message {
 	display:none;
 }
 

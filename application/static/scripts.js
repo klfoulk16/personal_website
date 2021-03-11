@@ -1,3 +1,4 @@
+// Dynamic phone menu
 function showMenu() {
     // expand phone header menu
     const phone_menu_btn = document.getElementById('phone-menu-btn');
@@ -38,12 +39,50 @@ window.onclick = function(event) {
     }
 };
 
-// Display message when someone subscribes.
-var subscribe_signup = document.getElementById('subscribe_signup');
+// Handle Interactive subscribe popup
+var subscribe_form = document.getElementById('subscribe-form');
+var dup_email_message = document.getElementById('subscribe-dup-email-message');
+subscribe_form.addEventListener("submit", subscribe_handler);
 
-subscribe_signup.onclick = function() {
-    var form = document.getElementById('subscribe_form')
-    var message = document.getElementById('subscribe_message')
-    form.style.display = 'none';
-    message.style.display = 'block';
-};
+async function subscribe_handler(event) {
+    /* send subscriber and retrieve json representation */
+    const response = await ajaxifyForm(event);
+
+    console.log(response);
+
+    if (response.statusText == "Duplicate Email") {
+        dup_email_message.style.display = 'block';
+    }
+    else if (response.status == 200) {
+        var form = document.getElementById('subscribe-form')
+        var message = document.getElementById('subscribe-success-message')
+        var initial_message = document.getElementById('initial-subscribe-message');
+        form.style.display = 'none';
+        initial_message.style.display = 'none';
+        dup_email_message.style.display = 'none';
+        message.style.display = 'block';
+    }
+}
+
+async function ajaxifyForm(event) {
+    /* we don't want the usual behaviors (like reloading the page) */
+    event.preventDefault();
+
+    /* get the form, then populate a new FormData from it. */
+    var form = event.target;
+    var formData = new FormData(form);
+
+    /* get the route that the form sends data to */
+    var url = form.action;
+
+    /* submit the request. Careful modifying this - it was the source of many a headache. */
+    return await fetch(url, {
+    method : 'POST',
+    mode: 'cors',
+    credentials: 'same-origin',
+    cache : "no-cache",
+    referrerPolicy: 'no-referrer',
+    redirect: 'follow',
+    body: formData,
+    });
+}
