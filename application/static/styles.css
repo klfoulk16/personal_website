@@ -21,14 +21,14 @@ header {
 
 body {
 	font-family: Arial, sans-serif;
-	padding-bottom: 5rem;    /* White-Space to Include Footer*/
+	padding-bottom: 10rem;    /* White-Space to Include Footer*/
 }
   
 footer {
 	/* Situating the footer */
 	position: absolute;
-	bottom: 0;
-	height: 1.5rem;            /* Footer height */
+	bottom: .25em;
+	height: 5.5rem;            /* Footer height */
 }
 
 h1, h3, h4 {

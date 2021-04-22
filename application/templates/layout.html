@@ -48,9 +48,14 @@
 </header>
 <body class="container">
     {% block main %}{% endblock %}
+    <script async defer src="https://www.recurse-scout.com/loader.js?t=c3afa0ba10efbc2b07947ae2877ad02e"></script>
 </body>
 <footer>
-    <span>&copy;2020 Kelly Foulk.</span>
+    <div style="height:2em;width:2em;" class="rc-scout"></div>
+    <p>&copy;2021 Kelly Foulk. <a href='mailto:klf16@my.fsu.edu' target="_blank">Contact.</a> 
+        <a href='https://www.linkedin.com/in/kelly-foulk-a8a9a167/'>LinkedIn.</a> 
+        <a href='https://github.com/klfoulk16'>Github.</a></p>
+    <script src="{{url_for('static', filename='scripts.js')}}"></script>
     <script src="{{url_for('static', filename='scripts.js')}}"></script>
 </footer>
 </html>
